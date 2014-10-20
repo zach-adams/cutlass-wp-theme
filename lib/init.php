@@ -1,6 +1,6 @@
 <?php
 /**
- * cutlass initial setup and constants
+ * Cutlass initial setup and constants
  */
 function cutlass_setup() {
   // Make theme available for translation
