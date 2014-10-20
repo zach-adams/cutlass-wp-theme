@@ -1,6 +1,6 @@
-Cutlass Wordpress Starter Theme
+Cutlass Starter Theme
 =========
 
-## Create Wordpress themes with the power of Blade
+## Create themes with the power of Laravel's Blade
 
 ![Cutlass Wordpress Starter Theme](https://github.com/zach-adams/cutlass-wp-theme/blob/master/screenshot.png "Cutlass Wordpress Starter Theme")
