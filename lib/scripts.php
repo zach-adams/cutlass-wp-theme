@@ -1,15 +1,6 @@
 <?php
 /**
  * Scripts and stylesheets
- *
- * Enqueue stylesheets in the following order:
- * 1. /theme/assets/css/main.css
- *
- * Enqueue scripts in the following order:
- * 1. jquery-1.11.1.min.js via Google CDN
- * 2. /theme/assets/js/vendor/modernizr.min.js
- * 3. /theme/assets/js/scripts.js (in footer)
- *
  */
 function cutlass_scripts() {
   /**
