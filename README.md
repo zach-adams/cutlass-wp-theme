@@ -1,3 +1,3 @@
-# Cutlass Wordpress Theme
+# Cutlass Wordpress Starter Theme
 
-A better readme is coming soon
+![Cutlass Wordpress Starter Theme](https://github.com/zach-adams/cutlass-wp-theme/blob/master/screenshot.png "Cutlass Wordpress Starter Theme")
