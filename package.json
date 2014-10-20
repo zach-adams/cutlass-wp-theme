@@ -1,7 +1,8 @@
 {
-  "name": "socialeyes-theme",
-  "author": "Zach Adams <zach@getsocialeyes.com>",
-  "homepage": "http://getsocialeyes.com",
+  "name": "cutlass-wp-theme",
+  "author": "Zach Adams <zach.adams383@gmail.com>",
+  "homepage": "http://zach-adams.com",
+  "version": "1.0.0",
   "licenses": [
     {
       "type": "MIT",
