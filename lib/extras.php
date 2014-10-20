@@ -2,15 +2,15 @@
 /**
  * Clean up the_excerpt()
  */
-function roots_excerpt_more($more) {
-  return ' &hellip; <a href="' . get_permalink() . '">' . __('Continued', 'roots') . '</a>';
+function cutlass_excerpt_more($more) {
+  return ' &hellip; <a href="' . get_permalink() . '">' . __('Continued', 'cutlass') . '</a>';
 }
-add_filter('excerpt_more', 'roots_excerpt_more');
+add_filter('excerpt_more', 'cutlass_excerpt_more');
 
 /**
  * Manage output of wp_title()
  */
-function roots_wp_title($title) {
+function cutlass_wp_title($title) {
   if (is_feed()) {
     return $title;
   }
@@ -19,4 +19,4 @@ function roots_wp_title($title) {
 
   return $title;
 }
-add_filter('wp_title', 'roots_wp_title', 10);
+add_filter('wp_title', 'cutlass_wp_title', 10);

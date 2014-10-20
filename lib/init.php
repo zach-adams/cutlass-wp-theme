@@ -1,16 +1,16 @@
 <?php
 /**
- * Roots initial setup and constants
+ * cutlass initial setup and constants
  */
-function roots_setup() {
+function cutlass_setup() {
   // Make theme available for translation
-  // Community translations can be found at https://github.com/roots/roots-translations
-  load_theme_textdomain('roots', get_template_directory() . '/lang');
+  // Community translations can be found at https://github.com/cutlass/cutlass-translations
+  load_theme_textdomain('cutlass', get_template_directory() . '/lang');
 
   // Register wp_nav_menu() menus
   // http://codex.wordpress.org/Function_Reference/register_nav_menus
   register_nav_menus(array(
-    'primary_navigation' => __('Primary Navigation', 'roots')
+    'primary_navigation' => __('Primary Navigation', 'cutlass')
   ));
 
   // Add post thumbnails
@@ -30,14 +30,14 @@ function roots_setup() {
   // Tell the TinyMCE editor to use a custom stylesheet
   add_editor_style('/assets/css/editor-style.css');
 }
-add_action('after_setup_theme', 'roots_setup');
+add_action('after_setup_theme', 'cutlass_setup');
 
 /**
  * Register sidebars
  */
-function roots_widgets_init() {
+function cutlass_widgets_init() {
   register_sidebar(array(
-    'name'          => __('Primary', 'roots'),
+    'name'          => __('Primary', 'cutlass'),
     'id'            => 'sidebar-primary',
     'before_widget' => '<section class="widget %1$s %2$s">',
     'after_widget'  => '</section>',
@@ -46,7 +46,7 @@ function roots_widgets_init() {
   ));
 
   register_sidebar(array(
-    'name'          => __('Footer', 'roots'),
+    'name'          => __('Footer', 'cutlass'),
     'id'            => 'sidebar-footer',
     'before_widget' => '<section class="widget %1$s %2$s">',
     'after_widget'  => '</section>',
@@ -54,4 +54,4 @@ function roots_widgets_init() {
     'after_title'   => '</h3>',
   ));
 }
-add_action('widgets_init', 'roots_widgets_init');
+add_action('widgets_init', 'cutlass_widgets_init');

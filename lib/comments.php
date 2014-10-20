@@ -4,7 +4,7 @@
  *
  * @link http://getbootstrap.com/components/#media
  */
-class Roots_Walker_Comment extends Walker_Comment {
+class cutlass_Walker_Comment extends Walker_Comment {
   function start_lvl(&$output, $depth = 0, $args = array()) {
     $GLOBALS['comment_depth'] = $depth + 1; ?>
     <ul <?php comment_class('media list-unstyled comment-' . get_comment_ID()); ?>>
@@ -32,12 +32,12 @@ class Roots_Walker_Comment extends Walker_Comment {
     <?php echo get_avatar($comment, $size = '64'); ?>
     <div class="media-body">
     <h4 class="media-heading"><?php echo get_comment_author_link(); ?></h4>
-    <time datetime="<?php echo get_comment_date('c'); ?>"><a href="<?php echo htmlspecialchars(get_comment_link($comment->comment_ID)); ?>"><?php printf(__('%1$s', 'roots'), get_comment_date(),  get_comment_time()); ?></a></time>
-    <?php edit_comment_link(__('(Edit)', 'roots'), '', ''); ?>
+    <time datetime="<?php echo get_comment_date('c'); ?>"><a href="<?php echo htmlspecialchars(get_comment_link($comment->comment_ID)); ?>"><?php printf(__('%1$s', 'cutlass'), get_comment_date(),  get_comment_time()); ?></a></time>
+    <?php edit_comment_link(__('(Edit)', 'cutlass'), '', ''); ?>
 
     <?php if ($comment->comment_approved == '0') : ?>
       <div class="alert alert-info">
-        <?php _e('Your comment is awaiting moderation.', 'roots'); ?>
+        <?php _e('Your comment is awaiting moderation.', 'cutlass'); ?>
       </div>
     <?php endif; ?>
 
@@ -57,10 +57,10 @@ class Roots_Walker_Comment extends Walker_Comment {
   }
 }
 
-function roots_get_avatar($avatar, $type) {
+function cutlass_get_avatar($avatar, $type) {
   if (!is_object($type)) { return $avatar; }
 
   $avatar = str_replace("class='avatar", "class='avatar pull-left media-object", $avatar);
   return $avatar;
 }
-add_filter('get_avatar', 'roots_get_avatar', 10, 2);
+add_filter('get_avatar', 'cutlass_get_avatar', 10, 2);

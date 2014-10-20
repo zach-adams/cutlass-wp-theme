@@ -19,21 +19,21 @@ if (!defined('WP_ENV')) {
 /**
  * Add body class if sidebar is active
  */
-function roots_sidebar_body_class($classes) {
-  if (roots_display_sidebar()) {
+function cutlass_sidebar_body_class($classes) {
+  if (cutlass_display_sidebar()) {
     $classes[] = 'sidebar-primary';
   }
   return $classes;
 }
-add_filter('body_class', 'roots_sidebar_body_class');
+add_filter('body_class', 'cutlass_sidebar_body_class');
 
 /**
  * Define which pages shouldn't have the sidebar
  *
  * See lib/sidebar.php for more details
  */
-function roots_display_sidebar() {
-  $sidebar_config = new Roots_Sidebar(
+function cutlass_display_sidebar() {
+  $sidebar_config = new cutlass_Sidebar(
     /**
      * Conditional tag checks (http://codex.wordpress.org/Conditional_Tags)
      * Any of these conditional tags that return true won't show the sidebar
@@ -57,7 +57,7 @@ function roots_display_sidebar() {
     )
   );
 
-  return apply_filters('roots/display_sidebar', $sidebar_config->display);
+  return apply_filters('cutlass/display_sidebar', $sidebar_config->display);
 }
 
 /**

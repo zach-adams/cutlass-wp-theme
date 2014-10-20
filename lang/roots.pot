@@ -240,23 +240,23 @@ msgstr ""
 msgid "Search"
 msgstr ""
 #. Theme Name of the plugin/theme
-msgid "Roots Starter Theme"
+msgid "cutlass Starter Theme"
 msgstr ""
 
 #. Theme URI of the plugin/theme
-msgid "http://roots.io/starter-theme/"
+msgid "http://cutlass.io/starter-theme/"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid "Roots is a WordPress starter theme based on HTML5 Boilerplate & Bootstrap. <a href=\"https://github.com/roots/roots/contributors\">Contribute on GitHub</a>"
+msgid "cutlass is a WordPress starter theme based on HTML5 Boilerplate & Bootstrap. <a href=\"https://github.com/cutlass/cutlass/contributors\">Contribute on GitHub</a>"
 msgstr ""
 
 #. Author of the plugin/theme
-msgid "Roots"
+msgid "cutlass"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "http://roots.io/"
+msgid "http://cutlass.io/"
 msgstr ""
 
 #. Template Name of the plugin/theme

@@ -9,7 +9,7 @@
       {{ the_content() }}
     </div>
     <footer>
-      {{ wp_link_pages(array('before' => '<nav class="page-nav"><p>' . __('Pages:', 'roots'), 'after' => '</p></nav>')) }}
+      {{ wp_link_pages(array('before' => '<nav class="page-nav"><p>' . __('Pages:', 'cutlass'), 'after' => '</p></nav>')) }}
     </footer>
     @include('templates.includes.comments')
   </article>
