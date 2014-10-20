@@ -1,11 +1,10 @@
 {
   "name": "cutlass",
-  "version": "7.0.1",
-  "homepage": "http://cutlass.io",
+  "version": "1.0.0",
+  "homepage": "http://zach-adams.com",
   "authors": [
-    "Ben Word <ben@benword.com>"
+    "Zach Adams <zach.adams383@gmail.com>"
   ],
-  "license": "MIT",
   "private": true,
   "ignore": [
     "**/.*",
