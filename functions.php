@@ -11,7 +11,6 @@ $cutlass_includes = array(
   'inc/blade.php',           // Load Laravel's Blade Templating Engine
   'inc/utils.php',           // Utility functions
   'inc/init.php',            // Initial theme setup and constants
-  'inc/sidebar.php',         // Sidebar class
   'inc/config.php',          // Configuration
   'inc/activation.php',      // Theme activation
   'inc/titles.php',          // Page titles
