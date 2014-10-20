@@ -14,17 +14,6 @@ if (!defined('WP_ENV')) {
 }
 
 /**
- * Add body class if sidebar is active
- */
-function cutlass_sidebar_body_class($classes) {
-  if (cutlass_display_sidebar()) {
-    $classes[] = 'sidebar-primary';
-  }
-  return $classes;
-}
-add_filter('body_class', 'cutlass_sidebar_body_class');
-
-/**
  * $content_width is a global variable used by WordPress for max image upload sizes
  * and media embeds (in pixels).
  *
