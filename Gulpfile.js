@@ -1,3 +1,28 @@
+// == DEVELOPMENT AND BUILD CSS AND JS == //
+
+var devvendorcss = [
+  "src/vendor/bootstrap/dist/css/bootstrap.css",
+  "src/vendor/font-awesome/css/font-awesome.css"
+  //"src/vendor/yourcssfile/main.css" - Example on how to add more Development CSS files
+];
+var devvendorjs = [
+  "src/vendor/jquery/dist/jquery.js",
+  "src/vendor/bootstrap/dist/js/bootstrap.js"
+  //"src/vendor/yourjsfile/main.js" - Example on how to add more Development JS files
+];
+var buildvendorcss = [
+  "src/vendor/bootstrap/dist/css/bootstrap.min.css",
+  "src/vendor/font-awesome/css/font-awesome.min.css"
+  //"src/vendor/yourcssfile/main.css" - Example on how to add more Build CSS files
+];
+var buildvendorjs = [
+  "src/vendor/jquery/dist/jquery.min.js",
+  "src/vendor/bootstrap/dist/js/bootstrap.min.js"
+  //"src/vendor/yourjsfile/main.js" - Example on how to add more Build JS files
+];
+
+
+// == Gulp Require Modules == //
 var gulp =          require('gulp'),
     sass =          require('gulp-ruby-sass'),
     autoprefixer =  require('gulp-autoprefixer'),
@@ -10,24 +35,10 @@ var gulp =          require('gulp'),
     imagemin =      require('gulp-imagemin'),
     pngcrush =      require('imagemin-pngcrush');
 
-var devvendorcss = [
-  "src/vendor/bootstrap/dist/css/bootstrap.css",
-  "src/vendor/font-awesome/css/font-awesome.css"
-];
-var devvendorjs = [
-  "src/vendor/jquery/dist/jquery.js",
-  "src/vendor/bootstrap/dist/js/bootstrap.js"
-];
-var buildvendorcss = [
-  "src/vendor/bootstrap/dist/css/bootstrap.min.css",
-  "src/vendor/font-awesome/css/font-awesome.min.css"
-];
-var buildvendorjs = [
-  "src/vendor/jquery/dist/jquery.min.js",
-  "src/vendor/bootstrap/dist/js/bootstrap.min.js"
-];
 
+// == STYLES TASKS == //
 
+// = Only compiles SASS and autoprefixes = //
 gulp.task('styles-dev', function() {
   return gulp.src('src/sass/*.scss')
     .pipe(plumber())
@@ -35,6 +46,7 @@ gulp.task('styles-dev', function() {
     .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
     .pipe(gulp.dest('dist/css/'));
 });
+// = Compiles SASS, autoprefixes then minifies the final version = //
 gulp.task('styles-build', function() {
   gulp.src('src/sass/*.scss')
     .pipe(plumber())
@@ -46,11 +58,15 @@ gulp.task('styles-build', function() {
 });
 
 
+// == SCRIPTS TASKS == //
+
+// = Only copies over the main.js file = //
 gulp.task('scripts-dev',function(){
   gulp.src('src/js/main.js')
     .pipe(plumber())
     .pipe(gulp.dest('dist/js/'));
 });
+// = Uglifies main.js before copying it over = //
 gulp.task('scripts-build', function() {
   gulp.src('src/js/main.js')
     .pipe(plumber())
@@ -59,6 +75,9 @@ gulp.task('scripts-build', function() {
 });
 
 
+// == VENDOR TASKS == // 
+
+// = Copies and concatinates the development vendor CSS and JS specified at the top = //
 gulp.task('vendor-dev', function(){
   gulp.src(devvendorcss)
     .pipe(plumber())
@@ -69,6 +88,7 @@ gulp.task('vendor-dev', function(){
     .pipe(concat({ path: 'vendor.js'}))
     .pipe(gulp.dest('dist/js/'));
 });
+// = Copies and concatinates the build vendor CSS and JS specified at the top = //
 gulp.task('vendor-build', function(){
   gulp.src(buildvendorcss)
     .pipe(plumber())
@@ -81,6 +101,9 @@ gulp.task('vendor-build', function(){
 });
 
 
+// == IMAGE TASKS == //
+
+// = Any images in the src/img folder are minified then copied over to the dist/img folder = //
 gulp.task('imagemin', function () {
   return gulp.src('src/img/*')
       .pipe(imagemin({
@@ -92,6 +115,10 @@ gulp.task('imagemin', function () {
 });
 
 
+// == WATCH TASKS == //
+
+// = Watches all SASS, JS, and the image folder for any changes, then runs the appropriate task. 
+// = Also watches all PHP, CSS, JS and the image folder in the dist folder for any changes then triggers livereload
 gulp.task('watch', function() {
   gulp.watch('src/sass/**/*.scss', ['styles-dev']);
   gulp.watch('src/js/**/*.js', ['scripts-dev']);
@@ -99,12 +126,17 @@ gulp.task('watch', function() {
 
   livereload.listen();
   gulp.watch('**/*.php').on('change', livereload.changed);
-  gulp.watch('css/*.css').on('change', livereload.changed);
-  gulp.watch('js/*.js').on('change', livereload.changed);
-  gulp.watch('img/**').on('change', livereload.changed);
+  gulp.watch('dist/css/*.css').on('change', livereload.changed);
+  gulp.watch('dist/js/*.js').on('change', livereload.changed);
+  gulp.watch('dist/img/**').on('change', livereload.changed);
 });
 
-gulp.task('dev', ['styles-dev', 'scripts-dev', 'vendor-dev', 'imagemin']);
-gulp.task('build', ['styles-build', 'scripts-build', 'vendor-build', 'imagemin'])
 
+// == GULP TASKS == //
+
+// = Development Task = //
+gulp.task('dev', ['styles-dev', 'scripts-dev', 'vendor-dev', 'imagemin']);
+// = Build Task = //
+gulp.task('build', ['styles-build', 'scripts-build', 'vendor-build', 'imagemin'])
+// = Default Task = //
 gulp.task('default', ['dev', 'watch']);
