@@ -30,14 +30,20 @@ Special Thanks to Mikael Mattsson and the Team at Roots for making the Blade Wor
 2. Go to the theme directory and run `sudo npm install` or `npm install`
 3. Run `gulp dev` to compile the initial css and js or just `gulp` to compile initial css and js and then run watch task
 
-## Gulp Tasks
+## Theme Development
+
+### Install Gulp and Bower
+
+Install Gulp with `npm install -g gulp` and Bower with `npm install -g bower`
+
+### Gulp Tasks
 
 * `gulp dev` - Compiles SASS (without minification), concatinates development vendor CSS, copies main.js, minifies images.
 * `gulp build` - Compiles SASS (with minifcation), concatinates build vendor CSS, copies main.js, minifies images.
-* `gulp watch` - Watches src/ and dist/ folders for changes (as well as all PHP files) and triggers livereload when it detects one
+* `gulp watch` - Watches src/ and dist/ folders for changes (as well as all PHP and Blade files) and triggers livereload when it detects one
 * `gulp` - Runs `gulp dev` then `gulp watch`
 
-## Bower
+### Bower
 
 Read more about bower [here](http://bower.io/). Bower installs to the src/vendor directory and you can add your dependencies into the css using the array's at the top of the Gulpfile.js
 
