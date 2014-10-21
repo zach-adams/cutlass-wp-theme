@@ -1,4 +1,4 @@
-@layout( 'templates.layouts.base' )
+@layout( 'templates.layouts.normal' )
 
 @section('content')
 

@@ -1,4 +1,4 @@
-@layout( 'templates.layouts.full-width' )
+@layout( 'templates.layouts.normal' )
 
 @section('page-content')
 
