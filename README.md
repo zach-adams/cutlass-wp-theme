@@ -37,6 +37,10 @@ Special Thanks to Mikael Mattsson and the Team at Roots for making the Blade Wor
 * `gulp watch` - Watches src/ and dist/ folders for changes (as well as all PHP files) and triggers livereload when it detects one
 * `gulp` - Runs `gulp dev` then `gulp watch`
 
+## Bower
+
+Read more about bower [here](http://bower.io/). Bower installs to the src/vendor directory and you can add your dependencies into the css using the array's at the top of the Gulpfile.js
+
 ## What's Blade?
 
 To quote Laravel's website: 
