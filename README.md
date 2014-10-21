@@ -28,7 +28,8 @@ Special Thanks to Mikael Mattsson and the Team at Roots for making the Blade Wor
 
 1. Clone this repo - `git clone git@github.com:zach-adams/cutlass-wp-theme.git` or [download the zip file](https://github.com/zach-adams/cutlass-wp-theme/archive/master.zip) and install it like a normal Wordpress theme.
 2. Go to the theme directory and run `sudo npm install` or `npm install`
-3. Run `gulp dev` to compile the initial css and js or just `gulp` to compile initial css and js and then run watch task
+3. Run `bower install` to install dependencies
+4. Run `gulp dev` to compile the initial css and js or just `gulp` to compile initial css and js and then run watch task
 
 ## Theme Development
 
