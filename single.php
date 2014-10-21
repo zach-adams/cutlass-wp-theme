@@ -1,6 +1,6 @@
 @layout( 'templates.layouts.normal' )
 
-@section('content')
+@section('page-content')
 
 	@include('templates.content.single')
 
