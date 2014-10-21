@@ -77,3 +77,7 @@ When the theme is loaded it attaches itself to the template loader and runs the 
 * content - The content for the template pages
 * includes - Various includes 
 * layouts - The master layouts. Base is the default and the others pull from Base
+
+## Issues
+
+See the Wiki for current known issues
