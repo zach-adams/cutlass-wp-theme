@@ -3,11 +3,26 @@ Cutlass Starter Theme
 
 ## Create themes with the power of Laravel's Blade
 
-Cutlass is a Wordpress Starter Theme with the power of Laravel's Blade templating engine included, allowing you to develop Wordpress sites more quickly then you ever have before.
+Cutlass is a Wordpress Starter Theme with the power of Laravel's Blade templating engine included, allowing you to develop Wordpress sites more quickly then you ever have before. It includes HTML5 syntax, Bootstrap and Font Awesome by default.
 
 Designed by [Zach Adams](http://zach-adams.com), uses code from [Roots Wordpress Starter Theme](https://github.com/roots/roots) and the [Blade Wordpress Plugin](https://github.com/MikaelMattsson/blade)
 
 Special Thanks to Mikael Mattsson and the Team at Roots for making the Blade Wordpress Plugin and the Roots Starter Theme respectively
+
+## Features
+
+* [Laravel's Blade](http://laravel.com/docs/4.2/templates) templating engine for even quicker Wordpress theme development
+* [Gulp](http://gulpjs.com/) for SASS compiling, file concatination, image minifying, javascript uglifying, and livereload
+* [Bower](http://bower.io/) for front-end package management
+* [Bootstrap](http://getbootstrap.com/)
+* HTML5 Ready
+* Tons of useful functions and theme activation thanks to [Roots](https://github.com/roots/roots)
+
+## Requirements
+
+* PHP 5.5 or higher
+* Apache or nginx
+* Wordpress 3.0.0 or higher
 
 ## What's Blade?
 
@@ -39,7 +54,3 @@ When the theme is loaded it attaches itself to the template loader and runs the 
 * content - The content for the template pages
 * includes - Various includes 
 * layouts - The master layouts. Base is the default and the others pull from Base
-
-
-
-Cutlass was originally a fork of the [Roots Starter Theme](http://roots.io/starter-theme/) but evolved into what it is today. 
