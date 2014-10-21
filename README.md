@@ -24,6 +24,19 @@ Special Thanks to Mikael Mattsson and the Team at Roots for making the Blade Wor
 * Apache or nginx
 * Wordpress 3.0.0 or higher
 
+## Installing
+
+1. Clone this repo - `git clone git@github.com:zach-adams/cutlass-wp-theme.git` or [download the zip file](https://github.com/zach-adams/cutlass-wp-theme/archive/master.zip) and install it like a normal Wordpress theme.
+2. Go to the theme directory and run `sudo npm install` or `npm install`
+3. Run `gulp dev` to compile the initial css and js or just `gulp` to compile initial css and js and then run watch task
+
+## Gulp Tasks
+
+* `gulp dev` - Compiles SASS (without minification), concatinates development vendor CSS, copies main.js, minifies images.
+* `gulp build` - Compiles SASS (with minifcation), concatinates build vendor CSS, copies main.js, minifies images.
+* `gulp watch` - Watches src/ and dist/ folders for changes (as well as all PHP files) and triggers livereload when it detects one
+* `gulp` - Runs `gulp dev` then `gulp watch`
+
 ## What's Blade?
 
 To quote Laravel's website: 
