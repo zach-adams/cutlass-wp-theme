@@ -1,4 +1,4 @@
-[Cutlass Starter Theme](http://cutlasswp.com/)
+[Cutlass Wordpress Starter Theme](http://cutlasswp.com/)
 =========
 
 ## Create themes with the power of Laravel's Blade
