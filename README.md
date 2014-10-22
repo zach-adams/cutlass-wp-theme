@@ -36,7 +36,6 @@ Special Thanks to Mikael Mattsson and the Team at Roots for making the Blade Wor
 ### Directory Structure
 
 ```
-.
 +-- dist/ - Distribution/Production files, Gulp takes care of this folder
 +-- inc/ - Various helpful functions and Blade code. All included in function.php
 +-- lang/ - Language code
