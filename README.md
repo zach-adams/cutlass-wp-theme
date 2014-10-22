@@ -11,7 +11,7 @@ Special Thanks to [Mikael Mattsson](https://github.com/MikaelMattsson) and the T
 
 ## Features
 
-* [Laravel's Blade](http://laravel.com/docs/4.2/templates) templating engine for even quicker Wordpress theme development
+* [Laravel's Blade](http://laravel3.veliovgroup.com/docs/views/templating) templating engine for even quicker Wordpress theme development
 * [Gulp](http://gulpjs.com/) for SASS compiling, file concatination, image minifying, javascript uglifying, and livereload
 * [Bower](http://bower.io/) for front-end package management
 * [Bootstrap](http://getbootstrap.com/)
