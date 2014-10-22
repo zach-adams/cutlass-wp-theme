@@ -35,6 +35,7 @@ Special Thanks to Mikael Mattsson and the Team at Roots for making the Blade Wor
 
 ### Directory Structure
 
+```
 .
 +-- _config.yml
 +-- _drafts
@@ -53,6 +54,7 @@ Special Thanks to Mikael Mattsson and the Team at Roots for making the Blade Wor
 |   +-- members.yml
 +-- _site
 +-- index.html
+```
 
 ### Install Gulp and Bower
 
