@@ -37,23 +37,24 @@ Special Thanks to Mikael Mattsson and the Team at Roots for making the Blade Wor
 
 ```
 .
-+-- _config.yml
-+-- _drafts
-|   +-- begin-with-the-crazy-ideas.textile
-|   +-- on-simplicity-in-technology.markdown
-+-- _includes
-|   +-- footer.html
-|   +-- header.html
-+-- _layouts
-|   +-- default.html
-|   +-- post.html
-+-- _posts
-|   +-- 2007-10-29-why-every-programmer-should-play-nethack.textile
-|   +-- 2009-04-26-barcamp-boston-4-roundup.textile
-+-- _data
-|   +-- members.yml
-+-- _site
-+-- index.html
++-- dist/ - Distribution/Production files, Gulp takes care of this folder
++-- inc/ - Various helpful functions and Blade code. All included in function.php
++-- lang/ - Language code
++-- src/ - Development Files
+|   +-- fonts/ - Font Files
+|   +-- img/ - Pre-optimized images (images optimized by gulp)
+|   +-- js/ - Javascript files
+|   +-- sass/ - Default SASS directory
+|	|	+-- base/ - Basic CSS styles for HTML, Typography, Colors, etc.
+|	|	+-- components/ - Wordpress Specific code, tables, buttons, etc.
+|	|	+-- helpers/ - SASS helpers, variables, mixins, paths
+|	|	+-- layout/ - Header, Footer, Navigation, Site, etc.
+|	|	+-- pages/ - Page specific code (home, contact, etc.)
+|   +-- vendor/ - Where your vendor code goes (Bower install's here)
++-- templates/ - Blade templating
+|   +-- content/ - Main content for the templates
+|   +-- includes/ - Various includes (Header, Footer, etc.)
+|   +-- layouts/ - Fundamental layouts of the templates
 ```
 
 ### Install Gulp and Bower
