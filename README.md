@@ -7,7 +7,7 @@ Cutlass is a Wordpress Starter Theme with the power of Laravel's Blade templatin
 
 Designed by [Zach Adams](http://zach-adams.com), uses code from [Roots Wordpress Starter Theme](https://github.com/roots/roots) and the [Blade Wordpress Plugin](https://github.com/MikaelMattsson/blade)
 
-Special Thanks to Mikael Mattsson and the Team at Roots for making the Blade Wordpress Plugin and the Roots Starter Theme respectively
+Special Thanks to [Mikael Mattsson](https://github.com/MikaelMattsson) and the Team at [Roots](http://roots.io) for making the Blade Wordpress Plugin and the Roots Starter Theme respectively
 
 ## Features
 
