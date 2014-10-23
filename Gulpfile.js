@@ -28,6 +28,10 @@ gulp.task('clean-styles', function(){
     return gulp.src('dist/css/*.css', {read: false})
       .pipe(clean());
 });
+gulp.task('clean-images', function(){
+    return gulp.src('dist/img/*', {read: false})
+      .pipe(clean());
+});
 
 // == STYLES TASKS == //
 
@@ -140,12 +144,13 @@ gulp.task('watch', function() {
 // == GULP TASKS == //
 
 // = Clean Task = //
-gulp.task('clean', ['clean-styles', 'clean-scripts']);
+gulp.task('clean', ['clean-styles', 'clean-scripts', 'clean-images']);
 // = Development Task = //
 gulp.task('dev', ['clean', 'vendor-dev', 'styles-dev', 'scripts-dev']);
 // = Build Task = //
 gulp.task('build', ['clean', 'vendor-build', 'styles-build', 'scripts-build']);
 // = Image Task = //
 gulp.task('image', ['imagemin']);
+gulp.task('image-clear', ['clean-images', 'imagemin']);
 // = Default Task = //
 gulp.task('default', ['dev', 'watch']);

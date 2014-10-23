@@ -62,14 +62,37 @@ Install Gulp with `npm install -g gulp` and Bower with `npm install -g bower`
 
 ### Gulp Tasks
 
-* `gulp dev` - Compiles SASS (without minification), concatinates development vendor CSS, copies main.js, minifies images.
-* `gulp build` - Compiles SASS (with minifcation), concatinates build vendor CSS, copies main.js, minifies images.
+* `gulp dev` - Compiles SASS (without minification), concatinates CSS included with Bower (read in Bower section), copies main.js
+* `gulp build` - Compiles SASS (with minifcation), concatinates and minifies CSS included with Bower (read in Bower section), copies main.js
 * `gulp watch` - Watches src/ and dist/ folders for changes (as well as all PHP and Blade files) and triggers livereload when it detects one
+* `gulp image` - Minifies images in src/img/ to dist/img/
+* `gulp image-clear` - Clears all images out of dist/img/ and re-minifies all of them
 * `gulp` - Runs `gulp dev` then `gulp watch`
 
 ### Bower
 
-Read more about bower [here](http://bower.io/). Bower installs to the src/vendor directory and you can add your dependencies into the css using the array's at the top of the Gulpfile.js
+Read more about bower [here](http://bower.io/). Bower installs to the src/vendor directory. 
+
+#### How your dependencies are added to vendor.css/vendor.js
+
+Gulp has a plugin called main-bower-files that can read the main files in each bower install, determining which one you're looking for from that. Most of it should happen automatically as you install Bower packages, however there may be times where you don't want packages included in the vendor.css or vendor.js or you wish to alter the files that are included by default. Here's how to do that. 
+
+1. Open your bower.json
+2. Add the "overrides" section like so:
+
+```
+{
+  "overrides": {
+    "BOWER-PACKAGE-NAME-GOES-HERE": {
+    	"main": "**/*.js",
+      	ignore": true
+    }
+  }
+}
+```
+3. Put in the name of the Bower Package
+4. **main** is the name of the Javascript files that are passed to Gulp to be minified, you can edit which one Bower chooses by default
+5. **ignore**, if set to true, will set the package to be ignored by Gulp when it looks
 
 ## What's Blade?
 
