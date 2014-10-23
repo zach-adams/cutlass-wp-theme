@@ -94,6 +94,10 @@ Gulp has a plugin called main-bower-files that can read the main files in each b
 4. **main** is the name of the Javascript files that are passed to Gulp to be minified, you can edit which one Bower chooses by default
 5. **ignore**, if set to true, will set the package to be ignored by Gulp when it looks
 
+## Bootstrap Navigation
+
+This theme comes with the [Bootstrap Nav Walker](https://github.com/twittem/wp-bootstrap-navwalker) developed by [twittem](https://github.com/twittem/). Reference the [Github](https://github.com/twittem/wp-bootstrap-navwalker) page on how to make changes.
+
 ## What's Blade?
 
 To quote Laravel's website: 
