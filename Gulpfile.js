@@ -1,40 +1,33 @@
-// == DEVELOPMENT AND BUILD CSS AND JS == //
-
-var devvendorcss = [
-  "src/vendor/bootstrap/dist/css/bootstrap.css",
-  "src/vendor/font-awesome/css/font-awesome.css"
-  //"src/vendor/yourcssfile/main.css" - Example on how to add more Development CSS files
-];
-var devvendorjs = [
-  "src/vendor/jquery/dist/jquery.js",
-  "src/vendor/bootstrap/dist/js/bootstrap.js"
-  //"src/vendor/yourjsfile/main.js" - Example on how to add more Development JS files
-];
-var buildvendorcss = [
-  "src/vendor/bootstrap/dist/css/bootstrap.min.css",
-  "src/vendor/font-awesome/css/font-awesome.min.css"
-  //"src/vendor/yourcssfile/main.css" - Example on how to add more Build CSS files
-];
-var buildvendorjs = [
-  "src/vendor/jquery/dist/jquery.min.js",
-  "src/vendor/bootstrap/dist/js/bootstrap.min.js"
-  //"src/vendor/yourjsfile/main.js" - Example on how to add more Build JS files
-];
-
-
 // == Gulp Require Modules == //
-var gulp =          require('gulp'),
-    sass =          require('gulp-ruby-sass'),
-    autoprefixer =  require('gulp-autoprefixer'),
-    cssmin =        require('gulp-cssmin'),
-    rename =        require('gulp-rename'),
-    concat =        require('gulp-concat'),
-    uglify =        require('gulp-uglify'),
-    livereload =    require('gulp-livereload'),
-    plumber =       require('gulp-plumber'),
-    imagemin =      require('gulp-imagemin'),
-    pngcrush =      require('imagemin-pngcrush');
+var gulp =            require('gulp'),
+    sass =            require('gulp-ruby-sass'),
+    autoprefixer =    require('gulp-autoprefixer'),
+    cssmin =          require('gulp-cssmin'),
+    rename =          require('gulp-rename'),
+    concat =          require('gulp-concat'),
+    uglify =          require('gulp-uglify'),
+    livereload =      require('gulp-livereload'),
+    plumber =         require('gulp-plumber'),
+    imagemin =        require('gulp-imagemin'),
+    pngcrush =        require('imagemin-pngcrush'),
+    mainBowerFiles =  require('main-bower-files'),
+    filter =          require('gulp-filter'),
+    clean =           require('gulp-clean');
 
+// == Clean Tasks == //
+
+gulp.task('clean-tmp', function(){
+    return gulp.src('dist/tmp/', {read: false})
+      .pipe(clean());
+});
+gulp.task('clean-scripts', function(){
+    return gulp.src('dist/js/*.js', {read: false})
+      .pipe(clean());
+});
+gulp.task('clean-styles', function(){
+    return gulp.src('dist/css/*.css', {read: false})
+      .pipe(clean());
+});
 
 // == STYLES TASKS == //
 
@@ -48,7 +41,7 @@ gulp.task('styles-dev', function() {
 });
 // = Compiles SASS, autoprefixes then minifies the final version = //
 gulp.task('styles-build', function() {
-  gulp.src('src/sass/*.scss')
+  return gulp.src('src/sass/*.scss')
     .pipe(plumber())
     .pipe(sass({ style: 'expanded' }))
     .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
@@ -60,16 +53,18 @@ gulp.task('styles-build', function() {
 
 // == SCRIPTS TASKS == //
 
-// = Only copies over the main.js file = //
+// = Only copies over the javascript files and concatinates them = //
 gulp.task('scripts-dev',function(){
-  gulp.src('src/js/main.js')
+  return gulp.src('src/js/*.js')
     .pipe(plumber())
+    .pipe(concat('main.js'))
     .pipe(gulp.dest('dist/js/'));
 });
-// = Uglifies main.js before copying it over = //
+// = Uglifies the javascript files then concatinates them = //
 gulp.task('scripts-build', function() {
-  gulp.src('src/js/main.js')
+  return gulp.src('src/js/**/*.js')
     .pipe(plumber())
+    .pipe(concat('main.js'))
     .pipe(uglify())
     .pipe(gulp.dest('dist/js/'));
 });
@@ -77,27 +72,37 @@ gulp.task('scripts-build', function() {
 
 // == VENDOR TASKS == // 
 
-// = Copies and concatinates the development vendor CSS and JS specified at the top = //
+// = Copies and concatinates the development vendor CSS and JS specified in Bower (Read the Docs) = //
 gulp.task('vendor-dev', function(){
-  gulp.src(devvendorcss)
+  gulp.src(mainBowerFiles())
     .pipe(plumber())
-    .pipe(concat({ path: 'vendor.css'}))
-    .pipe(gulp.dest('dist/css/'));
-  gulp.src(devvendorjs)
-    .pipe(plumber())
-    .pipe(concat({ path: 'vendor.js'}))
+    .pipe(filter('*.js'))
+    .pipe(gulp.dest('dist/tmp/'))
+    .pipe(concat('vendor.js'))
     .pipe(gulp.dest('dist/js/'));
+  gulp.src(mainBowerFiles())
+    .pipe(plumber())
+    .pipe(filter('*.css'))
+    .pipe(gulp.dest('dist/tmp/'))
+    .pipe(concat('vendor.css'))
+    .pipe(gulp.dest('dist/css/'));
 });
-// = Copies and concatinates the build vendor CSS and JS specified at the top = //
-gulp.task('vendor-build', function(){
-  gulp.src(buildvendorcss)
+// = Same thing as vendor-dev except we'll uglify the Javascript and cssmin the CSS = //
+gulp.task('vendor-build', function() {
+  gulp.src(mainBowerFiles())
     .pipe(plumber())
-    .pipe(concat({ path: 'vendor.css'}))
-    .pipe(gulp.dest('dist/css/'));
-  gulp.src(buildvendorjs)
-    .pipe(plumber())
-    .pipe(concat({ path: 'vendor.js'}))
+    .pipe(filter('*.js'))
+    .pipe(gulp.dest('dist/tmp/'))
+    .pipe(uglify())
+    .pipe(concat('vendor.js'))
     .pipe(gulp.dest('dist/js/'));
+  gulp.src(mainBowerFiles())
+    .pipe(plumber())
+    .pipe(filter('*.css'))
+    .pipe(gulp.dest('dist/tmp/'))
+    .pipe(cssmin())
+    .pipe(concat('vendor.css'))
+    .pipe(gulp.dest('dist/css/'));
 });
 
 
@@ -134,9 +139,13 @@ gulp.task('watch', function() {
 
 // == GULP TASKS == //
 
+// = Clean Task = //
+gulp.task('clean', ['clean-styles', 'clean-scripts']);
 // = Development Task = //
-gulp.task('dev', ['styles-dev', 'scripts-dev', 'vendor-dev', 'imagemin']);
+gulp.task('dev', ['clean', 'vendor-dev', 'styles-dev', 'scripts-dev']);
 // = Build Task = //
-gulp.task('build', ['styles-build', 'scripts-build', 'vendor-build', 'imagemin'])
+gulp.task('build', ['clean', 'vendor-build', 'styles-build', 'scripts-build']);
+// = Image Task = //
+gulp.task('image', ['imagemin']);
 // = Default Task = //
 gulp.task('default', ['dev', 'watch']);
