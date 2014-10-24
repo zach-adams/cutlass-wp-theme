@@ -144,7 +144,7 @@ gulp.task('watch', function() {
 // == GULP TASKS == //
 
 // = Clean Task = //
-gulp.task('clean', ['clean-styles', 'clean-scripts', 'clean-images']);
+gulp.task('clean', ['clean-styles', 'clean-scripts']);
 // = Development Task = //
 gulp.task('dev', ['clean', 'vendor-dev', 'styles-dev', 'scripts-dev']);
 // = Build Task = //
