@@ -5,6 +5,8 @@
 
 Cutlass is a Wordpress Starter Theme with the power of Laravel's Blade templating engine included, allowing you to develop Wordpress sites more quickly then you ever have before. It includes HTML5 syntax, Bootstrap and Font Awesome by default.
 
+Like Twig better? Try [Sprig!](https://github.com/zach-adams/sprig)
+
 Designed by [Zach Adams](http://zach-adams.com), Cutlass is built off of [Roots Wordpress Starter Theme](https://github.com/roots/roots) and the [Blade Wordpress Plugin](https://github.com/MikaelMattsson/blade)
 
 Special Thanks to [Mikael Mattsson](https://github.com/MikaelMattsson) and the Team at [Roots](http://roots.io) for making the Blade Wordpress Plugin and the Roots Starter Theme respectively
