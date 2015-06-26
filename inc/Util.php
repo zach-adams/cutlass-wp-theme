@@ -267,7 +267,7 @@ if (!function_exists('elixir')) {
 		}
 
 		if (isset($manifest[$file])) {
-			return '/build/'.$manifest[$file];
+			return wp_make_link_relative(get_stylesheet_directory_uri() . '/public/build/' . $manifest[$file]);
 		}
 
 		throw new InvalidArgumentException("File {$file} not defined in asset manifest.");

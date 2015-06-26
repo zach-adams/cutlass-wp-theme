@@ -15,7 +15,7 @@ class CutlassSite {
 	 *
 	 * @var array
 	 */
-	private $bloginfo_values;
+	public $bloginfo_values;
 
 	/**
 	 * Initialize the class, set the arrays so we can quickly
@@ -25,6 +25,7 @@ class CutlassSite {
 
 		$this->bloginfo_values = array(
 			'name',
+			'description',
 			'wpurl',
 			'url',
 			'charset',
@@ -44,6 +45,8 @@ class CutlassSite {
 			'comments_atom_url',
 			'comments_rss2_url',
 		);
+
+		$this->bloginfo_values = array_flip($this->bloginfo_values);
 
 	}
 
@@ -72,7 +75,7 @@ class CutlassSite {
 		/**
 		 * If we already have the field as a property, load it
 		 */
-		if ( property_exists($this, $field ) )
+		if ( property_exists($this, $field ) && !empty($this->$field) )
 			return $this->$field;
 
 		/**
@@ -81,14 +84,19 @@ class CutlassSite {
 		 * proxy for get_option and we don't want that slowing down our
 		 * get call.
 		 */
-		if ( isset( $this->bloginfo_values[$field] ) )
-			return get_bloginfo( $field );
+		if ( isset( $this->bloginfo_values[$field] ) ) {
+			$this->$field = get_bloginfo( $field );
+		}
 
 		/**
 		 * Search WordPress options if it's not a bloginfo value and it's not
 		 * already a property.
 		 */
-		return get_option($field);
+		else {
+			$this->$field = get_option($field);
+		}
+
+		return $this->$field;
 	}
 
 }

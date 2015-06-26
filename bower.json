@@ -1,18 +1,7 @@
 {
-  "name": "cutlass",
-  "version": "1.0.0",
-  "homepage": "http://zach-adams.com",
-  "authors": [
-    "Zach Adams <zach.adams383@gmail.com>"
-  ],
-  "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "assets/vendor"
-  ],
-  "dependencies": {
-    "jquery": "1.11.1",
-    "bootstrap": "3.2.0"
-  }
+	"name": "cutlass",
+	"dependencies": {
+		"jquery": "~2.1.4",
+		"bootstrap-sass-official": "~3.3.4"
+	}
 }

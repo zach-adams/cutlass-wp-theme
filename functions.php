@@ -48,7 +48,7 @@ $views_directory = get_stylesheet_directory() . '/resources/views';
  * The directory in which you want to have Blade store it's cached/compiled files
  * @var string
  */
-$cache_directory = get_stylesheet_directory() . '/inc/cache';
+$cache_directory = get_stylesheet_directory() . '/storage/views';
 
 /**
  * END CONFIGURATION
