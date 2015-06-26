@@ -35,24 +35,21 @@ class Cutlass {
 
 	}
 
-	public function render($filename, $context = false) {
+	public function render($filename, $context = array()) {
+
 		$this->blade->view()->share([
 			'site'  =>  new CutlassSite(),
 		]);
 
-		$this->addDirectives();
+		if( !empty($context) )
+			$this->blade->view()->share($context);
+
+		if ( !empty($this->custom_directives) )
+			array_walk($this->custom_directives, array($this, 'addDirective'));
 
 		$output = $this->blade->view()->make($filename)->render();
 		echo $output;
 		return $output;
-	}
-
-	private function addDirectives() {
-
-		if ( empty($this->custom_directives) )
-			return;
-
-		array_walk($this->custom_directives, array($this, 'addDirective'));
 
 	}
 
