@@ -35,32 +35,76 @@ class Cutlass {
 
 	}
 
+	/**
+	 * render
+	 *
+	 * Makes and renders the view into a cached PHP file
+	 * then echos and returns it.
+	 *
+	 * @param string $filename
+	 * @param array $context
+	 *
+	 * @return mixed
+	 */
 	public function render($filename, $context = array()) {
 
+		/**
+		 * Add our default information to all views
+		 */
 		$this->blade->view()->share([
 			'site'  =>  new CutlassSite(),
 		]);
 
+		/**
+		 * Add extra content
+		 */
 		if( !empty($context) )
 			$this->blade->view()->share($context);
 
+		/**
+		 * Add custom directives to Blade
+		 */
 		if ( !empty($this->custom_directives) )
 			array_walk($this->custom_directives, array($this, 'addDirective'));
 
+		/**
+		 * Render the view
+		 */
 		$output = $this->blade->view()->make($filename)->render();
+
 		echo $output;
 		return $output;
 
 	}
 
+	/**
+	 * addDirective
+	 *
+	 * Adds the directive to our compiler
+	 *
+	 * @param string $directive
+	 * @param string $key
+	 */
 	private function addDirective( $directive, $key ) {
 
 		$this->blade->getCompiler()->directive($key, function($expression) use ($directive) {
+
+			/**
+			 * Replace expression string with directive variable
+			 */
 			return str_replace('{expression}', $expression, $directive);
+
 		});
 
 	}
 
+	/**
+	 * getBlade
+	 *
+	 * Returns instance of our Blade object
+	 *
+	 * @return Blade;
+	 */
 	public function getBlade() {
 
 		return $this->blade;

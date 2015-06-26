@@ -77,10 +77,7 @@ if (!function_exists('config_path')) {
 	 */
 	function config_path($path = '') {
 
-		if( !empty($path) )
-			$path = '/' . $path;
-
-		return get_home_path() . $path;
+		return get_template_directory() . '/config/' . $path;
 
 	}
 }
