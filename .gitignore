@@ -1,5 +1,5 @@
 node_modules/*
 .sass-cache/*
 src/vendor/*
-inc/blade/storage/views/
+inc/cache/
 .phpcomplete_extended/
