@@ -1,31 +1,67 @@
 <?php
 /**
- * Cutlass includes
+ * Cutlass functions
  *
- * The $cutlass_includes array determines the code library included in your theme.
- * Add or remove files to the array as needed. Supports child theme overrides.
- *
- * Please note that missing files will produce a fatal error.
+ * This is where the magic happens
  */
-$cutlass_includes = array(
-  'inc/blade.php',                  // Load Laravel's Blade Templating Engine
-  'inc/utils.php',                  // Utility functions
-  'inc/init.php',                   // Initial theme setup and constants
-  'inc/config.php',                 // Configuration
-  'inc/activation.php',             // Theme activation
-  'inc/titles.php',                 // Page titles
-  'inc/wp_bootstrap_navwalker.php', // Bootstrap Nav Walker (From https://github.com/twittem/wp-bootstrap-navwalker)
-  'inc/gallery.php',                // Custom [gallery] modifications
-  'inc/comments.php',               // Custom comments modifications
-  'inc/scripts.php',                // Scripts and stylesheets
-  'inc/extras.php'                  // Custom functions
+
+/**
+ * BEGIN CONFIGURATION
+ * -----------------------
+ */
+
+/**
+ * Global variables you want to have available in all Blade views
+ * @var array
+ */
+$global_view_data = array(
+	//'site_url'    =>  get_bloginfo('url),
 );
+$global_view_data = apply_filters('cutlass_global_view_data', $global_view_data);
 
-foreach ($cutlass_includes as $file) {
-  if (!$filepath = locate_template($file)) {
-    trigger_error(sprintf(__('Error locating %s for inclusion', 'cutlass'), $file), E_USER_ERROR);
-  }
+/**
+ * Custom Directives to add to Blade
+ *
+ * * OPTIONAL: Add {expression} where you want the value of the directive to go
+ * * e.g.   'wpquery' => '<?php $query = new WP_Query({expression}); ?>'
+ * *            so that when you use:
+ * *        @wpquery(['post_type' => 'page'])
+ * *            it turns into this:
+ * *        <?php $query = new WP_Query(['post_type' => 'page']); ?>
+ *
+ * @var array
+ */
+$custom_directives = array(
+	'wploop'    =>  '<?php $query = new WP_Query({expression}); if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); ?>',
+	'wpempty'   =>  '<?php endwhile; else : ?>',
+	'wpend'     =>  '<?php endif; wp_reset_postdata(); ?>',
+);
+$global_view_data = apply_filters('cutlass_custom_directives', $global_view_data);
 
-  require_once $filepath;
-}
-unset($file, $filepath);
+/**
+ * The directory in which you want to have your Blade template files
+ * @var string
+ */
+$views_directory = get_stylesheet_directory() . '/resources/views';
+
+/**
+ * The directory in which you want to have Blade store it's cached/compiled files
+ * @var string
+ */
+$cache_directory = get_stylesheet_directory() . '/inc/cache';
+
+/**
+ * END CONFIGURATION
+ * -----------------
+ */
+
+/**
+ * Require the autoloader so we can start up the Blade engine
+ */
+require __DIR__ . '/vendor/autoload.php';
+
+/**
+ * Initialize Cutlass
+ */
+global $cutlass;
+$cutlass = new Cutlass($views_directory, $cache_directory, $custom_directives);

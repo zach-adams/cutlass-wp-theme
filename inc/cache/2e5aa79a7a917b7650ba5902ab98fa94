@@ -1,0 +1,4 @@
+<p class="byline author vcard">
+	<time class="published" datetime="<?php echo e(get_the_time('c')); ?>"><?php echo e(get_the_date()); ?></time>
+	<?php echo e(__('By', 'cutlass')); ?> <a href="<?php echo e(get_author_posts_url(get_the_author_meta('ID'))); ?>" rel="author" class="fn"><?php echo e(get_the_author()); ?></a>
+</p>

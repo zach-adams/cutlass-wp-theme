@@ -1,7 +1,3 @@
-@layout( 'templates.layouts.normal' )
+<?php
 
-@section('page-content')
-
-	@include('templates.content.front-page')
-
-@endsection
+$cutlass->render('content.front-page');

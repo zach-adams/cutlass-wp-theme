@@ -1,7 +1,3 @@
-@layout('templates.layouts.normal')
+<?php
 
-@section('page-content')
-
-  @include('templates.content.index')
-  
-@endsection
+echo 'test';

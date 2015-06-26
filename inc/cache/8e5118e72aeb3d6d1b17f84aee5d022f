@@ -1,0 +1,10 @@
+<article <?php echo e(post_class()); ?>>
+  <header>
+    <h2 class="entry-title"><a href="<?php echo e(the_permalink()); ?>" title="<?php echo e(the_title()); ?>"><?php echo e(the_title()); ?></a></h2>
+    <?php echo $__env->make('includes.entry-meta', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+  </header>
+  <div class="entry-summary">
+    <?php echo e(the_excerpt()); ?>
+
+  </div>
+</article>
