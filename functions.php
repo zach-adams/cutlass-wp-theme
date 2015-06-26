@@ -32,7 +32,7 @@ $global_view_data = apply_filters('cutlass_global_view_data', $global_view_data)
  * @var array
  */
 $custom_directives = array(
-	'wploop'    =>  '<?php $query = new WP_Query({expression}); if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); ?>',
+	'wploop'    =>  '<?php $query = new WP_Query({expression}); if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); $post = get_post(); ?>',
 	'wpempty'   =>  '<?php endwhile; else : ?>',
 	'wpend'     =>  '<?php endif; wp_reset_postdata(); ?>',
 );
@@ -64,4 +64,5 @@ require __DIR__ . '/vendor/autoload.php';
  * Initialize Cutlass
  */
 global $cutlass;
+
 $cutlass = new Cutlass($views_directory, $cache_directory, $custom_directives);
