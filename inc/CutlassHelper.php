@@ -54,7 +54,7 @@ class CutlassHelper {
 		if( empty($query) ) {
 			global $wp_query;
 
-			if( property_exists($wp_query->posts) && !empty($wp_query->posts) )
+			if( property_exists($wp_query, 'posts') && !empty($wp_query->posts) )
 				$posts = $wp_query->posts;
 		} else {
 			$posts = get_posts($query);
