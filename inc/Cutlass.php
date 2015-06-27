@@ -53,6 +53,7 @@ class Cutlass {
 		 */
 		$this->blade->view()->share([
 			'site'  =>  new CutlassSite(),
+			'posts' =>  CutlassHelper::get_posts()
 		]);
 
 		/**
@@ -88,7 +89,6 @@ class Cutlass {
 	private function addDirective( $directive, $key ) {
 
 		$this->blade->getCompiler()->directive($key, function($expression) use ($directive) {
-
 			/**
 			 * Replace expression string with directive variable
 			 */
