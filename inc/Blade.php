@@ -12,6 +12,18 @@ use Illuminate\View\Compilers\BladeCompiler;
 use Illuminate\View\FileViewFinder;
 use Illuminate\View\Factory;
 
+/**
+ * Class Blade
+ *
+ * This class comes from the Laravel-Blade project created and maintained
+ * by PhiloNL:
+ * https://github.com/PhiloNL/Laravel-Blade
+ *
+ * Edited by Zach Adams on 6-26-2015.
+ *
+ * @package Philo\Blade
+ */
+
 class Blade {
 
 	/**
@@ -67,13 +79,13 @@ class Blade {
 
 	public function registerFilesystem()
 	{
-		$this->container->bindShared('files', function(){
+		$this->container->bind('files', function(){
 			return new Filesystem;
 		});
 	}
 	public function registerEvents()
 	{
-		$this->container->bindShared('events', function(){
+		$this->container->bind('events', function(){
 			return new Dispatcher;
 		});
 	}
@@ -86,7 +98,7 @@ class Blade {
 	{
 		$me = $this;
 
-		$this->container->bindShared('view.engine.resolver', function($app) use ($me)
+		$this->container->bind('view.engine.resolver', function($app) use ($me)
 		{
 			$resolver = new EngineResolver;
 
@@ -127,7 +139,7 @@ class Blade {
 		// The Compiler engine requires an instance of the CompilerInterface, which in
 		// this case will be the Blade compiler, so we'll first create the compiler
 		// instance to pass into the engine so it can compile the views properly.
-		$this->container->bindShared('blade.compiler', function($app) use ($me)
+		$this->container->bind('blade.compiler', function($app) use ($me)
 		{
 			$cache = $me->cachePath;
 
@@ -148,7 +160,7 @@ class Blade {
 	public function registerViewFinder()
 	{
 		$me = $this;
-		$this->container->bindShared('view.finder', function($app) use ($me)
+		$this->container->bind('view.finder', function($app) use ($me)
 		{
 			$paths = $me->viewPaths;
 
@@ -185,6 +197,15 @@ class Blade {
 		return $this->container['blade.compiler'];
 	}
 
+	/**
+	 * getContainer
+	 *
+	 * Returns the container instance
+	 *
+	 * This function was added by Zach Adams on 6-26-2015
+	 *
+	 * @return Illuminate\Container\Container
+	 */
 	public function getContainer()
 	{
 		return $this->container;
