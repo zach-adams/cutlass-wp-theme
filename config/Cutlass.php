@@ -33,7 +33,8 @@ $global_view_data = array(
  * @var array
  */
 $custom_directives = array(
-	'wploop'    =>  '<?php $query = new WP_Query({expression}); if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); $post = get_post(); ?>',
+	'wploop'    =>  '<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); $post = get_post(); ?>',
+	'wpquery'   =>  '<?php $query = new WP_Query({expression}); if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); $post = get_post(); ?>',
 	'wpempty'   =>  '<?php endwhile; else : ?>',
 	'wpend'     =>  '<?php endif; wp_reset_postdata(); ?>',
 );
@@ -59,11 +60,11 @@ $cache_directory = app_path() . '/storage/views';
  * Apply filters
  */
 $global_view_data = apply_filters('cutlass_global_view_data', $global_view_data);
-$global_view_data = apply_filters('cutlass_custom_directives', $global_view_data);
+$custom_directives = apply_filters('cutlass_custom_directives', $custom_directives);
 
 /**
  * Initialize Cutlass
  */
 
 global $cutlass;
-$cutlass = new Cutlass($views_directory, $cache_directory, $custom_directives);
+$cutlass = new Cutlass($views_directory, $cache_directory, $custom_directives, $global_view_data);

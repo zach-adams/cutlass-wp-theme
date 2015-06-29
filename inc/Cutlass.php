@@ -22,16 +22,23 @@ class Cutlass {
 	private $custom_directives;
 
 	/**
+	 * Global data we want passed to all views
+	 */
+	private $global_view_data;
+
+	/**
 	 * Initialize the Blade helper object
 	 *
 	 * @param $view_dir
 	 * @param $cache_dir
 	 * @param $custom_directives
+	 * @param $global_view_data
 	 */
-	public function __construct($view_dir, $cache_dir, $custom_directives = array()) {
+	public function __construct($view_dir, $cache_dir, $custom_directives = array(), $global_view_data = array()) {
 
 		$this->blade = new Blade($view_dir, $cache_dir);
 		$this->custom_directives = $custom_directives;
+		$this->global_view_data = $global_view_data;
 
 	}
 
@@ -56,17 +63,24 @@ class Cutlass {
 			'posts' =>  CutlassHelper::get_posts()
 		]);
 
-		/**
-		 * Add extra content
-		 */
-		if( !empty($context) )
-			$this->blade->view()->share($context);
 
 		/**
 		 * Add custom directives to Blade
 		 */
 		if ( !empty($this->custom_directives) )
 			array_walk($this->custom_directives, array($this, 'addDirective'));
+
+		/**
+		 * Add global view data
+		 */
+		if( !empty($this->global_view_data) )
+			$this->blade->view()->share($this->global_view_data);
+
+		/**
+		 * Add view-specific context
+		 */
+		if( !empty($context) )
+			$this->blade->view()->share($context);
 
 		/**
 		 * Render the view
