@@ -9,15 +9,14 @@
  * Global variables you want to have available in all Blade views.
  *
  * * Note: This is a key value array, so your data goes from:
- *              'site_url'  =>  get_bloginfo('url),
+ *              'site_url'  =>  get_bloginfo('url'),
  *                          to:
- *              @if($site_url == "http://url.com")
- *                  {{ $site_url }}
- *              @endif
+ *              {{ $site_url }}
  * @var array
  */
+
 $global_view_data = array(
-	//'site_url'    =>  get_bloginfo('url),
+	'posts'     =>  CutlassHelper::get_posts(),
 );
 
 /**

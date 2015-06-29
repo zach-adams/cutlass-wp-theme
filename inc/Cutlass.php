@@ -59,8 +59,7 @@ class Cutlass {
 		 * Add our default information to all views
 		 */
 		$this->blade->view()->share([
-			'site'  =>  new CutlassSite(),
-			'posts' =>  CutlassHelper::get_posts()
+			'site'  =>  new CutlassSite()
 		]);
 
 
