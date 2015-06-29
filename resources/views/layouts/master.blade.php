@@ -1,18 +1,18 @@
-@include('includes.head')
+@include('includes.html-head')
 
 <body {{ body_class() }} >
   
-  @include('includes.header')
+	@include('includes.header')
 
-  <div class="wrap" role="document">
-    <div class="content">
-      @yield('content')
-    </div><!-- /.content -->
-  </div><!-- /.wrap -->
+	<div class="wrap" role="document">
+		<div class="content">
+			@yield('content')
+		</div><!-- /.content -->
+	</div><!-- /.wrap -->
 
-  @include('includes.footer')
+	@include('includes.footer')
 
-  {{ wp_footer() }}
+	{{ wp_footer() }}
 
 </body>
 </html>

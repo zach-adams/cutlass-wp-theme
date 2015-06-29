@@ -12,7 +12,7 @@
 
     <nav class="collapse navbar-collapse" role="navigation">
         @if(has_nav_menu('primary_navigation'))
-          {{ wp_nav_menu(array('theme_location' => 'primary_navigation', 'menu_class' => 'nav navbar-nav', 'walker' => new wp_bootstrap_navwalker(), 'container_class' => 'collapse navbar-collapse',)) }}
+          {{ wp_nav_menu(array('theme_location' => 'primary_navigation', 'menu_class' => 'nav navbar-nav', 'container_class' => 'collapse navbar-collapse',)) }}
         @endif
     </nav>
   </div>
