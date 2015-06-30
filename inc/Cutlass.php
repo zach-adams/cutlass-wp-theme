@@ -82,9 +82,9 @@ class Cutlass {
 			$this->blade->view()->share($context);
 
 		/**
-		 * Render the view
+		 * Render the view (if it exists)
 		 */
-		if( is_string($filenames) ) {
+		if( is_string($filenames) && $this->blade->view()->exists($filenames) ) {
 			$output = $this->blade->view()->make($filenames)->render();
 
 			echo $output;
