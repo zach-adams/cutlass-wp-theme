@@ -1,10 +1,19 @@
 @extends('layouts.master')
 
 @section('content')
-	<h1>{{ $title }}</h1>
+	<h1>{!! $title !!}</h1>
 	@wploop
-	<h4><a href="{{ get_permalink() }}">{{ $post->post_title }}</a></h4>
+	<article {{ post_class() }}>
+		<header>
+			<a href="{{ get_permalink() }}"><h2 class="entry-title">{{ get_the_title() }}</h2></a>
+		</header>
+		@include('includes.entry-meta')
+		<hr/>
+		<div class="entry-content">
+			{{ get_the_excerpt() }}
+		</div>
 	@wpempty
-	<h5>Sorry, No Posts</h5>
+		<h4>No content</h4>
+	</article>
 	@wpend
 @endsection
