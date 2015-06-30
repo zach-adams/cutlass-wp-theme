@@ -76,3 +76,37 @@ function cutlass_scripts() {
 
 }
 add_action( 'wp_enqueue_scripts', 'cutlass_scripts' );
+
+/**
+ * Adds helpful classes to our body tag
+ * From Roots Sage theme: https://github.com/roots/sage/blob/master/lib/extras.php
+ */
+function cutlass_body_class($classes) {
+	// Add page slug if it doesn't exist
+	if (is_single() || is_page() && !is_front_page()) {
+		if (!in_array(basename(get_permalink()), $classes)) {
+			$classes[] = basename(get_permalink());
+		}
+	}
+	return $classes;
+}
+add_filter('body_class', 'cutlass_body_class');
+
+/**
+ * Remove Emoji support
+ */
+remove_action('wp_head', 'print_emoji_detection_script', 7);
+remove_action('admin_print_scripts', 'print_emoji_detection_script');
+remove_action('wp_print_styles', 'print_emoji_styles');
+remove_action('admin_print_styles', 'print_emoji_styles');
+
+/**
+ * Remove Dashboard Widgets
+ */
+function cutlass_remove_dashboard_widgets() {
+	remove_meta_box('dashboard_incoming_links', 'dashboard', 'normal');
+	remove_meta_box('dashboard_quick_press', 'dashboard', 'normal');
+	remove_meta_box('dashboard_primary', 'dashboard', 'normal');
+	remove_meta_box('dashboard_secondary', 'dashboard', 'normal');
+}
+add_action('admin_init', 'cutlass_remove_dashboard_widgets');
