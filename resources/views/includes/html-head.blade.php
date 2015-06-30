@@ -15,3 +15,4 @@
 	<title>{{ wp_title() }}</title>
 
 	{{ wp_head() }}
+</head>
