@@ -1,7 +1,8 @@
-@layout( 'templates.layouts.normal' )
+<?php
+global $post;
 
-@section('page-content')
+$context = array(
+	'title'     =>  CutlassHelper::get_title(),
+);
 
-	@include('templates.content.page')
-
-@endsection
+$cutlass->render(['pages.'. $post->post_name, 'pages.page'], $context);

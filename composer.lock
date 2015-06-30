@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "694d7206b7856a498633ae302313f50a",
+    "hash": "ec73230afc110d7d8970761f571aaf6d",
     "packages": [
         {
             "name": "danielstjules/stringy",
@@ -409,30 +409,27 @@
             "time": "2015-06-15 07:46:41"
         },
         {
-            "name": "nesbot/carbon",
-            "version": "1.20.0",
+            "name": "philo/laravel-blade",
+            "version": "v3.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "bfd3eaba109c9a2405c92174c8e17f20c2b9caf3"
+                "url": "https://github.com/PhiloNL/Laravel-Blade.git",
+                "reference": "728be672354bdd377da56394e699112ddfa0628b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/bfd3eaba109c9a2405c92174c8e17f20c2b9caf3",
-                "reference": "bfd3eaba109c9a2405c92174c8e17f20c2b9caf3",
+                "url": "https://api.github.com/repos/PhiloNL/Laravel-Blade/zipball/728be672354bdd377da56394e699112ddfa0628b",
+                "reference": "728be672354bdd377da56394e699112ddfa0628b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0",
-                "symfony/translation": "~2.6|~3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0"
+                "illuminate/events": "~5",
+                "illuminate/view": "~5"
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "Carbon": "src"
+                "psr-4": {
+                    "Philo\\Blade\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -441,19 +438,16 @@
             ],
             "authors": [
                 {
-                    "name": "Brian Nesbitt",
-                    "email": "brian@nesbot.com",
-                    "homepage": "http://nesbot.com"
+                    "name": "Philo Hermans",
+                    "email": "me@philohermans.com"
                 }
             ],
-            "description": "A simple API extension for DateTime.",
-            "homepage": "http://carbon.nesbot.com",
+            "description": "Use the simple and yet powerful Laravel Blade templating engine as a standalone component.",
             "keywords": [
-                "date",
-                "datetime",
-                "time"
+                "blade",
+                "laravel"
             ],
-            "time": "2015-06-25 04:19:39"
+            "time": "2015-04-18 21:03:31"
         },
         {
             "name": "symfony/finder",
@@ -503,67 +497,6 @@
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
             "time": "2015-06-04 20:11:48"
-        },
-        {
-            "name": "symfony/translation",
-            "version": "v2.7.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/Translation.git",
-                "reference": "8349a2b0d11bd0311df9e8914408080912983a0b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Translation/zipball/8349a2b0d11bd0311df9e8914408080912983a0b",
-                "reference": "8349a2b0d11bd0311df9e8914408080912983a0b",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.9"
-            },
-            "conflict": {
-                "symfony/config": "<2.7"
-            },
-            "require-dev": {
-                "psr/log": "~1.0",
-                "symfony/config": "~2.7",
-                "symfony/intl": "~2.3",
-                "symfony/phpunit-bridge": "~2.7",
-                "symfony/yaml": "~2.2"
-            },
-            "suggest": {
-                "psr/log": "To use logging capability in translator",
-                "symfony/config": "",
-                "symfony/yaml": ""
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.7-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Translation\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Translation Component",
-            "homepage": "https://symfony.com",
-            "time": "2015-06-11 17:26:34"
         }
     ],
     "packages-dev": [],

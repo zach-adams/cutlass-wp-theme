@@ -48,12 +48,12 @@ class Cutlass {
 	 * Makes and renders the view into a cached PHP file
 	 * then echos and returns it.
 	 *
-	 * @param string $filename
+	 * @param array $filenames
 	 * @param array $context
 	 *
 	 * @return mixed
 	 */
-	public function render($filename, $context = array()) {
+	public function render($filenames, $context = array()) {
 
 		/**
 		 * Add our default information to all views
@@ -84,11 +84,23 @@ class Cutlass {
 		/**
 		 * Render the view
 		 */
-		$output = $this->blade->view()->make($filename)->render();
+		if( is_string($filenames) ) {
+			$output = $this->blade->view()->make($filenames)->render();
 
-		echo $output;
-		return $output;
+			echo $output;
+			return $output;
+		}
 
+		foreach($filenames as $filename) {
+			if($this->blade->view()->exists($filename)) {
+				$output = $this->blade->view()->make($filename)->render();
+
+				echo $output;
+				return $output;
+			}
+		}
+
+		throw new Exception("No view found");
 	}
 
 	/**

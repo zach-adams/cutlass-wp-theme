@@ -1,5 +1,8 @@
 @import "../bower/bootstrap-sass-official/assets/stylesheets/bootstrap";
 
+body {
+	word-wrap:break-word;
+}
 body > .container {
 	padding-top:70px;
 }

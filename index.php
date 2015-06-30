@@ -1,7 +1,7 @@
-@layout('templates.layouts.normal')
+<?php
 
-@section('page-content')
+$context = array(
+	'title'     =>  CutlassHelper::get_title(),
+);
 
-  @include('templates.content.index')
-  
-@endsection
+$cutlass->render('pages.index', $context);

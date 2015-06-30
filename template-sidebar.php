@@ -1,8 +1,12 @@
-@layout( 'templates.layouts.sidebar' )
-{{-- Template Name: Sidebar
+<?php
+/*
+ * Template Name: Sidebar
+ */
+global $post;
 
-@section('page-content')
+$context = array(
+	'title'     =>  CutlassHelper::get_title(),
+	'sidebar'   =>  true,
+);
 
-	@include('templates.content.page')
-
-@endsection
+$cutlass->render(['pages.page'], $context);

@@ -10,9 +10,9 @@
 		}
 	],
 	"require": {
-		"illuminate/view": "~5",
-		"illuminate/events": "~5",
-		"nesbot/carbon": "^1.20"
+		"philo/laravel-blade": "3.*",
+		"illuminate/view": "^5.1",
+		"illuminate/events": "^5.1"
 	},
 	"autoload": {
 		"files": ["inc/Util.php"],
