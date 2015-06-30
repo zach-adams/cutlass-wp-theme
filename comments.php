@@ -6,7 +6,7 @@
 
 <section id="comments" class="comments">
 	<?php if (have_comments()) : ?>
-		<h2><?php echo get_comments_number(); ?> <span><?php echo get_the_title(); ?></span></h2>
+		<h2><?php echo get_comments_number(); ?> <span><?php echo (get_comments_number() > 1 ? 'Comments' : 'Comment'); ?></span></h2>
 
 		<ol class="comment-list">
 			<?php wp_list_comments( array(
