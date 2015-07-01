@@ -13,7 +13,7 @@ if (!function_exists('app')) {
 	{
 		global $cutlass;
 
-		$container = $cutlass->getBlade()->getContainer();
+		$container = $cutlass->getBlade()->view()->getContainer();
 
 		if (is_null($make)) {
 			return $container;
