@@ -27,18 +27,26 @@ class Cutlass {
 	private $global_view_data;
 
 	/**
+	 * Misc settings applied in config/Cutlass.php
+	 */
+	public $misc_settings;
+
+
+	/**
 	 * Initialize the Blade helper object
 	 *
 	 * @param $view_dir
 	 * @param $cache_dir
 	 * @param $custom_directives
 	 * @param $global_view_data
+	 * @param $misc_settings
 	 */
-	public function __construct($view_dir, $cache_dir, $custom_directives = array(), $global_view_data = array()) {
+	public function __construct($view_dir, $cache_dir, $custom_directives = array(), $global_view_data = array(), $misc_settings = array()) {
 
 		$this->blade = new Blade($view_dir, $cache_dir);
 		$this->custom_directives = $custom_directives;
 		$this->global_view_data = $global_view_data;
+		$this->misc_settings = $misc_settings;
 
 	}
 

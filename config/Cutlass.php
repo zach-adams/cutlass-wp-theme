@@ -32,10 +32,19 @@ $global_view_data = array(
  * @var array
  */
 $custom_directives = array(
-	'wploop'    =>  '<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); $post = get_post(); ?>',
+	'wploop'    =>  '<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); $post = CutlassHelper::get_post(); ?>',
 	'wploopempty'   =>  '<?php endwhile; else : ?>',
 	'wploopend'     =>  '<?php endif; wp_reset_postdata(); ?>',
 	'wploopquery'   =>  '<?php $query = new WP_Query({expression}); if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); $post = get_post(); ?>',
+);
+
+$misc_settings = array(
+	/**
+	 * Controls WP_Post returned by CutlassHelper::get_posts. If true
+	 * the properties beginning with "post_" will have the "post_"
+	 * prefix removed.
+	 */
+	'simple_post_properties'    =>  true,
 );
 
 /**
@@ -66,4 +75,4 @@ $custom_directives = apply_filters('cutlass_custom_directives', $custom_directiv
  */
 
 global $cutlass;
-$cutlass = new Cutlass($views_directory, $cache_directory, $custom_directives, $global_view_data);
+$cutlass = new Cutlass($views_directory, $cache_directory, $custom_directives, $global_view_data, $misc_settings);
