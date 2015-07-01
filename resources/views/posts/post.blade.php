@@ -13,9 +13,9 @@
 		<div class="entry-content">
 			{{ the_content() }}
 		</div>
-	@wpempty
+	@wploopempty
 		<h4>No content</h4>
-	@wpend
+	@wploopend
 		<footer>
 			{!! wp_link_pages([
 				'echo' => '0',

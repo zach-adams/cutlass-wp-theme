@@ -12,8 +12,8 @@
 		<div class="entry-content">
 			{{ get_the_excerpt() }}
 		</div>
-	@wpempty
+	@wploopempty
 		<h4>No content</h4>
 	</article>
-	@wpend
+	@wploopend
 @endsection

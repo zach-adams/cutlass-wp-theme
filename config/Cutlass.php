@@ -33,9 +33,9 @@ $global_view_data = array(
  */
 $custom_directives = array(
 	'wploop'    =>  '<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); $post = get_post(); ?>',
-	'wpquery'   =>  '<?php $query = new WP_Query({expression}); if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); $post = get_post(); ?>',
-	'wpempty'   =>  '<?php endwhile; else : ?>',
-	'wpend'     =>  '<?php endif; wp_reset_postdata(); ?>',
+	'wploopempty'   =>  '<?php endwhile; else : ?>',
+	'wploopend'     =>  '<?php endif; wp_reset_postdata(); ?>',
+	'wploopquery'   =>  '<?php $query = new WP_Query({expression}); if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); $post = get_post(); ?>',
 );
 
 /**
