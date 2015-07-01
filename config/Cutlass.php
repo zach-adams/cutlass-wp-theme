@@ -40,11 +40,18 @@ $custom_directives = array(
 
 $misc_settings = array(
 	/**
-	 * Controls WP_Post returned by CutlassHelper::get_posts. If true
+	 * Controls WP_Post returned by CutlassHelper::get_post. If true
 	 * the properties beginning with "post_" will have the "post_"
-	 * prefix removed.
+	 * prefix removed. Set to false if memory or performance is an
+	 * issue.
 	 */
-	'simple_post_properties'    =>  true,
+	'post_simple_properties'    =>  true,
+	/**
+	 * Controls WP_Post returned by CutlassHelper::get_post. If true
+	 * there will be extra helpful properties available to the WP_Post
+	 * object returned. Set to false if performance is an issue.
+	 */
+	'post_extra_properties'     =>  true,
 );
 
 /**
