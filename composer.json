@@ -12,7 +12,8 @@
 	"require": {
 		"philo/laravel-blade": "3.*",
 		"illuminate/view": "^5.1",
-		"illuminate/events": "^5.1"
+		"illuminate/events": "^5.1",
+		"nesbot/carbon": "~1.19"
 	},
 	"autoload": {
 		"files": ["inc/Util.php"],
