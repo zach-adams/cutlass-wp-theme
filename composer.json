@@ -18,5 +18,8 @@
 	"autoload": {
 		"files": ["inc/Util.php"],
 		"classmap": ["inc/"]
+	},
+	"require-dev": {
+		"lavoiesl/php-benchmark": "^1.4"
 	}
 }
