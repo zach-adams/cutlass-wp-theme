@@ -16,7 +16,7 @@
  */
 
 $global_view_data = array(
-	'posts'     =>  CutlassHelper::get_posts(),
+
 );
 
 /**
@@ -32,10 +32,12 @@ $global_view_data = array(
  * @var array
  */
 $custom_directives = array(
-	'wploop'    =>  '<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); $post = CutlassHelper::get_post(); ?>',
+	'wpposts'       =>  '<?php foreach($posts as $post) : setup_postdata($post); ?>',
+	'wpendposts'    =>  '<?php endforeach; ?>',
+	'wploop'        =>  '<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); $post = CutlassHelper::get_post(get_the_ID()); ?>',
 	'wploopempty'   =>  '<?php endwhile; else : ?>',
 	'wploopend'     =>  '<?php endif; wp_reset_postdata(); ?>',
-	'wploopquery'   =>  '<?php $query = new WP_Query({expression}); if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); $post = get_post(); ?>',
+	'wploopquery'   =>  '<?php $query = new WP_Query({expression}); if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); $post = CutlassHelper::get_post(get_the_ID()); ?>',
 );
 
 $misc_settings = array(

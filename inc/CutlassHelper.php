@@ -1,5 +1,5 @@
 <?php
-use Carbon\Carbon;
+use Lavoiesl\PhpBenchmark\Benchmark;
 /**
  * The helper class
  *
@@ -45,21 +45,40 @@ class CutlassHelper {
 	 * otherwise runs get_posts on passed query
 	 *
 	 * @param array $query
+	 *
 	 * @return array
 	 */
 	public static function get_posts($query = array()) {
+		global $wp_query;
 
+		/**
+		 * Set return var
+		 */
 		$posts = array();
 
-		if( empty($query) ) {
-			global $wp_query;
-
-			if( property_exists($wp_query, 'posts') && !empty($wp_query->posts) )
-				$posts = $wp_query->posts;
-		} else {
+		/**
+		 * If the query's empty and the global WP_Query has posts grab them
+		 * else just grab the posts the normal way
+		 */
+		if( empty($query) && property_exists($wp_query, 'posts'))
+			$posts = $wp_query->posts;
+		else
 			$posts = get_posts($query);
-		}
 
+		/**
+		 * Return empty if either of those fail
+		 */
+		if( empty($posts) )
+			return array();
+
+		/**
+		 * Convert WP_Posts to CutlassPosts
+		 */
+		CutlassHelper::convert_posts($posts);
+
+		/**
+		 * Return array of CutlassPosts
+		 */
 		return $posts;
 
 	}
@@ -67,82 +86,58 @@ class CutlassHelper {
 	/**
 	 * get_post
 	 *
-	 * Gets the post. A little more fancy than WP's default get_post.
+	 * Gets the post and converts it into a CutlassPost
+	 * which grants us some nifty methods and properties
 	 *
-	 * @return array
+	 * @param int $postid
+	 *
+	 * @return array|null
 	 */
-	public static function get_post( $post = null ) {
-		global $cutlass;
+	public static function get_post( $postid ) {
 
 		/**
-		 * Set our return var
+		 * Grab post using postid
 		 */
-		$_post = null;
+		$post = get_post($postid);
 
 		/**
-		 * If there is no post to get or the post is not a WP_Post just
-		 * run get_post like normal
+		 * If it's a correct WP_Post convert it to a
+		 * CutlassPost
 		 */
-		if ( empty( $post ) ) {
-			$_post = get_post();
-		} elseif( !is_a($post, 'WP_Post') ) {
-			$_post = get_post($post);
-
-			/**
-			 * If it's still empty return null
-			 */
-			if( empty($_post) )
-				return null;
-		}
+		if ( is_a($post, 'WP_Post'))
+			return new CutlassPost($post);
 
 		/**
-		 * Set post properties that begin with post_ without the post_
+		 * Return null if all else fails
 		 */
-		if( $cutlass->misc_settings['post_simple_properties'] === true) {
-			$props = get_object_vars($_post);
-			array_walk($props, function(&$value, $key) use (&$_post) {
-				if(substr($key, 0, 5) === "post_") {
-					$new = substr($key, 5, strlen($key));
-					$_post->$new = $value;
-				}
-			} );
-		}
+		return null;
 
-		/**
-		 * Set human readable date with Carbon
-		 */
-		if( $cutlass->misc_settings['post_extra_properties'] === true) {
-			/**
-			 * Sets the post link
-			 */
-			$_post->link     = get_permalink($_post->ID);
-			/**
-			 * Set human date property using Carbon
-			 */
-			$date = (property_exists($_post, 'date') ? $_post->date : $_post->post_date);
-			$_post->human_date = Carbon::parse( $date )->diffForHumans();
-			/**
-			 * Set author property to actual author data
-			 */
-			$author = (property_exists($_post, 'author') ? $_post->author : $_post->post_author);
-			$_post->author     = get_userdata( intval($author) );
-			/**
-			 * Set categories to actual categories of post
-			 */
-			$_post->categories = get_the_category($_post->ID);
-			/**
-			 * Set post children
-			 */
-			$_post->children = get_children(['post_parent' => $_post->ID]);
-			/**
-			 * Set post comments
-			 */
-			$_post->comments = get_comments(['post_id' => $_post->ID]);
-		}
+	}
 
-		//dd($_post);
+	/**
+	 * convert_posts
+	 *
+	 * Converts WP_Posts to CutlassPosts
+	 *
+	 * * Note: We use array_walk over foreach for memory conservation because
+	 * * the gained time is not worth the memory lost
+	 *
+	 * @param array $posts
+	 */
+	public static function convert_posts(&$posts) {
 
-		return $_post;
+		array_walk($posts, function(&$value, $key) {
+			$value = new CutlassPost($value);
+		});
+
+	}
+
+
+	public static function get_children(){
+
+	}
+
+	public static function get_parent() {
 
 	}
 }

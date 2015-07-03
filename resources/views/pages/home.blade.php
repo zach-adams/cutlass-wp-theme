@@ -2,23 +2,22 @@
 
 @section('content')
 	<h1>{{ $title }}</h1>
-	@wploop
+	@wpposts
 	<article {{ post_class() }}>
 		<header>
 			<a href="{{ $post->link }}"><h2 class="entry-title">{{ $post->title }}</h2></a>
+			{!! $post->thumbnail() !!}
 		</header>
 		@include('includes.entry-meta')
 		<hr/>
 		<div class="entry-content">
-			{{ get_the_excerpt() }}
+			{{ $post->excerpt() }}
 		</div>
 		<footer>
-			@foreach($post->categories as $category)
-				{{ $category->name }},
-			@endforeach
+			@if($post->can_edit())
+				{{ edit_post_link() }}
+			@endif
 		</footer>
-	@wploopempty
-		<h4>No content</h4>
 	</article>
-	@wploopend
+	@wpendposts
 @endsection
