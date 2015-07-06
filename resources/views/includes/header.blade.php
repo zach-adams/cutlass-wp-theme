@@ -7,7 +7,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="{{ $site->url }}">{{ $site->name }}</a>
+			<a class="navbar-brand" href="{{ $site->info('url') }}">{{ $site->info('name') }}</a>
 		</div>
 
 		<nav class="collapse navbar-collapse" role="navigation">
