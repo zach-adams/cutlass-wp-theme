@@ -1,7 +1,7 @@
 <!doctype html>
-<!--[if lt IE 7]><html class="no-js ie ie6 lt-ie9 lt-ie8 lt-ie7" {{ $site->language_attributes }}> <![endif]-->
-<!--[if IE 7]><html class="no-js ie ie7 lt-ie9 lt-ie8" {{ $site->language_attributes }}> <![endif]-->
-<!--[if IE 8]><html class="no-js ie ie8 lt-ie9" {{ $site->language_attributes }}> <![endif]-->
+<!--[if lt IE 7]><html class="no-js ie ie6 lt-ie9 lt-ie8 lt-ie7" {{ $site->info('language_attributes') }}> <![endif]-->
+<!--[if IE 7]><html class="no-js ie ie7 lt-ie9 lt-ie8" {{ $site->info('language_attributes') }}> <![endif]-->
+<!--[if IE 8]><html class="no-js ie ie8 lt-ie9" {{ $site->info('language_attributes') }}> <![endif]-->
 <!--[if gt IE 8]><!--><html class="no-js" {{ $site->info('language_attributes') }}> <!--<![endif]-->
 <head>
 	<meta charset="{{ $site->info('charset') }}" />
