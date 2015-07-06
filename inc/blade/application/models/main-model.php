@@ -31,6 +31,10 @@ class WP_Blade_Main_Model {
 	 */
 	public function template_include_blade( $template ) {
 
+		# Able to catch the real template name, not the cached view.
+		do_action('template_include_blade', $template);
+
+
 		if( $this->bladedTemplate )
 			return $this->bladedTemplate;
 		if( ! $template )
