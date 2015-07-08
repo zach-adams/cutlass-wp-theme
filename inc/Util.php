@@ -43,6 +43,48 @@ if (!function_exists('app_path')) {
 	}
 }
 
+if (!function_exists('app_url')) {
+
+	/**
+	 * app_url
+	 *
+	 * Returns full url to the current template directory
+	 *
+	 * @type    function
+	 * @param   string $path
+	 * @return  string
+	 */
+	function app_url($path = '') {
+
+		if( !empty($path) )
+			$path = '/' . $path;
+
+		return get_template_directory_uri() . $path;
+
+	}
+}
+
+if (!function_exists('app_relative_url')) {
+
+	/**
+	 * app_url
+	 *
+	 * Returns full url to the current template directory
+	 *
+	 * @type    function
+	 * @param   string $path
+	 * @return  string
+	 */
+	function app_relative_url($path = '') {
+
+		if( !empty($path) )
+			$path = '/' . $path;
+
+		return wp_make_link_relative(get_template_directory_uri() . $path);
+
+	}
+}
+
 if (!function_exists('base_path')) {
 
 	/**
@@ -60,6 +102,24 @@ if (!function_exists('base_path')) {
 			$path = '/' . $path;
 
 		return get_home_path() . $path;
+
+	}
+}
+
+if (!function_exists('base_url')) {
+
+	/**
+	 * base_url
+	 *
+	 * Returns full URL to the current WordPress installation
+	 *
+	 * @type    function
+	 * @param   string $path
+	 * @return  string
+	 */
+	function base_url($path = '') {
+
+		return get_site_url(null, $path, null);
 
 	}
 }
@@ -88,6 +148,9 @@ if (!function_exists('database_path')) {
 	 * database_path
 	 *
 	 * Returns full path to the current WordPress directory
+	 * * There's no relevant place for this function in
+	 * * WordPress (unfortunately), so we're just gonna
+	 * * emulate app_path()
 	 *
 	 * @type    function
 	 * @param   string $path
@@ -117,6 +180,42 @@ if (!function_exists('public_path')) {
 	function public_path($path = '') {
 
 		return get_template_directory() . '/public/' . $path;
+
+	}
+}
+
+if (!function_exists('public_url')) {
+
+	/**
+	 * public_url
+	 *
+	 * Returns full url to the theme's public directory
+	 *
+	 * @type    function
+	 * @param   string $path
+	 * @return  string
+	 */
+	function public_url($path = '') {
+
+		return get_bloginfo('template_directory') . '/public/' . $path;
+
+	}
+}
+
+if (!function_exists('public_relative_url')) {
+
+	/**
+	 * public_relative_url
+	 *
+	 * Returns relative url to the theme's public directory
+	 *
+	 * @type    function
+	 * @param   string $path
+	 * @return  string
+	 */
+	function public_relative_url($path = '') {
+
+		return wp_make_link_relative(get_bloginfo('template_directory') . '/public/' . $path);
 
 	}
 }
@@ -189,6 +288,24 @@ if (!function_exists('url')) {
 	function url($path = '') {
 
 		return get_site_url(null, $path, null);
+
+	}
+}
+
+if (!function_exists('relative_url')) {
+
+	/**
+	 * relative_url
+	 *
+	 * Generates a relative URL to the given path
+	 *
+	 * @type    function
+	 * @param   string $path
+	 * @return  string
+	 */
+	function relative_url($path = '') {
+
+		return wp_make_link_relative(get_site_url(null, $path, null));
 
 	}
 }
