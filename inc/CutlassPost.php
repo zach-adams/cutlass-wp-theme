@@ -229,32 +229,6 @@ class CutlassPost {
 
 		}
 
-		/**
-		 * Apply common WP filters to our object
-		 */
-		$this->apply_filters($addSimple);
-
-	}
-
-	/**
-	 * apply_filters
-	 *
-	 * Apply common WP filters to our properties
-	 *
-	 * @var $addSimple bool
-	 */
-	private function apply_filters($addSimple = false) {
-
-		if ($addSimple)
-			$this->content = apply_filters('the_content', $this->content);
-		else
-			$this->post_content = apply_filters('the_content', $this->post_content);
-
-		if ($addSimple)
-			$this->title = apply_filters('the_title', $this->title);
-		else
-			$this->post_title = apply_filters('the_title', $this->post_title);
-
 	}
 
 	/**
@@ -410,13 +384,70 @@ class CutlassPost {
 	 *
 	 * Returns a nicely formatted excerpt.
 	 *
-	 * @var $length int
+	 * @param $length int
+	 * @param string $ellipsis
 	 *
 	 * @return String
 	 */
-	public function excerpt($length = 55) {
+	public function excerpt($length = 55, $ellipsis = "...") {
 
-		return sanitize_text_field(strip_shortcodes(Str::words($this->content, $length)));
+		return sanitize_text_field(strip_shortcodes(Str::words($this->content, $length, $ellipsis)));
+
+	}
+
+	/**
+	 * title
+	 *
+	 * Returns the post title after the filters have been run on it
+	 *
+	 * @param int $length
+	 * @param string $ellipsis
+	 *
+	 * @return String
+	 */
+	public function title($length = 0, $ellipsis = "...") {
+
+		$title = (property_exists($this, 'title') ? $this->title : $this->post_title);
+
+		$title = apply_filters('the_title', $title);
+
+		if( !empty($length) && is_int($length) ) {
+			$title = Str::words($title, $length, $ellipsis);
+		}
+
+		return $title;
+
+	}
+
+	/**
+	 * content
+	 *
+	 * Returns the post content after the filters have been run on it
+	 *
+	 * @param int $length
+	 * @param string $ellipsis
+	 *
+	 * @return String
+	 */
+	public function content($length = 0, $ellipsis = "...") {
+
+		$content = (property_exists($this, 'content') ? $this->content : $this->post_content);
+
+		/**
+		 * Apply filter
+		 */
+		$content = apply_filters('the_content', $content);
+
+		/**
+		 * Replace string
+		 * * See: https://core.trac.wordpress.org/browser/tags/4.2.2/src/wp-includes/post-template.php#L220
+		 */
+		$content = str_replace( ']]>', ']]&gt;', $content );
+
+		if( !empty($length) && is_int($length) )
+			$content = Str::words($content, $length, $ellipsis);
+
+		echo $content;
 
 	}
 }
