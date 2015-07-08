@@ -12,6 +12,132 @@ use Illuminate\Support\Str;
 class CutlassPost {
 
 	/**
+	 * The posts id
+	 * @var int
+	 */
+	public $ID = 0;
+
+	/**
+	 * The posts link
+	 * @var string
+	 */
+	public $link = '';
+	public $permalink = '';
+
+	/**
+	 * A human readable post date
+	 * * i.e. 2015-03-05 12:53:12 to 3 months ago
+	 *
+	 * @var string
+	 */
+	public $human_date = '';
+
+	/**
+	 * The post author's name
+	 * @var string
+	 */
+	public $author = '';
+	public $post_author = '';
+
+	/**
+	 * The post slug name
+	 * @var string
+	 */
+	public $name = '';
+	public $post_name = '';
+
+	/**
+	 * The post type
+	 * @var string
+	 */
+	public $type = '';
+	public $post_type = '';
+
+	/**
+	 * The post title
+	 * @var string
+	 */
+	public $title = '';
+	public $post_title = '';
+
+	/**
+	 * The post date
+	 * @var string
+	 */
+	public $date = '';
+	public $post_date = '';
+
+	/**
+	 * The post date in GMT
+	 * @var string
+	 */
+	public $date_gmt = '';
+	public $post_date_gmt = '';
+
+	/**
+	 * The post content
+	 * @var string
+	 */
+	public $content = '';
+	public $post_content = '';
+
+	/**
+	 * The posts current status
+	 * @var string
+	 */
+	public $status = '';
+	public $post_status = '';
+
+	/**
+	 * The current comment status (whether comments are enabled
+	 * or disabled)
+	 * @var string
+	 */
+	public $comment_status = '';
+
+	/**
+	 * The current ping status (whether this post can receive
+	 * pings or not)
+	 * @var string
+	 */
+	public $ping_status = '';
+
+	/**
+	 * The posts password if it has one
+	 * @var string
+	 */
+	public $password = '';
+	public $post_password = '';
+
+	/**
+	 * When the post was last modified
+	 * @var string
+	 */
+	public $modified = '';
+	public $post_modified = '';
+
+	/**
+	 * When the post was last modified in GMT
+	 * @var string
+	 */
+	public $modified_gmt = '';
+	public $post_modified_gmt = '';
+
+	/**
+	 * Number of comments for this post (in string for
+	 * whatever reason)
+	 * @var string
+	 */
+	public $comment_count = '';
+
+	/**
+	 * Order of this post in the menu
+	 * @var string
+	 */
+	public $menu_order = '';
+
+
+	/**
 	 * __construct
 	 *
 	 * Accepts a WP_Post object and builds a new
