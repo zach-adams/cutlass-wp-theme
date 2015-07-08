@@ -5,7 +5,7 @@
 global $post;
 
 $context = array(
-	'title'     =>  CutlassHelper::get_title(),
+	'title'     =>  CutlassHelper::get_page_title(),
 	'sidebar'   =>  true,
 );
 

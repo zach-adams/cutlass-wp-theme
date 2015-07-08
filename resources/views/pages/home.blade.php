@@ -5,7 +5,7 @@
 	@wpposts
 	<article {{ post_class() }}>
 		<header>
-			<a href="{{ $post->link }}"><h2 class="entry-title">{{ $post->title }}</h2></a>
+			<a href="{{ $post->link }}"><h2 class="entry-title">{{ $post->title() }}</h2></a>
 			{!! $post->thumbnail() !!}
 		</header>
 		@include('includes.entry-meta')

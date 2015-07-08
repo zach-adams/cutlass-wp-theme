@@ -18,7 +18,7 @@ class CutlassHelper {
 	 *
 	 * return @string
 	 */
-	public static function get_title() {
+	public static function get_page_title() {
 
 		if (is_home()) {
 			if (get_option('page_for_posts', true)) {
