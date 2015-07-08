@@ -210,9 +210,9 @@ class CutlassPost {
 		/**
 		 * Apply WP_Post properties to this CutlassPost object
 		 */
-		array_walk($props, function(&$value, $key) {
-			$this->$key = $value;
-		} );
+		foreach($props as $key => $prop) {
+			$this->$key = $prop;
+		}
 
 		/**
 		 * If we're adding simple properties, go through the properties
@@ -220,12 +220,12 @@ class CutlassPost {
 		 */
 		if($addSimple === true) {
 
-			array_walk($props, function(&$value, $key) {
+			foreach($props as $key => $prop) {
 				if(substr($key, 0, 5) === "post_") {
 					$new = substr($key, 5, strlen($key));
-					$this->$new = $value;
+					$this->$new = $prop;
 				}
-			} );
+			}
 
 		}
 
