@@ -1,5 +1,5 @@
 <?php
-use Lavoiesl\PhpBenchmark\Benchmark;
+
 /**
  * The helper class
  *
@@ -129,15 +129,6 @@ class CutlassHelper {
 		array_walk($posts, function(&$value, $key) {
 			$value = new CutlassPost($value);
 		});
-
-	}
-
-
-	public static function get_children(){
-
-	}
-
-	public static function get_parent() {
 
 	}
 }
