@@ -143,7 +143,7 @@ class CutlassPost {
 	 * Accepts a WP_Post object and builds a new
 	 * CutlassPost object using it's properties
 	 *
-	 * @var $post WP_Post
+	 * @param $post WP_Post
 	 */
 	public function __construct( $post ) {
 		global $cutlass;
@@ -169,7 +169,7 @@ class CutlassPost {
 	 * Accepts a WP_Post object and sets additional helpful
 	 * properties to this CutlassPost object
 	 *
-	 * @var $post WP_Post
+	 * @param WP_Post $post
 	 */
 	private function extra_properties( $post ) {
 
@@ -197,8 +197,8 @@ class CutlassPost {
 	 * Accepts WP_Post object, takes its properties and
 	 * applies them to this CutlassPost object
 	 *
-	 * @var $post WP_Post
-	 * @var $addSimple bool
+	 * @param WP_Post $post
+	 * @param bool $addSimple
 	 */
 	private function set_properties( $post, $addSimple = false ) {
 
@@ -249,7 +249,7 @@ class CutlassPost {
 	 *
 	 * Gets the tags for this post, accepts array of args
 	 *
-	 * @var $args Array
+	 * @param Array $args
 	 *
 	 * @return Array
 	 */
@@ -265,8 +265,8 @@ class CutlassPost {
 	 * Gets the terms for this post, accepts a taxonomy
 	 * array and an args array
 	 *
-	 * @var $tax String|Array
-	 * @var $args Array
+	 * @param String|Array $tax
+	 * @param Array $args
 	 *
 	 * @return Array
 	 */
@@ -286,7 +286,7 @@ class CutlassPost {
 	 *
 	 * Gets the posts featured image
 	 *
-	 * @var $size String|Array
+	 * @param String|Array $size
 	 *
 	 * @return String
 	 */
@@ -316,8 +316,8 @@ class CutlassPost {
 	 * Proxy for ACF's get_field, if ACF isn't installed
 	 * then get this post custom meta.
 	 *
-	 * @var $key String
-	 * @var $format_value bool
+	 * @param String $key
+	 * @param bool $format_value
 	 *
 	 * @return Mixed
 	 */
@@ -335,8 +335,8 @@ class CutlassPost {
 	 *
 	 * Gets this posts meta
 	 *
-	 * @var $key String
-	 * @var $single bool
+	 * @param String $key
+	 * @param bool $single
 	 *
 	 * @return Mixed
 	 */
@@ -351,7 +351,7 @@ class CutlassPost {
 	 *
 	 * Gets this posts children
 	 *
-	 * @var args Array
+	 * @var Array args
 	 *
 	 * @return Array
 	 */
@@ -384,7 +384,7 @@ class CutlassPost {
 	 *
 	 * Returns a nicely formatted excerpt.
 	 *
-	 * @param $length int
+	 * @param int $length
 	 * @param string $ellipsis
 	 *
 	 * @return String

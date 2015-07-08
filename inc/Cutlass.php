@@ -60,6 +60,7 @@ class Cutlass {
 	 * @param array $context
 	 *
 	 * @return mixed
+	 * @throws Exception
 	 */
 	public function render($filenames, $context = array()) {
 
