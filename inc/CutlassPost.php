@@ -152,12 +152,12 @@ class CutlassPost {
 		 * Takes the original WP_Post properties and moves them to
 		 * this CutlassPost object
 		 */
-		$this->set_properties($post, $cutlass->misc_settings['post_simple_properties']);
+		$this->set_properties($post, $cutlass->misc_settings['enable_post_simple_properties']);
 
 		/**
 		 * Sets extra helpful properties
 		 */
-		if ($cutlass->misc_settings['post_extra_properties'] === true) {
+		if ($cutlass->misc_settings['enable_post_extra_properties'] === true) {
 			$this->extra_properties($post);
 		}
 
