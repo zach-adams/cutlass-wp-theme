@@ -50,6 +50,7 @@ class CutlassHelper {
 	 */
 	public static function get_posts($query = array()) {
 		global $wp_query;
+		global $cutlass;
 
 		/**
 		 * Set return var
@@ -70,6 +71,13 @@ class CutlassHelper {
 		 */
 		if( empty($posts) )
 			return array();
+
+		/**
+		 * If simple posts are disabled we can return
+		 * the boring old WP_Posts now.
+		 */
+		if( $cutlass->misc_settings['enable_simple_posts'] === false)
+			return $posts;
 
 		/**
 		 * Convert WP_Posts to CutlassPosts
@@ -93,12 +101,26 @@ class CutlassHelper {
 	 *
 	 * @return array|null
 	 */
-	public static function get_post( $postid ) {
+	public static function get_post( $postid = null ) {
+		global $cutlass;
+
+		/**
+		 * If postid is empty get the ID the normal way
+		 */
+		if(empty($postid))
+			$postid = get_the_ID();
 
 		/**
 		 * Grab post using postid
 		 */
 		$post = get_post($postid);
+
+		/**
+		 * If simple posts are disabled we can return
+		 * the boring old WP_Post now.
+		 */
+		if( $cutlass->misc_settings['enable_simple_posts'] === false)
+			return $post;
 
 		/**
 		 * If it's a correct WP_Post convert it to a
@@ -122,10 +144,30 @@ class CutlassHelper {
 	 * * Note: We use array_walk over foreach for memory conservation because
 	 * * the gained time is not worth the memory lost
 	 *
-	 * @param array $posts
+	 * @param array|WP_Post $posts
+	 *
+	 * @return null|WP_Post
 	 */
 	public static function convert_posts(&$posts) {
 
+		/**
+		 * If it's already CutlassPost just return
+		 */
+		if( is_a($posts, 'CutlassPost') )
+			return;
+
+		/**
+		 * If it's a single WP_Post object convert it
+		 * and return
+		 */
+		if (is_a($posts, 'WP_Post') ) {
+			$posts = new CutlassPost($posts);
+			return $posts;
+		}
+
+		/**
+		 * Convert all posts
+		 */
 		array_walk($posts, function(&$value, $key) {
 			$value = new CutlassPost($value);
 		});

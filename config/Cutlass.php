@@ -33,7 +33,7 @@ $global_view_data = array(
  */
 $custom_directives = array(
 	'wpposts'       =>  '<?php foreach($posts as $post) : setup_postdata($post); ?>',
-	'wpendposts'    =>  '<?php endforeach; wp_reset_postdata(); ?>',
+	'wppostsend'    =>  '<?php endforeach; wp_reset_postdata(); ?>',
 	'wppostsquery'  =>  '<?php $posts = get_posts({expression}); foreach($posts as $post) : setup_postdata($post); ?>',
 	'wploop'        =>  '<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); $post = CutlassHelper::get_post(); ?>',
 	'wploopempty'   =>  '<?php endwhile; else : ?>',
@@ -43,18 +43,32 @@ $custom_directives = array(
 
 $misc_settings = array(
 	/**
-	 * Controls WP_Post returned by CutlassHelper::get_post. If true
+	 * Enables the conversion from WP_Post to CutlassPost. You
+	 * can still use CutlassHelper functions however they will
+	 * return boring old WP_Post objects. Set to false if
+	 * memory or performance is an issue.
+	 */
+	'enable_simple_posts'   =>  true,
+	/**
+	 * Controls the properties in the CutlassPost object. If true
 	 * the properties beginning with "post_" will have the "post_"
 	 * prefix removed. Set to false if memory or performance is an
 	 * issue.
+	 *
+	 * * Note: If enable_simple_posts is disabled this setting
+	 * * becomes invalid
 	 */
-	'post_simple_properties'    =>  true,
+	'enable_post_simple_properties'    =>  true,
 	/**
-	 * Controls WP_Post returned by CutlassHelper::get_post. If true
-	 * there will be extra helpful properties available to the WP_Post
-	 * object returned. Set to false if performance is an issue.
+	 * Controls the properties in the CutlassPost object. If true
+	 * there will be extra helpful properties available to the
+	 * WP_Post object returned. Set to false if performance is an
+	 * issue.
+	 *
+	 * * Note: If enable_simple_posts is disabled this setting
+	 * * becomes invalid
 	 */
-	'post_extra_properties'     =>  true,
+	'enable_post_extra_properties'     =>  true,
 );
 
 /**
