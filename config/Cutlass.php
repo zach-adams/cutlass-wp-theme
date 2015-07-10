@@ -33,11 +33,12 @@ $global_view_data = array(
  */
 $custom_directives = array(
 	'wpposts'       =>  '<?php foreach($posts as $post) : setup_postdata($post); ?>',
-	'wpendposts'    =>  '<?php endforeach; ?>',
-	'wploop'        =>  '<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); $post = CutlassHelper::get_post(get_the_ID()); ?>',
+	'wpendposts'    =>  '<?php endforeach; wp_reset_postdata(); ?>',
+	'wppostsquery'  =>  '<?php $posts = get_posts({expression}); foreach($posts as $post) : setup_postdata($post); ?>',
+	'wploop'        =>  '<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); $post = CutlassHelper::get_post(); ?>',
 	'wploopempty'   =>  '<?php endwhile; else : ?>',
 	'wploopend'     =>  '<?php endif; wp_reset_postdata(); ?>',
-	'wploopquery'   =>  '<?php $query = new WP_Query({expression}); if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); $post = CutlassHelper::get_post(get_the_ID()); ?>',
+	'wploopquery'   =>  '<?php $query = new WP_Query({expression}); if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); $post = CutlassHelper::get_post(); ?>',
 );
 
 $misc_settings = array(
