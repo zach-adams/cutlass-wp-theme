@@ -317,14 +317,20 @@ class CutlassPost {
 	 * then get this post custom meta.
 	 *
 	 * @param String $key
+	 * @param bool $echo
 	 * @param bool $format_value
 	 *
 	 * @return Mixed
 	 */
-	public function field( $key, $format_value = true){
+	public function field( $key, $echo = true,  $format_value = true){
 
 		if(!function_exists('get_field'))
 			return $this->meta($key, $format_value);
+
+		if($echo) {
+			echo get_field($key, $this->ID, $format_value);
+			return;
+		}
 
 		return get_field($key, $this->ID, $format_value);
 
