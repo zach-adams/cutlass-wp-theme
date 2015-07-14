@@ -245,6 +245,22 @@ class CutlassPost {
 	}
 
 	/**
+	 * post_class
+	 *
+	 * Returns the post class
+	 *
+	 * @param null $class
+	 * @param null $post_id
+	 *
+	 * @return mixed
+	 */
+	public function post_class( $class = null, $post_id = null) {
+
+		return post_class($class, $post_id);
+
+	}
+
+	/**
 	 * tags
 	 *
 	 * Gets the tags for this post, accepts array of args
