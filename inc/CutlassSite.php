@@ -22,6 +22,23 @@ class CutlassSite {
 	}
 
 	/**
+	 * title
+	 *
+	 * Returns the value of wp_title function
+	 *
+	 * @param string $sep
+	 * @param bool $display
+	 * @param string $seplocation
+	 *
+	 * @return String
+	 */
+	public function title( $sep = '&raquo;', $display = true, $seplocation = 'left' ) {
+
+		return wp_title($sep, $display, $seplocation);
+
+	}
+
+	/**
 	 * option
 	 *
 	 * Allows us to easily access the option wp function
