@@ -402,6 +402,31 @@ class CutlassPost {
 	}
 
 	/**
+	 * link
+	 *
+	 * Returns the post's permalink
+	 *
+	 * @param bool $relative
+	 * @param int $id
+	 * @param bool $leavename
+	 *
+	 * @return String
+	 */
+	public function link( $relative = false, $id = 0, $leavename = FALSE ) {
+
+		if(!empty($id) || !empty($leavename))
+			return ($relative === true ? wp_make_link_relative(get_permalink($id, $leavename)) : get_permalink($id, $leavename));
+
+		if(!empty($this->link))
+			return ($relative === true ? wp_make_link_relative($this->link) : $this->link);
+
+		if(!empty($this->permalink))
+			return ($relative === true ? wp_make_link_relative($this->permalink) : $this->permalink);
+
+		return ($relative === true ? wp_make_link_relative(get_permalink()) : get_permalink());
+	}
+
+	/**
 	 * excerpt
 	 *
 	 * Returns a nicely formatted excerpt.
