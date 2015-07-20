@@ -13,7 +13,7 @@ if (!function_exists('app')) {
 	{
 		global $cutlass;
 
-		$container = $cutlass->getBlade()->view()->getContainer();
+		$container = $cutlass->blade->view()->getContainer();
 
 		if (is_null($make)) {
 			return $container;
@@ -401,7 +401,7 @@ if (!function_exists('view')) {
 	{
 		global $cutlass;
 
-		$factory = $cutlass->getBlade()->view();
+		$factory = $cutlass->blade->view();
 
 		if (func_num_args() === 0) {
 			return $factory;

@@ -14,7 +14,7 @@ class Cutlass {
 	 *
 	 * @var Blade
 	 */
-	private $blade;
+	public $blade;
 
 	/**
 	 * Custom directives that we want to add to Blade views
@@ -64,6 +64,8 @@ class Cutlass {
 	 */
 	public function render($filenames, $context = array()) {
 
+		$output = '';
+
 		/**
 		 * Add our default information to all views
 		 */
@@ -76,7 +78,8 @@ class Cutlass {
 		 * Add custom directives to Blade
 		 */
 		if ( !empty($this->custom_directives) )
-			array_walk($this->custom_directives, array($this, 'addDirective'));
+			foreach($this->custom_directives as $key => $directive)
+				$this->directive($key, $directive);
 
 		/**
 		 * Add global view data
@@ -92,35 +95,38 @@ class Cutlass {
 
 		/**
 		 * Render the view (if it exists)
+		 * Check to see if it's a single filename, else check to see if
+		 * there's an array of filenames
 		 */
 		if( is_string($filenames) && $this->blade->view()->exists($filenames) ) {
 			$output = $this->blade->view()->make($filenames)->render();
-
-			echo $output;
-			return $output;
-		}
-
-		foreach($filenames as $filename) {
-			if($this->blade->view()->exists($filename)) {
-				$output = $this->blade->view()->make($filename)->render();
-
-				echo $output;
-				return $output;
+		} elseif(is_array($filenames)) {
+			foreach($filenames as $filename) {
+				if($this->blade->view()->exists($filename)) {
+					$output = $this->blade->view()->make($filename)->render();
+				}
 			}
 		}
 
-		throw new Exception("No view found");
+		echo $output;
+		return $output;
+
 	}
 
 	/**
-	 * addDirective
+	 * directive
 	 *
 	 * Adds the directive to our compiler
 	 *
-	 * @param string $directive
 	 * @param string $key
+	 * @param string $directive
 	 */
-	private function addDirective( $directive, $key ) {
+	public function directive( $key, $directive ) {
+
+		if(is_callable($directive)) {
+			$this->blade->getCompiler()->directive($key, $directive);
+			return;
+		}
 
 		$this->blade->getCompiler()->directive($key, function($expression) use ($directive) {
 			/**
@@ -129,19 +135,6 @@ class Cutlass {
 			return str_replace('{expression}', $expression, $directive);
 
 		});
-
-	}
-
-	/**
-	 * getBlade
-	 *
-	 * Returns instance of our Blade object
-	 *
-	 * @return Blade;
-	 */
-	public function getBlade() {
-
-		return $this->blade;
 
 	}
 }
