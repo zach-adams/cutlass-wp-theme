@@ -11,7 +11,7 @@
 		@include('includes.entry-meta')
 		<hr/>
 		<div class="entry-content">
-			{{ $post->excerpt() }}
+			{{ $post->excerpt() }}`
 		</div>
 		<footer>
 			@if($post->can_edit())
