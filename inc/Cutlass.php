@@ -137,21 +137,4 @@ class Cutlass {
 		});
 
 	}
-
-	/**
-	 * context
-	 *
-	 * Adds items to the view's context
-	 *
-	 * @param string|array $context
-	 * @return bool
-	 */
-	public function context( $context ) {
-
-		if(!empty($context))
-			return $this->blade->view()->share($context);
-
-		return false;
-
-	}
 }
