@@ -19,5 +19,5 @@
 			@endif
 		</footer>
 	</article>
-	@wpendposts
+	@wppostsend
 @endsection
