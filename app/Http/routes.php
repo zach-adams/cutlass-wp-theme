@@ -12,5 +12,9 @@
 */
 
 $app->get('/', function() use ($app) {
-    return $app->welcome();
+	$context = [
+		'title' =>  CutlassHelper::get_page_title(),
+		'posts' =>  CutlassHelper::get_posts()
+	];
+    return view('pages.home', $context);
 });

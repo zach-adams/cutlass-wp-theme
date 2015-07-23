@@ -1,16 +1,12 @@
 <?php
 
-/**
- * Require the autoloader so we can get this party started
- */
-require __DIR__ . '/vendor/autoload.php';
 
-/**
- * Include Cutlass Configuration
- */
-require config_path('Cutlass.php');
+$app = require __DIR__.'/bootstrap/app.php';
+
+$app->run();
+
 
 /**
  * Include Theme Setup Configuration
  */
-require config_path('Theme.php');
+require __DIR__.'/config/Theme.php';

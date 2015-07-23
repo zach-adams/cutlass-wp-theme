@@ -5,4 +5,4 @@ $context = array(
 	'posts'     =>  CutlassHelper::get_posts(),
 );
 
-$cutlass->render('pages.home', $context);
+//$cutlass->render('pages.home', $context);

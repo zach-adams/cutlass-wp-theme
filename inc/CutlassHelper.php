@@ -73,13 +73,6 @@ class CutlassHelper {
 			return array();
 
 		/**
-		 * If simple posts are disabled we can return
-		 * the boring old WP_Posts now.
-		 */
-		if( $cutlass->misc_settings['enable_simple_posts'] === false)
-			return $posts;
-
-		/**
 		 * Convert WP_Posts to CutlassPosts
 		 */
 		CutlassHelper::convert_posts($posts);
