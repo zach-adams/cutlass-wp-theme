@@ -1,5 +1,31 @@
 <?php
 
+if (!function_exists('bcrypt')) {
+	/**
+	 * Hash the given value.
+	 *
+	 * @param  string  $value
+	 * @param  array   $options
+	 * @return string
+	 */
+	function bcrypt($value, $options = [])
+	{
+		return password_hash($value, PASSWORD_DEFAULT, $options);
+	}
+}
+if (!function_exists('back')) {
+	/**
+	 * Create a new redirect response to the previous location.
+	 *
+	 * @param  int    $status
+	 * @return mixed
+	 */
+	function back($status = 302)
+	{
+		wp_redirect( wp_get_referer(), $status );
+		exit;
+	}
+}
 if (!function_exists('app')) {
 
 	/**
