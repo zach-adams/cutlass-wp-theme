@@ -32,7 +32,7 @@ class CutlassSite {
 	 *
 	 * @return String
 	 */
-	public function title( $sep = '&raquo;', $display = true, $seplocation = 'left' ) {
+	public function title( $sep = '&raquo;', $display = false, $seplocation = 'left' ) {
 
 		return wp_title($sep, $display, $seplocation);
 

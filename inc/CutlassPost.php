@@ -149,6 +149,12 @@ class CutlassPost {
 		global $cutlass;
 
 		/**
+		 * If we're given an int we'll convert it to a WP_Post object
+		 */
+		if(is_int($post))
+			$post = get_post($post);
+
+		/**
 		 * Takes the original WP_Post properties and moves them to
 		 * this CutlassPost object
 		 */
@@ -236,11 +242,16 @@ class CutlassPost {
 	 *
 	 * Gets all comments for this post
 	 *
-	 * return @mixed
+	 * @param Array $args
+	 *
+	 * @return mixed
 	 */
-	public function comments() {
+	public function comments($args = array()) {
 
-		return get_comments(['post_id' => $this->ID]);
+		if(!isset($args['post_id']))
+			$args['post_id'] = $this->ID;
+
+		return get_comments($args);
 
 	}
 
@@ -250,13 +261,12 @@ class CutlassPost {
 	 * Returns the post class
 	 *
 	 * @param null $class
-	 * @param null $post_id
 	 *
 	 * @return mixed
 	 */
-	public function post_class( $class = null, $post_id = null) {
+	public function post_class( $class = null) {
 
-		return post_class($class, $post_id);
+		return get_post_class($class, $this->ID);
 
 	}
 
@@ -269,7 +279,7 @@ class CutlassPost {
 	 *
 	 * @return Array
 	 */
-	public function tags( $args = array()) {
+	public function tags( $args = array() ) {
 
 		return wp_get_post_tags($this->ID, $args);
 
@@ -303,12 +313,13 @@ class CutlassPost {
 	 * Gets the posts featured image
 	 *
 	 * @param String|Array $size
+	 * @param String|Array $attr
 	 *
 	 * @return String
 	 */
-	public function thumbnail( $size = 'thumbnail' ) {
+	public function thumbnail( $size = 'thumbnail', $attr = '' ) {
 
-		return get_the_post_thumbnail($this->ID, $size);
+		return get_the_post_thumbnail($this->ID, $size, $attr);
 
 	}
 
@@ -338,14 +349,15 @@ class CutlassPost {
 	 *
 	 * @return Mixed
 	 */
-	public function field( $key, $echo = true,  $format_value = true){
+	public function field( $key, $echo = false,  $format_value = true){
 
 		if(!function_exists('get_field'))
 			return $this->meta($key, $format_value);
 
 		if($echo) {
-			echo get_field($key, $this->ID, $format_value);
-			return;
+			$val = get_field($key, $this->ID, $format_value);
+			echo $val;
+			return $val;
 		}
 
 		return get_field($key, $this->ID, $format_value);
@@ -378,13 +390,20 @@ class CutlassPost {
 	 * @return Array
 	 */
 	public function children( $args = array('post_type'=>'any') ) {
+		global $cutlass;
+
+		if(is_string($args)) {
+			$args = [
+				'post_type' =>  $args,
+			];
+		}
 
 		/**
 		 * Make sure essential args are set
 		 */
-		if(!isset($args['post_parent']))
+		if(!array_key_exists('post_parent', $args))
 			$args['post_parent'] = $this->ID;
-		if(!isset($args['post_type']))
+		if(!array_key_exists('post_type', $args))
 			$args['post_type'] = 'any';
 
 		$children = get_children($args);
@@ -395,7 +414,9 @@ class CutlassPost {
 		/**
 		 * Convert WP_Post objects to CutlassPost objects
 		 */
-		CutlassHelper::convert_posts($children);
+		if($cutlass->misc_settings['enable_simple_posts'] === true) {
+			CutlassHelper::convert_posts($children);
+		}
 
 		return $children;
 
@@ -407,15 +428,10 @@ class CutlassPost {
 	 * Returns the post's permalink
 	 *
 	 * @param bool $relative
-	 * @param int $id
-	 * @param bool $leavename
 	 *
 	 * @return String
 	 */
-	public function link( $relative = false, $id = 0, $leavename = FALSE ) {
-
-		if(!empty($id) || !empty($leavename))
-			return ($relative === true ? wp_make_link_relative(get_permalink($id, $leavename)) : get_permalink($id, $leavename));
+	public function link( $relative = false ) {
 
 		if(!empty($this->link))
 			return ($relative === true ? wp_make_link_relative($this->link) : $this->link);
@@ -423,7 +439,8 @@ class CutlassPost {
 		if(!empty($this->permalink))
 			return ($relative === true ? wp_make_link_relative($this->permalink) : $this->permalink);
 
-		return ($relative === true ? wp_make_link_relative(get_permalink()) : get_permalink());
+		return ($relative === true ? wp_make_link_relative(get_permalink($this->ID)) : get_permalink($this->ID));
+
 	}
 
 	/**
@@ -471,12 +488,13 @@ class CutlassPost {
 	 *
 	 * Returns the post content after the filters have been run on it
 	 *
-	 * @param int $length
 	 * @param string $ellipsis
+	 * @param int $length
+	 * @param bool $echo
 	 *
 	 * @return String
 	 */
-	public function content($length = 0, $ellipsis = "...") {
+	public function content($ellipsis = "...", $length = null, $echo = false) {
 
 		$content = (property_exists($this, 'content') ? $this->content : $this->post_content);
 
@@ -487,14 +505,17 @@ class CutlassPost {
 
 		/**
 		 * Replace string
-		 * * See: https://core.trac.wordpress.org/browser/tags/4.2.2/src/wp-includes/post-template.php#L220
+		 * * See: https://core.trac.wor dpress.org/browser/tags/4.2.2/src/wp-includes/post-template.php#L220
 		 */
 		$content = str_replace( ']]>', ']]&gt;', $content );
 
-		if( !empty($length) && is_int($length) )
+		if( is_int($length) )
 			$content = Str::words($content, $length, $ellipsis);
 
-		echo $content;
+		if($echo === true)
+			echo $content;
+
+		return $content;
 
 	}
 }

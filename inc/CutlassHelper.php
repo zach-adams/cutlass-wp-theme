@@ -16,9 +16,11 @@ class CutlassHelper {
 	 * From Root's Sage
 	 * https://github.com/roots/sage
 	 *
-	 * return @string
+	 * @param null|int $post_id
+	 *
+	 * @return string
 	 */
-	public static function get_page_title() {
+	public static function get_page_title( $post_id = 0 ) {
 
 		if (is_home()) {
 			if (get_option('page_for_posts', true)) {
@@ -33,7 +35,7 @@ class CutlassHelper {
 		} elseif (is_404()) {
 			return 'Not Found';
 		} else {
-			return get_the_title();
+			return get_the_title($post_id);
 		}
 
 	}
@@ -61,7 +63,7 @@ class CutlassHelper {
 		 * If the query's empty and the global WP_Query has posts grab them
 		 * else just grab the posts the normal way
 		 */
-		if( empty($query) && property_exists($wp_query, 'posts'))
+		if( empty($query) && property_exists($wp_query, 'posts') && !empty($wp_query->posts))
 			$posts = $wp_query->posts;
 		else
 			$posts = get_posts($query);
