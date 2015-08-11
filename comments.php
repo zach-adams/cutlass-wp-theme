@@ -12,8 +12,6 @@
 			<?php wp_list_comments( array(
 				'style'         => 'ul',
 				'short_ping'    => true,
-				'avatar_size'   => '64',
-				'walker'        => new Bootstrap_Comment_Walker(),
 			)); ?>
 		</ol>
 
