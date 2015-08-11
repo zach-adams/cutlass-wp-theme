@@ -1,7 +1,5 @@
 {
 	"name": "cutlass",
 	"dependencies": {
-		"jquery": "~2.1.4",
-		"bootstrap-sass-official": "~3.3.4"
 	}
 }

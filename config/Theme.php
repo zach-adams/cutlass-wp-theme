@@ -99,7 +99,7 @@ function cutlass_scripts() {
 	/**
 	 * Queue our elixir scripts
 	 */
-	wp_enqueue_script( 'all', elixir('js/all.js'), array(), null, true );
+	wp_enqueue_script( 'all', elixir('js/all.js'), array('jquery'), null, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );

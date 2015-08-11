@@ -27,7 +27,3 @@
 
 	{{ comments_template() }}
 @endsection
-
-@section('sidebar')
-	{{ get_sidebar() }}
-@endsection
