@@ -1,5 +1,5 @@
 @layout( 'templates.layouts.sidebar' )
-{{-- Template Name: Sidebar
+{{-- Template Name: Sidebar --}}
 
 @section('page-content')
 
