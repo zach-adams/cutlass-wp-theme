@@ -11,7 +11,7 @@
 
 	<title>{{ wp_title() }}</title>
 
-	{{ wp_head() }}
+	{!! $wp_head !!}
 </head>
 
 <body {{ body_class() }} >

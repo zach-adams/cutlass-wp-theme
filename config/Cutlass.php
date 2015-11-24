@@ -38,12 +38,14 @@ add_filter('cutlass_cache_directory', 'set_cutlass_cache_directory', 10, 1);
  *                          to:
  *              {{ $site_url }}
  *
+ * @param array $global_view_data
  * @return array
  */
-function add_cutlass_global_view_data() {
-	return [
-		'site'=> new CutlassSite(),
-	];
+function add_cutlass_global_view_data($global_view_data) {
+
+	$global_view_data['site'] = new CutlassSite();
+
+	return $global_view_data;
 }
 add_filter('cutlass_global_view_data', 'add_cutlass_global_view_data', 10, 1);
 
@@ -57,17 +59,14 @@ add_filter('cutlass_global_view_data', 'add_cutlass_global_view_data', 10, 1);
  * *            it turns into this:
  * *        <?php $query = new WP_Query(['post_type' => 'page']); ?>
  *
+ * @param array $custom_directives
  * @return array;
  */
-function add_custom_directives() {
-	return [
-			'wpposts'       =>  '<?php foreach($posts as $post) : setup_postdata($post); ?>',
-			'wppostsend'    =>  '<?php endforeach; wp_reset_postdata(); ?>',
-			'wppostsquery'  =>  '<?php $posts = get_posts({expression}); foreach($posts as $post) : setup_postdata($post); ?>',
-			'wploop'        =>  '<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); $post = Cutlass\Cutlass::get_post(); ?>',
-			'wploopempty'   =>  '<?php endwhile; else : ?>',
-			'wploopend'     =>  '<?php endif; wp_reset_postdata(); ?>',
-			'wploopquery'   =>  '<?php $query = new WP_Query({expression}); if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); $post = Cutlass\Cutlass::get_post(); ?>',
-	];
+function add_custom_directives($custom_directives) {
+	$custom_directives['wpposts'] = '<?php foreach($posts as $post) : setup_postdata($post); ?>';
+	$custom_directives['wppostsend'] = '<?php endforeach; wp_reset_postdata(); ?';
+	$custom_directives['wppostsquery'] = '<?php $posts = get_posts({expression}); foreach($posts as $post) : setup_postdata($post); ?>';
+
+	return $custom_directives;
 }
 add_filter('cutlass_custom_directives', 'add_custom_directives', 10, 1);

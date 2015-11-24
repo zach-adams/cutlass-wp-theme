@@ -1,6 +1,5 @@
 <?php namespace Cutlass;
 use Philo\Blade\Blade;
-use Cutlass\CutlassSite;
 use Exception;
 
 /**
@@ -36,16 +35,34 @@ class CutlassRenderer {
 		$this->blade = $blade;
 
 		/**
+		 * Our default Custom Directives
+		 */
+		$custom_directives = [
+				'wploop'        =>  '<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); $post = Cutlass\Cutlass::get_post(); ?>',
+				'wploopempty'   =>  '<?php endwhile; else : ?>',
+				'wploopend'     =>  '<?php endif; wp_reset_postdata(); ?>',
+				'wploopquery'   =>  '<?php $query = new WP_Query({expression}); if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); $post = Cutlass\Cutlass::get_post(); ?>',
+		];
+
+		/**
+		 * Our default Global View Data
+		 */
+		$global_view_data = [
+			'wp_head'	=>	$this->render_wp_head(),
+			'wp_footer'	=>	$this->render_wp_footer(),
+		];
+
+		/**
 		 * Filter: 'cutlass_custom_directives' - Add your own custom Blade directives
 		 * @var string
 		 */
-		$this->custom_directives = apply_filters('cutlass_custom_directives', array());
+		$this->custom_directives = apply_filters('cutlass_custom_directives', $custom_directives);
 
 		/**
 		 * Filter: 'cutlass_global_view_data' - Add global data to all Blade views
 		 * @var string
 		 */
-		$this->global_view_data = apply_filters('cutlass_global_view_data', array());
+		$this->global_view_data = apply_filters('cutlass_global_view_data', $global_view_data);
 
 	}
 
@@ -59,8 +76,6 @@ class CutlassRenderer {
 	 * @throws Exception
 	 */
 	public function render() {
-
-		$output = '';
 
 		/**
 		 * Add custom directives to Blade
@@ -90,22 +105,52 @@ class CutlassRenderer {
 		 * Check to see if it's a single filename, else check to see if
 		 * there's an array of filenames
 		 */
+		$output = false;
 		if( is_string($this->filesnames)) {
 			if(!$this->blade->view()->exists($this->filesnames)) { throw new Exception('View ( '. $this->filesnames .' ) does not exist'); }
 
 			$output = $this->blade->view()->make($this->filesnames)->render();
 		} elseif(is_array($this->filesnames)) {
-			$output = false;
 			foreach($this->filesnames as $filename) {
 				if($this->blade->view()->exists($filename)) {
 					$output = $this->blade->view()->make($filename)->render();
 				}
 			}
-			if($output === false) { throw new Exception('No valid View found'); }
 		}
+		if($output === false) { throw new Exception('No valid View found'); }
 
 		return $output;
 
+	}
+
+
+	/**
+	 * render_wp_head
+	 *
+	 * Renders the wp_head function so we can input into our view
+	 *
+	 * @return string
+	 */
+	protected function render_wp_head()
+	{
+		ob_start();
+		wp_head();
+		return ob_get_clean();
+	}
+
+
+	/**
+	 * render_wp_footer
+	 *
+	 * Renders the wp_footer function so we can input into our view
+	 *
+	 * @return string
+	 */
+	protected function render_wp_footer()
+	{
+		ob_start();
+		wp_footer();
+		return ob_get_clean();
 	}
 
 	/**
