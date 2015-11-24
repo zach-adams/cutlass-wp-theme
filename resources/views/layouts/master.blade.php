@@ -12,11 +12,11 @@
 	{!! $wp_head !!}
 </head>
 
-<body {{ body_class() }} >
+<body {{ body_class() }}>
   
 	@include('includes.header')
 
-	<main id="main" class="wrap content" role="document">
+	<main id="main" role="main">
 		@yield('content')
 	</main><!-- /.wrap -->
 
