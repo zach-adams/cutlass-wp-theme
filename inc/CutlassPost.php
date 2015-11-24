@@ -271,6 +271,14 @@ class CutlassPost
     }
 
 
+    public function author()
+    {
+
+        return $this->author;
+
+    }
+
+
     /**
      * post_class
      *
@@ -283,7 +291,7 @@ class CutlassPost
     public function post_class($class = null)
     {
 
-        return get_post_class($class, $this->ID);
+        return 'class="' . join( ' ', get_post_class( $class, $this->ID ) ) . '"';
 
     }
 
@@ -534,13 +542,13 @@ class CutlassPost
      *
      * Returns the post content after the filters have been run on it
      *
+     * @param bool   $echo
      * @param string $ellipsis
      * @param int    $length
-     * @param bool   $echo
      *
      * @return String
      */
-    public function content($ellipsis = "...", $length = null, $echo = false)
+    public function content($echo = true, $ellipsis = "...", $length = null)
     {
 
         $content = ( property_exists($this, 'content') ? $this->content : $this->post_content );
@@ -562,9 +570,9 @@ class CutlassPost
 
         if ($echo === true) {
             echo $content;
+        } else {
+            return $content;
         }
-
-        return $content;
 
     }
 }

@@ -16,9 +16,7 @@
   
 	@include('includes.header')
 
-	<main id="main" role="main">
-		@yield('content')
-	</main><!-- /.wrap -->
+	@yield('main_content')
 
 	@include('includes.footer')
 

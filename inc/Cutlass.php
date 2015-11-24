@@ -221,7 +221,7 @@ class Cutlass
          * If it's already CutlassPost just return
          */
         if (is_a($posts, 'CutlassPost')) {
-            return null;
+            return;
         }
 
         /**

@@ -67,7 +67,7 @@ if ( ! function_exists('asset')) {
             $path = '/' . $path;
         }
 
-        return get_template_directory_uri() . 'public' . $path;
+        return get_template_directory_uri() . '/public' . $path;
     }
 }
 if ( ! function_exists('app_path')) {

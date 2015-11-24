@@ -1,23 +1,11 @@
-@extends('layouts.master')
+@extends('layouts.full')
 
 @section('content')
-	<h1>{{ $title }}</h1>
-	@wpposts
-	<article {{ $post->class }}>
-		<header>
-			<a href="{{ $post->link }}"><h2 class="entry-title">{{ $post->title }}</h2></a>
-			{!! $post->thumbnail !!}
-		</header>
-		@include('includes.entry-meta')
-		<hr/>
-		<div class="entry-content">
-			{{ $post->excerpt }}
-		</div>
-		<footer>
-			@if($post->can_edit()))
-				{{ edit_post_link() }}
-			@endif
-		</footer>
-	</article>
-	@wppostsend
+	<header>
+		<h1>{{ $title }}</h1>
+	</header>
+
+	<section>
+		@each('posts.excerpt', $posts, 'post')
+	</section>
 @endsection

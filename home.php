@@ -1,8 +1,8 @@
 <?php
+use Cutlass\Cutlass;
 
-$context = array(
-	'title'     =>  CutlassHelper::get_page_title(),
-	'posts'     =>  CutlassHelper::get_posts(),
-);
+$post = Cutlass::get_post();
+$posts = Cutlass::get_posts();
+$title = Cutlass::get_page_title();
 
-$cutlass->render('pages.home', $context);
+Cutlass::render(['pages.home', 'pages.page'], compact('post', 'posts', 'title'));

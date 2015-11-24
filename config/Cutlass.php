@@ -71,7 +71,7 @@ add_filter('cutlass_global_view_data', 'add_cutlass_global_view_data', 10, 1);
  */
 function add_custom_directives($custom_directives)
 {
-    $custom_directives['wpposts']      = '<?php foreach($posts as $post) : setup_postdata($post); ?>';
+    $custom_directives['wpposts']      = '<?php foreach($posts as $post) : setup_postdata($post); $post = new Cutlass\CutlassPost($post); ?>';
     $custom_directives['wppostsend']   = '<?php endforeach; wp_reset_postdata(); ?>';
     $custom_directives['wppostsquery'] = '<?php $posts = get_posts({expression}); foreach($posts as $post) : setup_postdata($post); ?>';
 
