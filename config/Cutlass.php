@@ -1,9 +1,34 @@
 <?php
+use Cutlass\Cutlass;
+use Cutlass\CutlassSite;
 
 /**
- * BEGIN CONFIGURATION
- * -----------------------
+ * Set the default path to the directory where Blade will read for
+ * views
+ *
+ * @param 	$views_directory string
+ * 			Default: app_path() . '/resources/views'
+ *
+ * @return string
  */
+function set_cutlass_views_directory($views_directory) {
+	return app_path() . '/resources/views';
+}
+add_filter('cutlass_views_directory', 'set_cutlass_views_directory', 10, 1);
+
+/**
+ * Set the default path to the directory where Blade will store
+ * it's cache files
+ *
+ * @param 	$cache_directory string
+ * 			Default: app_path() . '/storage/views'
+ *
+ * @return string
+ */
+function set_cutlass_cache_directory($cache_directory) {
+	return app_path() . '/storage/views';
+}
+add_filter('cutlass_cache_directory', 'set_cutlass_cache_directory', 10, 1);
 
 /**
  * Global variables you want to have available in all Blade views.
@@ -12,91 +37,37 @@
  *              'site_url'  =>  get_bloginfo('url'),
  *                          to:
  *              {{ $site_url }}
- * @var array
+ *
+ * @return array
  */
-
-$global_view_data = array(
-
-);
+function add_cutlass_global_view_data() {
+	return [
+		'site'=> new CutlassSite(),
+	];
+}
+add_filter('cutlass_global_view_data', 'add_cutlass_global_view_data', 10, 1);
 
 /**
  * Custom Directives to add to Blade
  *
  * * OPTIONAL: Add {expression} where you want the value of the directive to go
- * * e.g.   'wpquery' => '<?php $query = new WP_Query({expression}); ?>'
+ * * e.x.   'wpquery' => '<?php $query = new WP_Query({expression}); ?>'
  * *            so that when you use:
  * *        @wpquery(['post_type' => 'page'])
  * *            it turns into this:
  * *        <?php $query = new WP_Query(['post_type' => 'page']); ?>
  *
- * @var array
+ * @return array;
  */
-$custom_directives = array(
-	'wpposts'       =>  '<?php foreach($posts as $post) : setup_postdata($post); ?>',
-	'wppostsend'    =>  '<?php endforeach; wp_reset_postdata(); ?>',
-	'wppostsquery'  =>  '<?php $posts = get_posts({expression}); foreach($posts as $post) : setup_postdata($post); ?>',
-	'wploop'        =>  '<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); $post = CutlassHelper::get_post(); ?>',
-	'wploopempty'   =>  '<?php endwhile; else : ?>',
-	'wploopend'     =>  '<?php endif; wp_reset_postdata(); ?>',
-	'wploopquery'   =>  '<?php $query = new WP_Query({expression}); if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); $post = CutlassHelper::get_post(); ?>',
-);
-
-$misc_settings = array(
-	/**
-	 * Enables the conversion from WP_Post to CutlassPost. You
-	 * can still use CutlassHelper functions however they will
-	 * return boring old WP_Post objects. Set to false if
-	 * memory or performance is an issue.
-	 */
-	'enable_simple_posts'   =>  true,
-	/**
-	 * Controls the properties in the CutlassPost object. If true
-	 * the properties beginning with "post_" will have the "post_"
-	 * prefix removed. Set to false if memory or performance is an
-	 * issue.
-	 *
-	 * * Note: If enable_simple_posts is disabled this setting
-	 * * becomes invalid
-	 */
-	'enable_post_simple_properties'    =>  true,
-	/**
-	 * Controls the properties in the CutlassPost object. If true
-	 * there will be extra helpful properties available to the
-	 * WP_Post object returned. Set to false if performance is an
-	 * issue.
-	 *
-	 * * Note: If enable_simple_posts is disabled this setting
-	 * * becomes invalid
-	 */
-	'enable_post_extra_properties'     =>  true,
-);
-
-/**
- * The directory in which you want to have your Blade template files
- * @var string
- */
-$views_directory = app_path() . '/resources/views';
-
-/**
- * The directory in which you want to have Blade store it's cached/compiled files
- * @var string
- */
-$cache_directory = app_path() . '/storage/views';
-
-/**
- * END CONFIGURATION
- * -----------------
- */
-
-/**
- * Apply filters
- */
-$global_view_data = apply_filters('cutlass_global_view_data', $global_view_data);
-$custom_directives = apply_filters('cutlass_custom_directives', $custom_directives);
-
-/**
- * Initialize Cutlass
- */
-
-global $cutlass;
-$cutlass = new Cutlass($views_directory, $cache_directory, $custom_directives, $global_view_data, $misc_settings);
+function add_custom_directives() {
+	return [
+			'wpposts'       =>  '<?php foreach($posts as $post) : setup_postdata($post); ?>',
+			'wppostsend'    =>  '<?php endforeach; wp_reset_postdata(); ?>',
+			'wppostsquery'  =>  '<?php $posts = get_posts({expression}); foreach($posts as $post) : setup_postdata($post); ?>',
+			'wploop'        =>  '<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); $post = Cutlass\Cutlass::get_post(); ?>',
+			'wploopempty'   =>  '<?php endwhile; else : ?>',
+			'wploopend'     =>  '<?php endif; wp_reset_postdata(); ?>',
+			'wploopquery'   =>  '<?php $query = new WP_Query({expression}); if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); $post = Cutlass\Cutlass::get_post(); ?>',
+	];
+}
+add_filter('cutlass_custom_directives', 'add_custom_directives', 10, 1);

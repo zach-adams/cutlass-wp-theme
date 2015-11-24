@@ -94,12 +94,12 @@ function cutlass_scripts() {
 	/**
 	 * Queue our elixir styles
 	 */
-	wp_enqueue_style( 'all', elixir('css/all.css'), array(), null, 'all' );
+	wp_enqueue_style( 'all', asset('css/all.css'), array(), null, 'all' );
 
 	/**
 	 * Queue our elixir scripts
 	 */
-	wp_enqueue_script( 'all', elixir('js/all.js'), array('jquery'), null, true );
+	wp_enqueue_script( 'all', asset('js/all.js'), array('jquery'), null, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
