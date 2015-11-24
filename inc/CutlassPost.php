@@ -284,14 +284,21 @@ class CutlassPost
      *
      * Returns the post class
      *
+     * @param bool   $echo
      * @param null $class
      *
      * @return mixed
      */
-    public function post_class($class = null)
+    public function post_class($echo = true, $class = null)
     {
 
-        return 'class="' . join( ' ', get_post_class( $class, $this->ID ) ) . '"';
+        $class = 'class="' . join( ' ', get_post_class( $class, $this->ID ) ) . '"';
+
+        if ($echo === true) {
+            echo $class;
+        } else {
+            return $class;
+        }
 
     }
 
