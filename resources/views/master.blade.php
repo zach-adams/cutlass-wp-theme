@@ -13,7 +13,6 @@
 </head>
 
 <body {{ body_class() }}>
-  
 	@include('includes.header')
 
 	@yield('main_content')
