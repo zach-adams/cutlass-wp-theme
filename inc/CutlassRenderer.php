@@ -126,6 +126,7 @@ class CutlassRenderer
             foreach ($this->filesnames as $filename) {
                 if ($this->blade->view()->exists($filename)) {
                     $output = $this->blade->view()->make($filename)->render();
+                    break;
                 }
             }
         }
