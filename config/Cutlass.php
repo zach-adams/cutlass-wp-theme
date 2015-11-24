@@ -28,7 +28,7 @@ add_filter('cutlass_views_directory', 'set_cutlass_views_directory', 10, 1);
  */
 function set_cutlass_cache_directory($cache_directory)
 {
-    return app_path() . '/storage/views';
+    return app_path() . '/storage/framework/views';
 }
 
 add_filter('cutlass_cache_directory', 'set_cutlass_cache_directory', 10, 1);
@@ -72,7 +72,7 @@ add_filter('cutlass_global_view_data', 'add_cutlass_global_view_data', 10, 1);
 function add_custom_directives($custom_directives)
 {
     $custom_directives['wpposts']      = '<?php foreach($posts as $post) : setup_postdata($post); ?>';
-    $custom_directives['wppostsend']   = '<?php endforeach; wp_reset_postdata(); ?';
+    $custom_directives['wppostsend']   = '<?php endforeach; wp_reset_postdata(); ?>';
     $custom_directives['wppostsquery'] = '<?php $posts = get_posts({expression}); foreach($posts as $post) : setup_postdata($post); ?>';
 
     return $custom_directives;
