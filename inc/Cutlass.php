@@ -104,7 +104,7 @@ class Cutlass
         } elseif (is_search()) {
             return 'Search Results for ' . get_search_query();
         } elseif (is_404()) {
-            return 'Not Found';
+            return '404 - Not Found';
         } else {
             return get_the_title($post_id);
         }

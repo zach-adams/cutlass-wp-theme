@@ -1,7 +1,6 @@
 <?php
+use Cutlass\Cutlass;
 
-$context = array(
-	'title'     =>  CutlassHelper::get_page_title(),
-);
+$title = Cutlass::get_page_title();
 
-$cutlass->render('pages.404', $context);
+Cutlass::render(['pages.404'], compact('title'));
