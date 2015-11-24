@@ -60,7 +60,7 @@ class Cutlass {
         $cache_directory = apply_filters('cutlass_cache_directory', app_path() . '/storage/views');
 
         /**
-         * Blade Class
+         * Blade Engine
          */
         self::$blade = new Blade($views_directory, $cache_directory);
 
