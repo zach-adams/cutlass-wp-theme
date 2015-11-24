@@ -118,10 +118,6 @@ class CutlassRenderer
 
             $output = $this->blade->view()->make($this->filesnames)->render();
         } elseif (is_array($this->filesnames)) {
-            /**
-             * For whatever reason it's necessary to flip the array to sort correctly
-             */
-            $this->filesnames = array_reverse($this->filesnames);
 
             foreach ($this->filesnames as $filename) {
                 if ($this->blade->view()->exists($filename)) {
