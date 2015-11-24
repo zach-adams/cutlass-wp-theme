@@ -34,6 +34,27 @@ function set_cutlass_cache_directory($cache_directory)
 add_filter('cutlass_cache_directory', 'set_cutlass_cache_directory', 10, 1);
 
 /**
+ * Enable or disable the Blade cache
+ * * Note: Be sure to disable the cache in development
+ * * environments otherwise changes may not appear until
+ * * you manually clear the Blade Cache directory
+ *
+ * @param    $disable_cache bool
+ *                            Default: false
+ *
+ * @return bool
+ */
+function set_cutlass_disable_cache($disable_cache)
+{
+    if(WP_DEBUG === true) {
+        return true;
+    }
+    return $disable_cache;
+}
+
+add_filter('cutlass_disable_cache', 'set_cutlass_disable_cache', 10, 1);
+
+/**
  * Global variables you want to have available in all Blade views.
  *
  * * Note: This is a key value array, so your data goes from:

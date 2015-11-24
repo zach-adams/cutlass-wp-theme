@@ -59,7 +59,18 @@ class Cutlass
          * Filter: 'cutlass_cache_directory' - Change the location of the Blade cache
          * @var string
          */
-        $cache_directory = apply_filters('cutlass_cache_directory', app_path() . '/storage/views');
+        $cache_directory = apply_filters('cutlass_cache_directory', app_path() . '/storage/framework/views');
+
+        /**
+         * Whether the Blade cache is enabled or disabled
+         * Filter: 'cutlass_disable_cache' - Enable or Disable the Blade cache
+         * @var bool
+         */
+        $disable_cache = apply_filters('cutlass_disable_cache', false);
+
+        if($disable_cache === true) {
+            self::clear_blade_cache();
+        }
 
         /**
          * Blade Engine
@@ -74,6 +85,17 @@ class Cutlass
 
         return $output;
 
+    }
+
+
+    /**
+     * clear_blade_cache
+     * Clears the entire Blade cache directory
+     * @return array
+     */
+    protected static function clear_blade_cache()
+    {
+        return array_map('unlink', glob(app_path() . '/storage/framework/views/*'));
     }
 
 
