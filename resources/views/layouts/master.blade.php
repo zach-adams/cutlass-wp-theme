@@ -9,8 +9,6 @@
 
 	<link rel="pingback" href="{{ $site->info('pingback_url') }}" />
 
-	<title>{{ wp_title() }}</title>
-
 	{!! $wp_head !!}
 </head>
 

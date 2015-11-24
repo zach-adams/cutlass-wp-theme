@@ -30,6 +30,11 @@ function cutlass_setup()
 			'caption',
 	]);
 
+	/**
+	 * Add theme support for new title tag (as of 4.1)
+	 */
+	add_theme_support( 'title-tag' );
+
 	//Register default nav menus
 	register_nav_menus([
 			'primary_navigation' => 'Primary Navigation'
@@ -57,41 +62,6 @@ function cutlass_widgets_init()
 }
 
 add_action('widgets_init', 'cutlass_widgets_init');
-
-/**
- * Create a nicely formatted and more specific title element text for output
- * in head of document, based on current view.
- *
- * From Twenty Fifteen:
- * https://github.com/WordPress/WordPress/blob/81df9bffc5ffdda9cd7c16dadef21b574f9ee922/wp-content/themes/twentyfourteen/functions.php
- *
- * @param $title
- * @param $sep
- *
- * @return string
- */
-function cutlass_wp_title($title, $sep)
-{
-	global $paged, $page;
-	if (is_feed()) {
-		return $title;
-	}
-	// Add the site name.
-	$title .= get_bloginfo('name', 'display');
-	// Add the site description for the home/front page.
-	$site_description = get_bloginfo('description', 'display');
-	if ($site_description && ( is_home() || is_front_page() )) {
-		$title = "$title $sep $site_description";
-	}
-	// Add a page number if necessary.
-	if (( $paged >= 2 || $page >= 2 ) && ! is_404()) {
-		$title = "$title $sep " . sprintf(__('Page %s', 'twentyfourteen'), max($paged, $page));
-	}
-
-	return $title;
-}
-
-add_filter('wp_title', 'cutlass_wp_title', 10, 2);
 
 /**
  * Theme styles and scripts setup
