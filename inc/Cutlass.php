@@ -1,9 +1,9 @@
 <?php namespace Cutlass;
 
 use Philo\Blade\Blade;
-use Cutlass\CutlassPost;
 
-class Cutlass {
+class Cutlass
+{
 
     /**
      * The unique instance of the plugin.
@@ -19,6 +19,7 @@ class Cutlass {
      */
     public static $blade;
 
+
     /**
      * Gets an instance of our plugin.
      *
@@ -33,16 +34,17 @@ class Cutlass {
         return self::$instance;
     }
 
+
     /**
      * Makes and renders the view into a cached PHP file
      * then echos and returns it.
      *
      * @param array $filenames - An array of views to render in order of precedence
-     * @param array $context - An array of items to add to the view
+     * @param array $context   - An array of items to add to the view
      *
      * @return mixed
      */
-    public static function render($filenames, $context = array())
+    public static function render($filenames, $context = [ ])
     {
 
         /**
@@ -69,9 +71,11 @@ class Cutlass {
         $output = $cutlassrenderer->render();
 
         echo $output;
+
         return $output;
 
     }
+
 
     /**
      * get_title
@@ -86,7 +90,8 @@ class Cutlass {
      *
      * @return string
      */
-    public static function get_page_title( $post_id = 0 ) {
+    public static function get_page_title($post_id = 0)
+    {
 
         if (is_home()) {
             if (get_option('page_for_posts', true)) {
@@ -106,6 +111,7 @@ class Cutlass {
 
     }
 
+
     /**
      * get_posts
      *
@@ -116,29 +122,31 @@ class Cutlass {
      *
      * @return array
      */
-    public static function get_posts($query = array()) {
+    public static function get_posts($query = [ ])
+    {
         global $wp_query;
-        global $cutlass;
 
         /**
          * Set return var
          */
-        $posts = array();
+        $posts = [ ];
 
         /**
          * If the query's empty and the global WP_Query has posts grab them
          * else just grab the posts the normal way
          */
-        if( empty($query) && property_exists($wp_query, 'posts') && !empty($wp_query->posts))
+        if (empty( $query ) && property_exists($wp_query, 'posts') && ! empty( $wp_query->posts )) {
             $posts = $wp_query->posts;
-        else
+        } else {
             $posts = get_posts($query);
+        }
 
         /**
          * Return empty if either of those fail
          */
-        if( empty($posts) )
-            return array();
+        if (empty( $posts )) {
+            return [ ];
+        }
 
         /**
          * Convert WP_Posts to CutlassPosts
@@ -152,6 +160,7 @@ class Cutlass {
 
     }
 
+
     /**
      * get_post
      *
@@ -160,15 +169,17 @@ class Cutlass {
      *
      * @param int $postid
      *
-     * @return CutlassPost
+     * @return CutlassPost|bool
      */
-    public static function get_post( $postid = null ) {
+    public static function get_post($postid = null)
+    {
 
         /**
          * If postid is empty get the ID the normal way
          */
-        if(empty($postid))
+        if (empty( $postid )) {
             $postid = get_the_ID();
+        }
 
         /**
          * Grab post using postid
@@ -179,15 +190,17 @@ class Cutlass {
          * If it's a correct WP_Post convert it to a
          * CutlassPost
          */
-        if ( is_a($post, 'WP_Post'))
+        if (is_a($post, 'WP_Post')) {
             return new CutlassPost($post);
+        }
 
         /**
          * Return null if all else fails
          */
-        return null;
+        return false;
 
     }
+
 
     /**
      * convert_posts
@@ -201,27 +214,30 @@ class Cutlass {
      *
      * @return null|WP_Post
      */
-    public static function convert_posts(&$posts) {
+    public static function convert_posts(&$posts)
+    {
 
         /**
          * If it's already CutlassPost just return
          */
-        if( is_a($posts, 'CutlassPost') )
+        if (is_a($posts, 'CutlassPost')) {
             return null;
+        }
 
         /**
          * If it's a single WP_Post object convert it
          * and return
          */
-        if (is_a($posts, 'WP_Post') ) {
+        if (is_a($posts, 'WP_Post')) {
             $posts = new CutlassPost($posts);
+
             return $posts;
         }
 
         /**
          * Convert all posts
          */
-        array_walk($posts, function(&$value, $key) {
+        array_walk($posts, function (&$value, $key) {
             $value = new CutlassPost($value);
         });
 
