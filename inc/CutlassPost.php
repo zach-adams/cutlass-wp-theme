@@ -1,4 +1,4 @@
-<?php
+<?php namespace Cutlass;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -146,7 +146,6 @@ class CutlassPost {
 	 * @param $post WP_Post
 	 */
 	public function __construct( $post ) {
-		global $cutlass;
 
 		/**
 		 * If we're given an int we'll convert it to a WP_Post object
@@ -158,14 +157,12 @@ class CutlassPost {
 		 * Takes the original WP_Post properties and moves them to
 		 * this CutlassPost object
 		 */
-		$this->set_properties($post, $cutlass->misc_settings['enable_post_simple_properties']);
+		$this->set_properties($post);
 
 		/**
-		 * Sets extra helpful properties
+		 * Adds our extra simple properties to the object
 		 */
-		if ($cutlass->misc_settings['enable_post_extra_properties'] === true) {
-			$this->extra_properties($post);
-		}
+		$this->extra_properties($post);
 
 	}
 
@@ -204,9 +201,8 @@ class CutlassPost {
 	 * applies them to this CutlassPost object
 	 *
 	 * @param WP_Post $post
-	 * @param bool $addSimple
 	 */
-	private function set_properties( $post, $addSimple = false ) {
+	private function set_properties( $post ) {
 
 		/**
 		 * Get WP_Post properties
@@ -221,18 +217,14 @@ class CutlassPost {
 		}
 
 		/**
-		 * If we're adding simple properties, go through the properties
-		 * and remove "post_" from any properties
+		 * Make "easy" properties
+		 * * i.e. $this->post_date to $this->date
 		 */
-		if($addSimple === true) {
-
-			foreach($props as $key => $prop) {
-				if(substr($key, 0, 5) === "post_") {
-					$new = substr($key, 5, strlen($key));
-					$this->$new = $prop;
-				}
+		foreach($props as $key => $prop) {
+			if(substr($key, 0, 5) === "post_") {
+				$new = substr($key, 5, strlen($key));
+				$this->$new = $prop;
 			}
-
 		}
 
 	}
@@ -242,7 +234,7 @@ class CutlassPost {
 	 *
 	 * Gets all comments for this post
 	 *
-	 * @param Array $args
+	 * @param $args array
 	 *
 	 * @return mixed
 	 */
@@ -275,9 +267,9 @@ class CutlassPost {
 	 *
 	 * Gets the tags for this post, accepts array of args
 	 *
-	 * @param Array $args
+	 * @param array $args 
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function tags( $args = array() ) {
 
@@ -291,10 +283,10 @@ class CutlassPost {
 	 * Gets the terms for this post, accepts a taxonomy
 	 * array and an args array
 	 *
-	 * @param String|Array $tax
-	 * @param Array $args
+	 * @param String|array $tax
+	 * @param array $args
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function terms( $tax = 'post_tag', $args = array()){
 
@@ -312,8 +304,8 @@ class CutlassPost {
 	 *
 	 * Gets the posts featured image
 	 *
-	 * @param String|Array $size
-	 * @param String|Array $attr
+	 * @param String|array $size
+	 * @param String|array $attr
 	 *
 	 * @return String
 	 */
@@ -385,9 +377,9 @@ class CutlassPost {
 	 *
 	 * Gets this posts children
 	 *
-	 * @var Array args
+	 * @var array args
 	 *
-	 * @return Array
+	 * @return array
 	 */
 	public function children( $args = array('post_type'=>'any') ) {
 		global $cutlass;

@@ -1,4 +1,4 @@
-<?php
+<?php namespace Cutlass;
 
 /**
  * CutlassSite Class
@@ -13,11 +13,13 @@ class CutlassSite {
 	 *
 	 * Allows us to easily access the bloginfo wp function
 	 *
-	 * return @mixed
+	 * @param string $name - The name of the option to get
+	 * @param string $filter - Whether to filter the returned value
+	 * @return mixed
 	 */
-	public function info($value, $filter = 'raw') {
+	public function info($name, $filter = 'raw') {
 
-		return get_bloginfo($value, $filter);
+		return get_bloginfo($name, $filter);
 
 	}
 
@@ -43,11 +45,13 @@ class CutlassSite {
 	 *
 	 * Allows us to easily access the option wp function
 	 *
-	 * return @mixed
+	 * @param string $name - the option name
+	 *
+	 * @return mixed
 	 */
-	public function option($value) {
+	public function option($name) {
 
-		return get_option($value);
+		return get_option($name);
 
 	}
 
