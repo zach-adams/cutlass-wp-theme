@@ -52,8 +52,7 @@ class CutlassRenderer
          * Our default Global View Data
          */
         $global_view_data = [
-            'wp_head'   => $this->render_wp_head(),
-            'wp_footer' => $this->render_wp_footer(),
+            'wp_head' => $this->render_wp_head(),
         ];
 
         /**
@@ -145,22 +144,6 @@ class CutlassRenderer
     {
         ob_start();
         wp_head();
-
-        return ob_get_clean();
-    }
-
-
-    /**
-     * render_wp_footer
-     *
-     * Renders the wp_footer function so we can input into our view
-     *
-     * @return string
-     */
-    protected function render_wp_footer()
-    {
-        ob_start();
-        wp_footer();
 
         return ob_get_clean();
     }
