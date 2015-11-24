@@ -1,5 +1,7 @@
 <?php
 
+use Cutlass\Cutlass;
+
 if (!function_exists('bcrypt')) {
 	/**
 	 * Hash the given value.
@@ -37,9 +39,9 @@ if (!function_exists('app')) {
 	 */
 	function app($make = null, $parameters = [])
 	{
-		global $cutlass;
+		$cutlass = Cutlass::get_instance();
 
-		$container = $cutlass->blade->view()->getContainer();
+		$container = $cutlass::$blade->view()->getContainer();
 
 		if (is_null($make)) {
 			return $container;
@@ -47,7 +49,21 @@ if (!function_exists('app')) {
 		return $container->make($make, $parameters);
 	}
 }
+if (! function_exists('asset')) {
+	/**
+	 * Generate an asset path for the application.
+	 *
+	 * @param  string  $path
+	 * @return string
+	 */
+	function asset($path)
+	{
+		if( !empty($path) )
+			$path = '/' . $path;
 
+		return get_template_directory_uri() . 'public' . $path;
+	}
+}
 if (!function_exists('app_path')) {
 
 	/**
