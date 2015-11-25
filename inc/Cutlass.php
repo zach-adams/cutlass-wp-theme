@@ -200,7 +200,7 @@ class Cutlass
          * If postid is empty get the ID the normal way
          */
         if (empty( $postid )) {
-            $postid = get_the_ID();
+            $postid = get_queried_object_id();
         }
 
         /**
