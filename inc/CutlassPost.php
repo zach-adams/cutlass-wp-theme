@@ -350,15 +350,19 @@ class CutlassPost
      *
      * Gets the posts featured image
      *
+     * @param bool $echo
      * @param String|array $size
      * @param String|array $attr
      *
      * @return String
      */
-    public function thumbnail($size = 'thumbnail', $attr = '')
+    public function thumbnail($echo = true, $size = 'thumbnail', $attr = '')
     {
-
-        return get_the_post_thumbnail($this->ID, $size, $attr);
+        if($echo === true) {
+            echo get_the_post_thumbnail($this->ID, $size, $attr);
+        } else {
+            return get_the_post_thumbnail($this->ID, $size, $attr);
+        }
 
     }
 
