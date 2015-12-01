@@ -1,17 +1,13 @@
 <?php namespace Cutlass;
 
 /**
- * CutlassSite Class
- *
  * Allows us to quickly and easily access common WordPress
  * options and blog info.
  */
-class CutlassSite
+class Site
 {
 
     /**
-     * info
-     *
      * Allows us to easily access the bloginfo wp function
      *
      * @param string $name   - The name of the option to get
@@ -28,8 +24,6 @@ class CutlassSite
 
 
     /**
-     * title
-     *
      * Returns the value of wp_title function
      *
      * @param string $sep
@@ -47,8 +41,33 @@ class CutlassSite
 
 
     /**
-     * option
+     * Simple helper to load WordPress dynamic sidebars
      *
+     * @param string $sidebar
+     *
+     * @return void|string
+     */
+    public function sidebar($sidebar = '')
+    {
+        /**
+         * We're using ob_ functions so we can reliably return
+         * the correct values if dynamic_sidebar fails
+         */
+        ob_start();
+        dynamic_sidebar($sidebar);
+        $sidebar = ob_get_clean();
+
+        if (is_string($sidebar)) {
+            echo $sidebar;
+
+            return;
+        }
+
+        return $sidebar;
+    }
+
+
+    /**
      * Allows us to easily access the option wp function
      *
      * @param string $name - the option name

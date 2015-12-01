@@ -3,11 +3,11 @@ use Cutlass\Cutlass;
 
 /*
 |--------------------------------------------------------------------------
-| Home Template
+| Front Page Template
 |--------------------------------------------------------------------------
 |
-| This is the template for displaying the Home Page. This template is used
-| for the Posts index page which is set under the WordPress settings.
+| This is the template for displaying the Static Front Page. This template
+| is used when there is a static front page set in the WordPress settings.
 |
 | https://codex.wordpress.org/Creating_a_Static_Front_Page#Theme_Development_for_Custom_Front_Page_Templates
 |

@@ -19,8 +19,8 @@
 		"nesbot/carbon": "~1.19"
 	},
 	"autoload": {
-		"files": ["inc/Util.php"],
-		"classmap": ["inc/"]
+		"files": ["Cutlass/Util.php"],
+		"classmap": ["Cutlass/"]
 	},
 	"require-dev": {
 		"lavoiesl/php-benchmark": "^1.4"

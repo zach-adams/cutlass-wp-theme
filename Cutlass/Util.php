@@ -1,5 +1,4 @@
 <?php
-
 use Cutlass\Cutlass;
 
 if ( ! function_exists('bcrypt')) {

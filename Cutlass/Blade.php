@@ -1,14 +1,11 @@
 <?php namespace Cutlass;
 
-use Philo\Blade\Blade;
 use Exception;
 
 /**
- * The CutlassRenderer class
- *
  * Used to initialize the Blade templating engine
  */
-class CutlassRenderer
+class Blade
 {
 
     /**
@@ -71,8 +68,6 @@ class CutlassRenderer
 
 
     /**
-     * render
-     *
      * Makes and renders the view into a cached PHP file
      * then echos and returns it.
      *
@@ -136,8 +131,6 @@ class CutlassRenderer
 
 
     /**
-     * render_wp_head
-     *
      * Renders the wp_head function so we can input into our view
      *
      * @return string
@@ -152,8 +145,6 @@ class CutlassRenderer
 
 
     /**
-     * directive
-     *
      * Adds the directive to our compiler
      *
      * @param string $key

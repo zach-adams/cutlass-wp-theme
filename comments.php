@@ -1,4 +1,14 @@
 <?php
+/*
+|--------------------------------------------------------------------------
+| Comments Template
+|--------------------------------------------------------------------------
+|
+| This is the template for displaying comments. The area of the page that
+| contains both current comments and the comment form.
+|
+*/
+
 	if (post_password_required()) {
 		return;
 	}

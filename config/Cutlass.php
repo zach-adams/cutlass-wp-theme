@@ -1,5 +1,5 @@
 <?php
-use Cutlass\CutlassSite;
+use Cutlass\Site;
 
 /**
  * Set the default path to the directory where Blade will read for
@@ -69,7 +69,7 @@ add_filter('cutlass_disable_cache', 'set_cutlass_disable_cache', 10, 1);
 function add_cutlass_global_view_data($global_view_data)
 {
 
-    $global_view_data['site'] = new CutlassSite();
+    $global_view_data['site'] = new Site();
 
     return $global_view_data;
 }
@@ -92,7 +92,7 @@ add_filter('cutlass_global_view_data', 'add_cutlass_global_view_data', 10, 1);
  */
 function add_custom_directives($custom_directives)
 {
-    $custom_directives['wpposts']      = '<?php foreach($posts as $post) : setup_postdata($post); $post = new Cutlass\CutlassPost($post); ?>';
+    $custom_directives['wpposts']      = '<?php foreach($posts as $post) : setup_postdata($post); $post = new Cutlass\Post($post); ?>';
     $custom_directives['wppostsend']   = '<?php endforeach; wp_reset_postdata(); ?>';
     $custom_directives['wppostsquery'] = '<?php $posts = get_posts({expression}); foreach($posts as $post) : setup_postdata($post); ?>';
 

@@ -4,13 +4,11 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 /**
- * CutlassPost Class
- *
  * Converts a WP_Post object into a much more useable
  * object that we can use to easily access common
  * wp properties and methods
  */
-class CutlassPost
+class Post
 {
 
     /**
@@ -152,10 +150,8 @@ class CutlassPost
 
 
     /**
-     * __construct
-     *
      * Accepts a WP_Post object and builds a new
-     * CutlassPost object using it's properties
+     * Post object using it's properties
      *
      * @param $post WP_Post
      */
@@ -171,7 +167,7 @@ class CutlassPost
 
         /**
          * Takes the original WP_Post properties and moves them to
-         * this CutlassPost object
+         * this Post object
          */
         $this->set_properties($post);
 
@@ -184,10 +180,8 @@ class CutlassPost
 
 
     /**
-     * extra_properties
-     *
      * Accepts a WP_Post object and sets additional helpful
-     * properties to this CutlassPost object
+     * properties to this Post object
      *
      * @param WP_Post $post
      */
@@ -214,10 +208,8 @@ class CutlassPost
 
 
     /**
-     * set_properties
-     *
      * Accepts WP_Post object, takes its properties and
-     * applies them to this CutlassPost object
+     * applies them to this Post object
      *
      * @param WP_Post $post
      */
@@ -230,7 +222,7 @@ class CutlassPost
         $props = get_object_vars($post);
 
         /**
-         * Apply WP_Post properties to this CutlassPost object
+         * Apply WP_Post properties to this Post object
          */
         foreach ($props as $key => $prop) {
             $this->$key = $prop;
@@ -251,8 +243,6 @@ class CutlassPost
 
 
     /**
-     * comments
-     *
      * Gets all comments for this post
      *
      * @param $args array
@@ -271,6 +261,11 @@ class CutlassPost
     }
 
 
+    /**
+     * Simply returns the author of this post
+     *
+     * @return string
+     */
     public function author()
     {
 
@@ -280,11 +275,9 @@ class CutlassPost
 
 
     /**
-     * post_class
-     *
      * Returns the post class
      *
-     * @param bool   $echo
+     * @param bool $echo
      * @param null $class
      *
      * @return mixed
@@ -292,7 +285,7 @@ class CutlassPost
     public function post_class($echo = true, $class = null)
     {
 
-        $class = 'class="' . join( ' ', get_post_class( $class, $this->ID ) ) . '"';
+        $class = 'class="' . join(' ', get_post_class($class, $this->ID)) . '"';
 
         if ($echo === true) {
             echo $class;
@@ -304,8 +297,6 @@ class CutlassPost
 
 
     /**
-     * tags
-     *
      * Gets the tags for this post, accepts array of args
      *
      * @param array $args
@@ -321,8 +312,6 @@ class CutlassPost
 
 
     /**
-     * terms
-     *
      * Gets the terms for this post, accepts a taxonomy
      * array and an args array
      *
@@ -346,11 +335,9 @@ class CutlassPost
 
 
     /**
-     * thumbnail
-     *
      * Gets the posts featured image
      *
-     * @param bool $echo
+     * @param bool         $echo
      * @param String|array $size
      * @param String|array $attr
      *
@@ -358,7 +345,7 @@ class CutlassPost
      */
     public function thumbnail($echo = true, $size = 'thumbnail', $attr = '')
     {
-        if($echo === true) {
+        if ($echo === true) {
             echo get_the_post_thumbnail($this->ID, $size, $attr);
         } else {
             return get_the_post_thumbnail($this->ID, $size, $attr);
@@ -368,8 +355,6 @@ class CutlassPost
 
 
     /**
-     * can_edit
-     *
      * Returns bool for whether the current user
      * can edit the this post
      *
@@ -384,8 +369,6 @@ class CutlassPost
 
 
     /**
-     * field
-     *
      * Proxy for ACF's get_field, if ACF isn't installed
      * then get this post custom meta.
      *
@@ -415,8 +398,6 @@ class CutlassPost
 
 
     /**
-     * meta
-     *
      * Gets this posts meta
      *
      * @param String $key
@@ -433,8 +414,6 @@ class CutlassPost
 
 
     /**
-     * children
-     *
      * Gets this posts children
      *
      * @var array args
@@ -467,12 +446,7 @@ class CutlassPost
             return [ ];
         }
 
-        /**
-         * Convert WP_Post objects to CutlassPost objects
-         */
-        if ($cutlass->misc_settings['enable_simple_posts'] === true) {
-            CutlassHelper::convert_posts($children);
-        }
+        Cutlass::convert_posts($children);
 
         return $children;
 
@@ -480,8 +454,6 @@ class CutlassPost
 
 
     /**
-     * link
-     *
      * Returns the post's permalink
      *
      * @param bool $relative
@@ -505,8 +477,6 @@ class CutlassPost
 
 
     /**
-     * excerpt
-     *
      * Returns a nicely formatted excerpt.
      *
      * @param int    $length
@@ -523,8 +493,6 @@ class CutlassPost
 
 
     /**
-     * title
-     *
      * Returns the post title after the filters have been run on it
      *
      * @param int    $length
@@ -549,8 +517,6 @@ class CutlassPost
 
 
     /**
-     * content
-     *
      * Returns the post content after the filters have been run on it
      *
      * @param bool   $echo

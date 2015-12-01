@@ -1,6 +1,6 @@
 <?php namespace Cutlass;
 
-use Philo\Blade\Blade;
+use Philo\Blade\Blade as PhiloBlade;
 
 class Cutlass
 {
@@ -68,16 +68,16 @@ class Cutlass
          */
         $disable_cache = apply_filters('cutlass_disable_cache', false);
 
-        if($disable_cache === true) {
+        if ($disable_cache === true) {
             self::clear_blade_cache();
         }
 
         /**
          * Blade Engine
          */
-        self::$blade = new Blade($views_directory, $cache_directory);
+        self::$blade = new PhiloBlade($views_directory, $cache_directory);
 
-        $cutlassrenderer = new CutlassRenderer($filenames, $context, self::$blade);
+        $cutlassrenderer = new Blade($filenames, $context, self::$blade);
 
         $output = $cutlassrenderer->render();
 
@@ -89,8 +89,8 @@ class Cutlass
 
 
     /**
-     * clear_blade_cache
      * Clears the entire Blade cache directory
+     *
      * @return array
      */
     protected static function clear_blade_cache()
@@ -100,8 +100,6 @@ class Cutlass
 
 
     /**
-     * get_title
-     *
      * Returns a nice formatted title according to which page
      * we're on.
      *
@@ -135,8 +133,6 @@ class Cutlass
 
 
     /**
-     * get_posts
-     *
      * Checks global wp_query for posts and returns them,
      * otherwise runs get_posts on passed query
      *
@@ -171,12 +167,12 @@ class Cutlass
         }
 
         /**
-         * Convert WP_Posts to CutlassPosts
+         * Convert WP_Posts to Posts
          */
         self::convert_posts($posts);
 
         /**
-         * Return array of CutlassPosts
+         * Return array of Posts
          */
         return $posts;
 
@@ -184,14 +180,12 @@ class Cutlass
 
 
     /**
-     * get_post
-     *
-     * Gets the post and converts it into a CutlassPost
+     * Gets the post and converts it into a Post
      * which grants us some nifty methods and properties
      *
      * @param int $postid
      *
-     * @return CutlassPost|bool
+     * @return Post|bool
      */
     public static function get_post($postid = null)
     {
@@ -210,10 +204,10 @@ class Cutlass
 
         /**
          * If it's a correct WP_Post convert it to a
-         * CutlassPost
+         * Post
          */
         if (is_a($post, 'WP_Post')) {
-            return new CutlassPost($post);
+            return new Post($post);
         }
 
         /**
@@ -225,9 +219,7 @@ class Cutlass
 
 
     /**
-     * convert_posts
-     *
-     * Converts WP_Posts to CutlassPosts
+     * Converts WP_Posts to Posts
      *
      * * Note: We use array_walk over foreach for memory conservation because
      * * the gained time is not worth the memory lost
@@ -240,9 +232,9 @@ class Cutlass
     {
 
         /**
-         * If it's already CutlassPost just return
+         * If it's already Post just return
          */
-        if (is_a($posts, 'CutlassPost')) {
+        if (is_a($posts, 'Post')) {
             return;
         }
 
@@ -251,7 +243,7 @@ class Cutlass
          * and return
          */
         if (is_a($posts, 'WP_Post')) {
-            $posts = new CutlassPost($posts);
+            $posts = new Post($posts);
 
             return $posts;
         }
@@ -260,7 +252,7 @@ class Cutlass
          * Convert all posts
          */
         array_walk($posts, function (&$value, $key) {
-            $value = new CutlassPost($value);
+            $value = new Post($value);
         });
 
     }

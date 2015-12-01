@@ -1,4 +1,4 @@
-@extends('layouts.full')
+@extends('layouts.full-width')
 
 @section('content')
 

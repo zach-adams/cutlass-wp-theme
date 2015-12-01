@@ -6,7 +6,7 @@
     </header>
 
     <section>
-        @include('pages.partials.single')
+        {{ $post->content() }}
     </section>
 
     {{ comments_template() }}
@@ -14,5 +14,5 @@
 
 @section('sidebar')
     <h2>Sidebar</h2>
-    {{ get_sidebar() }}
+    {{ $site->sidebar('sidebar-primary') }}
 @endsection
