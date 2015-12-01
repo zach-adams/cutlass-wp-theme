@@ -16,15 +16,25 @@ class Blade
      */
     protected $blade;
 
+    /**
+     * An array of filenames to render in order of precedence
+     *
+     * @var array|string
+     */
     protected $filesnames;
 
+    /**
+     * An array of data to add to the view
+     *
+     * @var array
+     */
     protected $context;
 
 
     /**
      * Initialize the class
      *
-     * @param $filenames array - An array of filenames to render in order of precedence
+     * @param $filenames array - An array or string of filename/s to render in order of precedence
      * @param $context   array - An array of data to add to the view
      * @param $blade     Blade - The Blade renderer class
      */
