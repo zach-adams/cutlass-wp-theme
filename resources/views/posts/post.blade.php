@@ -4,5 +4,5 @@
 
 	@include('posts.partials.single')
 
-	{{ comments_template() }}
+	{{ $site->comments() }}
 @endsection

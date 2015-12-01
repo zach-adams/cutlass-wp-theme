@@ -2,14 +2,14 @@
 
 @section('content')
     <header>
-        <h1>{{ $title }}</h1>
+        <h1>{{ $page->title() }}</h1>
     </header>
 
     <section>
         {{ $post->content() }}
     </section>
 
-    {{ comments_template() }}
+    {{ $site->comments() }}
 @endsection
 
 @section('sidebar')
