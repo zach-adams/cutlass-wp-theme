@@ -16,4 +16,4 @@ use Cutlass\Cutlass;
 $post = Cutlass::get_post();
 $posts = Cutlass::get_posts();
 
-Cutlass::render('pages.page', compact('post', 'posts'));
+Cutlass::render('pages.index', compact('post', 'posts'));
