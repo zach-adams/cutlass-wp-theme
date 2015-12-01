@@ -74,7 +74,7 @@ function cutlass_scripts()
 		 */
 		wp_enqueue_style('all', asset('css/app.css'), [ ], null, 'all');
 	}
-	if(file_exists(public_path('css/app.js'))) {
+	if(file_exists(public_path('js/app.js'))) {
 
 		/**
 		 * Queue our elixir scripts
