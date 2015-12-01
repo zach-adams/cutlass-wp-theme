@@ -1,6 +1,6 @@
 <?php namespace Cutlass;
 
-use Philo\Blade\Blade as PhiloBlade;
+use Philo\Blade\Blade as BladeEngine;
 
 class Cutlass
 {
@@ -18,7 +18,6 @@ class Cutlass
      * @var Blade
      */
     public static $blade;
-
 
     /**
      * Gets an instance of our plugin.
@@ -73,9 +72,9 @@ class Cutlass
         }
 
         /**
-         * Blade Engine
+         * Create the Blade Engine
          */
-        self::$blade = new PhiloBlade($views_directory, $cache_directory);
+        self::$blade = new BladeEngine($views_directory, $cache_directory);
 
         $cutlassrenderer = new Blade($filenames, $context, self::$blade);
 
@@ -96,39 +95,6 @@ class Cutlass
     protected static function clear_blade_cache()
     {
         return array_map('unlink', glob(app_path() . '/storage/framework/views/*'));
-    }
-
-
-    /**
-     * Returns a nice formatted title according to which page
-     * we're on.
-     *
-     * From Root's Sage
-     * https://github.com/roots/sage
-     *
-     * @param null|int $post_id
-     *
-     * @return string
-     */
-    public static function get_page_title($post_id = 0)
-    {
-
-        if (is_home()) {
-            if (get_option('page_for_posts', true)) {
-                return get_the_title(get_option('page_for_posts', true));
-            } else {
-                return 'Latest Posts';
-            }
-        } elseif (is_archive()) {
-            return get_the_archive_title();
-        } elseif (is_search()) {
-            return 'Search Results for ' . get_search_query();
-        } elseif (is_404()) {
-            return '404 - Not Found';
-        } else {
-            return get_the_title($post_id);
-        }
-
     }
 
 
