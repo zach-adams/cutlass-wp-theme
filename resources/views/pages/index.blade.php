@@ -6,6 +6,6 @@
 	</header>
 
 	<section id="main-content">
-		@each('posts.excerpt', $posts, 'post')
+		@each('posts.partials.excerpt', $posts, 'post')
 	</section>
 @endsection
