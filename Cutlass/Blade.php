@@ -90,7 +90,7 @@ class Blade
         /**
          * Add custom directives to Blade
          */
-        if ( ! empty( $this->custom_directives )) {
+        if ( ! empty( $this->custom_directives ) && is_array($this->custom_directives)) {
             foreach ($this->custom_directives as $key => $directive) {
                 $this->directive($key, $directive);
             }
@@ -99,19 +99,20 @@ class Blade
         /**
          * Add global view data
          */
-        if ( ! empty( $this->global_view_data )) {
+        if ( ! empty( $this->global_view_data ) && is_array($this->global_view_data)) {
             $this->blade->view()->share($this->global_view_data);
         }
 
         /**
          * Add view-specific context
          */
-        if ( ! empty( $this->context )) {
+        if ( ! empty( $this->context ) && is_array($this->context)) {
             $this->blade->view()->share($this->context);
         }
 
         /**
          * Render the view (if it exists)
+         *
          * Check to see if it's a single filename, else check to see if
          * there's an array of filenames
          */
