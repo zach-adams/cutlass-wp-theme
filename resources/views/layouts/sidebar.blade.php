@@ -6,7 +6,7 @@
     </main>
     <aside id="sidebar">
         @section('sidebar')
-            {{ get_sidebar() }}
+            {{ $site->sidebar() }}
         @show
     </aside>
 @endsection
