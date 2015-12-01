@@ -146,40 +146,44 @@ class Cutlass
 
 
     /**
-     * Gets the post and converts it into a Post
-     * which grants us some nifty methods and properties
+     * Gets the post and converts it into a Cutlass Post using the get_post function
      *
-     * @param int $postid
+     * See {@link sanitize_post()} for optional $filter values. Also, the parameter
+     * $post, must be given as a variable, since it is passed by reference.
      *
-     * @return Post|bool
+     * @param int|WP_Post|null $post   Optional. Post ID or post object. Defaults to global $post.
+     * @param string           $output Optional, default is Object. Accepts OBJECT, ARRAY_A, or ARRAY_N.
+     *                                 Default OBJECT.
+     * @param string           $filter Optional. Type of filter to apply. Accepts 'raw', 'edit', 'db',
+     *                                 or 'display'. Default 'raw'.
+     * @return WP_Post|array|null Type corresponding to $output on success or null on failure.
+     *                            When $output is OBJECT, a `WP_Post` instance is returned.
+     *
+     * @return Post|bool|null
      */
-    public static function get_post($postid = null)
+    public static function get_post( $post = null, $output = OBJECT, $filter = 'raw' )
     {
 
+        $post = get_post($post, $output, $filter);
+
         /**
-         * If postid is empty get the ID the normal way
+         * If it's null just return null
          */
-        if (empty( $postid )) {
-            $postid = get_queried_object_id();
+        if(is_null($post)) {
+            return null;
         }
 
         /**
-         * Grab post using postid
-         */
-        $post = get_post($postid);
-
-        /**
-         * If it's a correct WP_Post convert it to a
-         * Post
+         * If it's a correct WP_Post convert it to a Cutlass Post
          */
         if (is_a($post, 'WP_Post')) {
             return new Post($post);
         }
 
         /**
-         * Return null if all else fails
+         * Return post if it's an Array
          */
-        return false;
+        return $post;
 
     }
 
