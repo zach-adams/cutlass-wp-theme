@@ -23,6 +23,5 @@
 		"classmap": ["Cutlass/"]
 	},
 	"require-dev": {
-		"lavoiesl/php-benchmark": "^1.4"
 	}
 }
