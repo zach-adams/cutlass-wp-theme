@@ -1,5 +1,6 @@
 <?php
 use Cutlass\Site;
+use Cutlass\Page;
 
 /**
  * Set the default path to the directory where Blade will read for
@@ -39,16 +40,17 @@ add_filter('cutlass_cache_directory', 'set_cutlass_cache_directory', 10, 1);
  * * environments otherwise changes may not appear until
  * * you manually clear the Blade Cache directory
  *
- * @param    $disable_cache bool
+ * @param    $disable_cache   bool
  *                            Default: false
  *
  * @return bool
  */
 function set_cutlass_disable_cache($disable_cache)
 {
-    if(WP_DEBUG === true) {
+    if (WP_DEBUG === true) {
         return true;
     }
+
     return $disable_cache;
 }
 
@@ -69,7 +71,10 @@ add_filter('cutlass_disable_cache', 'set_cutlass_disable_cache', 10, 1);
 function add_cutlass_global_view_data($global_view_data)
 {
 
-    $global_view_data['site'] = new Site();
+    $global_view_data = array_merge($global_view_data, [
+        'site' => new Site(),
+        'page' => new Page(),
+    ]);
 
     return $global_view_data;
 }
@@ -92,9 +97,11 @@ add_filter('cutlass_global_view_data', 'add_cutlass_global_view_data', 10, 1);
  */
 function add_custom_directives($custom_directives)
 {
-    $custom_directives['wpposts']      = '<?php foreach($posts as $post) : setup_postdata($post); $post = new Cutlass\Post($post); ?>';
-    $custom_directives['wppostsend']   = '<?php endforeach; wp_reset_postdata(); ?>';
-    $custom_directives['wppostsquery'] = '<?php $posts = get_posts({expression}); foreach($posts as $post) : setup_postdata($post); ?>';
+    $custom_directives = array_merge($custom_directives, [
+        'wpposts'      => '<?php foreach($posts as $post) : setup_postdata($post); $post = new Cutlass\Post($post); ?>',
+        'wppostsend'   => '<?php endforeach; wp_reset_postdata(); ?>',
+        'wppostsquery' => '<?php $posts = get_posts({expression}); foreach($posts as $post) : setup_postdata($post); ?>',
+    ]);
 
     return $custom_directives;
 }
