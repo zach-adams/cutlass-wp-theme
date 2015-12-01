@@ -1,7 +1,15 @@
 <?php
 use Cutlass\Cutlass;
 
-$post = Cutlass::get_post();
-$title = Cutlass::get_page_title();
+/*
+|--------------------------------------------------------------------------
+| Page Template
+|--------------------------------------------------------------------------
+|
+| This is the template that displays all pages by default.
+|
+*/
 
-Cutlass::render(['pages.'. $post->post_name, 'pages.page'], compact('post', 'title'));
+$post = Cutlass::get_post();
+
+Cutlass::render(['pages.'. $post->post_name, 'pages.page'], compact('post'));

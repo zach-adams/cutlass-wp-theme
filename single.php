@@ -1,7 +1,15 @@
 <?php
 use Cutlass\Cutlass;
 
-$post = Cutlass::get_post();
-$title = Cutlass::get_page_title();
+/*
+|--------------------------------------------------------------------------
+| Single Post Template
+|--------------------------------------------------------------------------
+|
+| This is the template for displaying all single posts and attachments
+|
+*/
 
-Cutlass::render(['posts.'. $post->post_name, 'posts.post'], compact('post', 'title'));
+$post = Cutlass::get_post();
+
+Cutlass::render(['posts.'. $post->post_name, 'posts.post'], compact('post'));

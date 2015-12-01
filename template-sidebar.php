@@ -1,10 +1,16 @@
 <?php
-/**
- * Template Name: Sidebar
- */
 use Cutlass\Cutlass;
 
-$post = Cutlass::get_post();
-$title = Cutlass::get_page_title();
+/*
+|--------------------------------------------------------------------------
+| Sidebar Template
+| Template Name: Sidebar
+|--------------------------------------------------------------------------
+|
+| This is the template for displaying the sidebar layout
+|
+*/
 
-Cutlass::render(['pages.sidebar'], compact('post', 'title', 'sidebar'));
+$post = Cutlass::get_post();
+
+Cutlass::render(['pages.sidebar'], compact('post'));

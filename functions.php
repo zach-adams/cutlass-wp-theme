@@ -1,5 +1,15 @@
 <?php
 
+/*
+|--------------------------------------------------------------------------
+| Theme Functions
+|--------------------------------------------------------------------------
+|
+| This is where the magic happens. This is where Cutlass gets initialized
+| and loaded.
+|
+*/
+
 /**
  * Require the autoloader so we can get this party started
  */
