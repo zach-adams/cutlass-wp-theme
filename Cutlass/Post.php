@@ -355,6 +355,19 @@ class Post
 
 
     /**
+     * Returns whether the currenst post has a thumbanil
+     *
+     * @return Bool
+     */
+    public function has_thumbnail()
+    {
+
+            return has_post_thumbnail($this->ID);
+
+    }
+
+
+    /**
      * Returns bool for whether the current user
      * can edit the this post
      *
