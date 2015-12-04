@@ -98,6 +98,14 @@ class Post
     public $post_status = '';
 
     /**
+     * The posts mimetype
+     * @var string
+     */
+    public $post_mime_type = '';
+
+    public $mime_type = '';
+
+    /**
      * The current comment status (whether comments are enabled
      * or disabled)
      * @var string
@@ -154,6 +162,8 @@ class Post
      * Post object using it's properties
      *
      * @param $post \WP_Post|array
+     *
+     * @throws \Exception
      */
     public function __construct($post)
     {
@@ -168,11 +178,11 @@ class Post
         /**
          * If we're given an array we'll assume it's a query
          */
-        if(is_array($post)) {
+        if (is_array($post)) {
             $post['posts_per_page'] = 1;
-            $post = get_posts($post);
+            $post                   = get_posts($post);
 
-            if(isset($post[0])) {
+            if (isset( $post[0] )) {
                 $post = $post[0];
             }
         }
@@ -180,7 +190,7 @@ class Post
         /**
          * If we don't have a WP_Post by now throw an Exception
          */
-        if(!$post instanceof \WP_Post) {
+        if ( ! $post instanceof \WP_Post) {
             throw new \Exception('Cutlass was not able to convert this to a new Post type.');
         }
 
@@ -247,6 +257,41 @@ class Post
 
 
     /**
+     *
+     * Get extended entry info (<!--more-->).
+     *
+     * There should not be any space after the second dash and before the word
+     * 'more'. There can be text or space(s) after the word 'more', but won't be
+     * referenced.
+     *
+     * The returned array has 'main', 'extended', and 'more_text' keys. Main has the text before
+     * the `<!--more-->`. The 'extended' key has the content after the
+     * `<!--more-->` comment. The 'more_text' key has the custom "Read More" text.
+     *
+     * @param string $return - The type of item to return, must be string and "main", "extended", or "more_text
+     * @param bool   $echo   - Whether to echo or return value
+     *
+     * @return string|void
+     */
+    public function extended($return = 'main', $echo = true)
+    {
+
+        if ( ! in_array($return, [ 'main', 'extended', 'more_text' ])) {
+            throw new \InvalidArgumentException('Only accepts string "main", "extended", or "more_text". Input was: ' . $return);
+        }
+
+        $extended = get_extended($this->content);
+
+        if ($echo === false) {
+            return $extended[$return];
+        }
+
+        echo $extended[$return];
+
+    }
+
+
+    /**
      * Gets all comments for this post
      *
      * @param $args array
@@ -281,21 +326,21 @@ class Post
     /**
      * Returns the post class
      *
-     * @param bool $echo
      * @param null $class
+     * @param bool $echo
      *
      * @return mixed
      */
-    public function post_class($echo = true, $class = null)
+    public function post_class($class = null, $echo = true)
     {
 
         $class = 'class="' . join(' ', get_post_class($class, $this->ID)) . '"';
 
-        if ($echo === true) {
-            echo $class;
-        } else {
+        if ($echo === false) {
             return $class;
         }
+
+        echo $class;
 
     }
 
@@ -311,6 +356,28 @@ class Post
     {
 
         return wp_get_post_tags($this->ID, $args);
+
+    }
+
+
+    /**
+     * Gets the categories for this post
+     *
+     * @param array $args Optional. Category arguments. Default empty.
+     *
+     * @return array Array of category objects
+     */
+    public function categories($args = [ ])
+    {
+
+        $category_ids = wp_get_post_categories($this->ID, $args);
+        $categories   = [ ];
+
+        foreach ($category_ids as $category_id) {
+            $categories[] = get_category($category_id);
+        }
+
+        return $categories;
 
     }
 
@@ -342,41 +409,42 @@ class Post
      * Gets the posts featured image
      * Returns thumbnail by default
      *
-     * @param bool         $echo
      * @param String|array $size
      * @param String|array $attr
+     * @param bool         $echo
      *
-     * @return String
+     * @return String|void
      */
-    public function thumbnail($echo = true, $size = 'thumbnail', $attr = '')
+    public function thumbnail($size = 'thumbnail', $attr = '', $echo = true)
     {
 
-        if ($echo === true) {
-            echo get_the_post_thumbnail($this->ID, $size, $attr);
-        } else {
+        if ($echo === false) {
             return get_the_post_thumbnail($this->ID, $size, $attr);
         }
 
+        echo get_the_post_thumbnail($this->ID, $size, $attr);
+
     }
+
 
     /**
      * Gets the posts featured image (a little more verbosely)
      * Returns full size by default
      *
-     * @param bool         $echo
      * @param String|array $size
      * @param String|array $attr
+     * @param bool         $echo
      *
-     * @return String
+     * @return String|void
      */
-    public function featured_image($echo = true, $size = 'full', $attr = '')
+    public function featured_image($size = 'full', $attr = '', $echo = true)
     {
 
-        if ($echo === true) {
-            echo get_the_post_thumbnail($this->ID, $size, $attr);
-        } else {
+        if ($echo === false) {
             return get_the_post_thumbnail($this->ID, $size, $attr);
         }
+
+        echo get_the_post_thumbnail($this->ID, $size, $attr);
 
     }
 
@@ -389,7 +457,7 @@ class Post
     public function has_thumbnail()
     {
 
-            return has_post_thumbnail($this->ID);
+        return has_post_thumbnail($this->ID);
 
     }
 
@@ -443,26 +511,46 @@ class Post
      * then get this post custom meta.
      *
      * @param String $key
-     * @param bool   $echo
      * @param bool   $format_value
+     * @param bool   $echo
      *
-     * @return Mixed
+     * @return Mixed|void
      */
-    public function field($key, $echo = false, $format_value = true)
+    public function field($key, $format_value = true, $echo = true)
     {
 
         if ( ! function_exists('get_field')) {
             return $this->meta($key, $format_value);
         }
 
-        if ($echo) {
-            $val = get_field($key, $this->ID, $format_value);
-            echo $val;
-
-            return $val;
+        if ($echo === false) {
+            return get_field($key, $this->ID, $format_value);
         }
 
-        return get_field($key, $this->ID, $format_value);
+        echo get_field($key, $this->ID, $format_value);
+
+    }
+
+
+    /**
+     * Proxy for ACF's update_field, if ACF isn't installed
+     * then set this post's custom meta.
+     *
+     * @param String $key
+     * @param mixed  $value      Metadata value. Must be serializable if non-scalar.
+     * @param mixed  $prev_value Optional. Previous value to check before removing.
+     *                           Default empty.
+     *
+     * @return Mixed
+     */
+    public function update_field($key, $value, $prev_value = '')
+    {
+
+        if ( ! function_exists('update_field')) {
+            return $this->update_meta($key, $value, $prev_value);
+        }
+
+        return update_field($key, $value, $this->ID);
 
     }
 
@@ -484,6 +572,178 @@ class Post
 
 
     /**
+     * Updates this posts meta with the value
+     *
+     * @param string $key
+     * @param mixed  $value
+     * @param mixed  $prev_value Optional. Previous value to check before removing.
+     *                           Default empty.
+     *
+     * @return int|bool Meta ID if the key didn't exist, true on successful update,
+     *                  false on failure.
+     */
+    public function update_meta($key, $value, $prev_value = '')
+    {
+
+        return update_post_meta($this->ID, $key, $value, $prev_value);
+
+    }
+
+
+    /**
+     * Delete this posts meta given a key and optionally a value
+     *
+     * @param string $key
+     * @param mixed  $value
+     *
+     * @return bool True on success, false on failure.
+     */
+    public function delete_meta($key, $value = '')
+    {
+
+        return delete_post_meta($this->ID, $key, $value);
+
+    }
+
+
+    /**
+     * Check if post is sticky.
+     *
+     * @return bool
+     */
+    public function is_sticky()
+    {
+
+        return is_sticky($this->ID);
+
+    }
+
+
+    /**
+     * Makes this post sticky
+     *
+     * @return void
+     */
+    public function stick()
+    {
+
+        stick_post($this->ID);
+
+    }
+
+
+    /**
+     * Unsticks this post
+     *
+     * @return void
+     */
+    public function unstick()
+    {
+
+        unstick_post($this->ID);
+
+    }
+
+
+    /**
+     *
+     * Trash or delete this post.
+     *
+     * When the post and page is permanently deleted, everything that is tied to
+     * it is deleted also. This includes comments, post meta fields, and terms
+     * associated with the post.
+     *
+     * The post or page is moved to trash instead of permanently deleted unless
+     * trash is disabled, item is already in the trash, or $force_delete is true.
+     *
+     * @param bool $force        Optional. Whether to bypass trash and force deletion.
+     *                           Default false.
+     *
+     * @return array|false|\WP_Post
+     */
+    public function delete($force = false)
+    {
+
+        return wp_delete_post($this->ID, $force);
+
+    }
+
+
+    /**
+     * Updates this post with an array of data
+     *
+     * @param array|object $data     Post data. Arrays are expected to be escaped,
+     *                               objects are not. Default array.
+     * @param bool         $wp_error Optional. Allow return of WP_Error on failure. Default false.
+     *
+     * @param bool|false   $wp_error
+     *
+     * @return int|\WP_Error
+     */
+    public function update($data, $wp_error = false)
+    {
+        $data['ID'] = $this->ID;
+
+        return wp_update_post($data, $wp_error);
+
+    }
+
+
+    /**
+     * Move this post to the Trash
+     *
+     * If trash is disabled, this post is deleted.
+     *
+     * @return false|array|\WP_Post|null Post data array, otherwise false.
+     */
+    public function trash()
+    {
+
+        return wp_trash_post($this->ID);
+
+    }
+
+
+    /**
+     * Restore this post from the Trash.
+     *
+     * @return false|array|\WP_Post|null Post data array, otherwise false.
+     */
+    public function untrash()
+    {
+
+        return wp_untrash_post($this->ID);
+
+    }
+
+
+    /**
+     * Moves comments for this post to the trash.
+     *
+     * @return mixed|void False on failure.
+     */
+    public function trash_comments()
+    {
+
+        return wp_trash_post_comments($this->ID);
+
+    }
+
+
+    /**
+     * Restores comments for this post to the trash.
+     *
+     * @return mixed|void False on failure.
+     */
+    public function untrash_comments()
+    {
+
+        return wp_untrash_post_comments($this->ID);
+
+    }
+
+
+    /**
      * Gets this posts children
      *
      * @var array args
@@ -492,7 +752,6 @@ class Post
      */
     public function children($args = [ 'post_type' => 'any' ])
     {
-        global $cutlass;
 
         if (is_string($args)) {
             $args = [
@@ -533,15 +792,7 @@ class Post
     public function link($relative = false)
     {
 
-        if ( ! empty( $this->link )) {
-            return ( $relative === true ? wp_make_link_relative($this->link) : $this->link );
-        }
-
-        if ( ! empty( $this->permalink )) {
-            return ( $relative === true ? wp_make_link_relative($this->permalink) : $this->permalink );
-        }
-
-        return ( $relative === true ? wp_make_link_relative(get_permalink($this->ID)) : get_permalink($this->ID) );
+        return ( $relative === true ? wp_make_link_relative($this->link) : $this->link );
 
     }
 
@@ -567,10 +818,11 @@ class Post
      *
      * @param int    $length
      * @param string $ellipsis
+     * @param bool   $echo
      *
-     * @return String
+     * @return String|void
      */
-    public function title($length = 0, $ellipsis = "...")
+    public function title($length = 0, $ellipsis = "...", $echo = true)
     {
 
         $title = ( property_exists($this, 'title') ? $this->title : $this->post_title );
@@ -581,7 +833,11 @@ class Post
             $title = Str::words($title, $length, $ellipsis);
         }
 
-        return $title;
+        if ($echo === false) {
+            return $title;
+        }
+
+        echo $title;
 
     }
 
@@ -589,13 +845,13 @@ class Post
     /**
      * Returns the post content after the filters have been run on it
      *
-     * @param bool   $echo
      * @param string $ellipsis
      * @param int    $length
+     * @param bool   $echo
      *
-     * @return String
+     * @return String|void
      */
-    public function content($echo = true, $ellipsis = "...", $length = null)
+    public function content($ellipsis = "...", $length = null, $echo = true)
     {
 
         $content = ( property_exists($this, 'content') ? $this->content : $this->post_content );
@@ -615,11 +871,11 @@ class Post
             $content = Str::words($content, $length, $ellipsis);
         }
 
-        if ($echo === true) {
-            echo $content;
-        } else {
+        if ($echo === false) {
             return $content;
         }
+
+        echo $content;
 
     }
 }
