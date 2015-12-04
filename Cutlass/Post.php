@@ -153,7 +153,7 @@ class Post
      * Accepts a WP_Post object and builds a new
      * Post object using it's properties
      *
-     * @param $post WP_Post
+     * @param $post \WP_Post|array
      */
     public function __construct($post)
     {
@@ -166,43 +166,29 @@ class Post
         }
 
         /**
+         * If we're given an array we'll assume it's a query
+         */
+        if(is_array($post)) {
+            $post['posts_per_page'] = 1;
+            $post = get_posts($post);
+
+            if(isset($post[0])) {
+                $post = $post[0];
+            }
+        }
+
+        /**
+         * If we don't have a WP_Post by now throw an Exception
+         */
+        if(!$post instanceof \WP_Post) {
+            throw new \Exception('Cutlass was not able to convert this to a new Post type.');
+        }
+
+        /**
          * Takes the original WP_Post properties and moves them to
          * this Post object
          */
         $this->set_properties($post);
-
-        /**
-         * Adds our extra simple properties to the object
-         */
-        $this->extra_properties($post);
-
-    }
-
-
-    /**
-     * Accepts a WP_Post object and sets additional helpful
-     * properties to this Post object
-     *
-     * @param WP_Post $post
-     */
-    private function extra_properties($post)
-    {
-
-        /**
-         * Sets the post link
-         */
-        $this->link      = get_permalink($post->ID);
-        $this->permalink = $this->link;
-        /**
-         * Set human date property using Carbon
-         */
-        $date             = ( property_exists($this, 'date') ? $this->date : $this->post_date );
-        $this->human_date = Carbon::parse($date)->diffForHumans();
-        /**
-         * Set author property to actual author data
-         */
-        $author       = ( property_exists($this, 'author') ? $this->author : $this->post_author );
-        $this->author = get_userdata(intval($author));
 
     }
 
@@ -211,7 +197,7 @@ class Post
      * Accepts WP_Post object, takes its properties and
      * applies them to this Post object
      *
-     * @param WP_Post $post
+     * @param \WP_Post $post
      */
     private function set_properties($post)
     {
@@ -235,9 +221,27 @@ class Post
         foreach ($props as $key => $prop) {
             if (substr($key, 0, 5) === "post_") {
                 $new        = substr($key, 5, strlen($key));
-                $this->$new = $prop;
+                $this->$new =& $this->$key;
             }
         }
+
+        /**
+         * Sets the post link
+         */
+        $this->link      = get_permalink($post->ID);
+        $this->permalink =& $this->link;
+
+        /**
+         * Set human date property using Carbon
+         */
+        $date             = ( property_exists($this, 'date') ? $this->date : $this->post_date );
+        $this->human_date = Carbon::parse($date)->diffForHumans();
+
+        /**
+         * Set author property to actual author data
+         */
+        $author       = ( property_exists($this, 'author') ? $this->author : $this->post_author );
+        $this->author = get_userdata(intval($author));
 
     }
 
@@ -336,6 +340,7 @@ class Post
 
     /**
      * Gets the posts featured image
+     * Returns thumbnail by default
      *
      * @param bool         $echo
      * @param String|array $size
@@ -345,11 +350,59 @@ class Post
      */
     public function thumbnail($echo = true, $size = 'thumbnail', $attr = '')
     {
+
         if ($echo === true) {
             echo get_the_post_thumbnail($this->ID, $size, $attr);
         } else {
             return get_the_post_thumbnail($this->ID, $size, $attr);
         }
+
+    }
+
+    /**
+     * Gets the posts featured image (a little more verbosely)
+     * Returns full size by default
+     *
+     * @param bool         $echo
+     * @param String|array $size
+     * @param String|array $attr
+     *
+     * @return String
+     */
+    public function featured_image($echo = true, $size = 'full', $attr = '')
+    {
+
+        if ($echo === true) {
+            echo get_the_post_thumbnail($this->ID, $size, $attr);
+        } else {
+            return get_the_post_thumbnail($this->ID, $size, $attr);
+        }
+
+    }
+
+
+    /**
+     * Returns whether the currenst post has a featured image
+     *
+     * @return Bool
+     */
+    public function has_thumbnail()
+    {
+
+            return has_post_thumbnail($this->ID);
+
+    }
+
+
+    /**
+     * Returns whether the currenst post has a featured image
+     *
+     * @return Bool
+     */
+    public function has_featured_image()
+    {
+
+        return has_post_thumbnail($this->ID);
 
     }
 
@@ -364,6 +417,23 @@ class Post
     {
 
         return current_user_can('edit_posts');
+
+    }
+
+
+    /**
+     * Displays a link to edit the current post
+     *
+     * @param string $link   Optional. Anchor text.
+     * @param string $before Optional. Display before edit link.
+     * @param string $after  Optional. Display after edit link.
+     *
+     * @return void
+     */
+    public function edit_link($link = 'Edit this', $before = '', $after = '')
+    {
+
+        edit_post_link($link, $before, $after, $this->ID);
 
     }
 
