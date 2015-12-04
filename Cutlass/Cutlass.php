@@ -98,7 +98,15 @@ class Cutlass
      */
     protected static function clear_blade_cache()
     {
-        return array_map('unlink', glob(app_path() . '/storage/framework/views/*'));
+        $cache_directory = apply_filters('cutlass_cache_directory', app_path() . '/storage/framework/views');
+
+        if(substr($cache_directory, -1) != '/') {
+            $cache_directory .= '/';
+        }
+
+        $cache_directory .= '*';
+
+        return array_map('unlink', glob($cache_directory));
     }
 
 
