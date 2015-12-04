@@ -359,10 +359,11 @@ class Post
 
     }
 
+
     /**
      * Gets the categories for this post
      *
-     * @param array $args    Optional. Category arguments. Default empty.
+     * @param array $args Optional. Category arguments. Default empty.
      *
      * @return array Array of category objects
      */
@@ -370,9 +371,9 @@ class Post
     {
 
         $category_ids = wp_get_post_categories($this->ID, $args);
-        $categories = [];
+        $categories   = [ ];
 
-        foreach($category_ids as $category_id) {
+        foreach ($category_ids as $category_id) {
             $categories[] = get_category($category_id);
         }
 
@@ -522,7 +523,7 @@ class Post
             return $this->meta($key, $format_value);
         }
 
-        if($echo === false) {
+        if ($echo === false) {
             return get_field($key, $this->ID, $format_value);
         }
 
@@ -587,6 +588,7 @@ class Post
         return update_post_meta($this->ID, $key, $value, $prev_value);
 
     }
+
 
     /**
      * Delete this posts meta given a key and optionally a value
@@ -654,7 +656,7 @@ class Post
      * The post or page is moved to trash instead of permanently deleted unless
      * trash is disabled, item is already in the trash, or $force_delete is true.
      *
-     * @param bool $force Optional. Whether to bypass trash and force deletion.
+     * @param bool $force        Optional. Whether to bypass trash and force deletion.
      *                           Default false.
      *
      * @return array|false|\WP_Post
