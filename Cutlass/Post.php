@@ -154,6 +154,7 @@ class Post
      * Post object using it's properties
      *
      * @param $post \WP_Post|array
+     * @throws \Exception
      */
     public function __construct($post)
     {
