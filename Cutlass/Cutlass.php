@@ -40,10 +40,11 @@ class Cutlass
      *
      * @param array $filenames - An array of views to render in order of precedence
      * @param array $context   - An array of items to add to the view
+     * @param bool $echo - Whether to echo or return output
      *
-     * @return mixed
+     * @return string|void
      */
-    public static function render($filenames, $context = [ ])
+    public static function render($filenames, $context = [ ], $echo = true)
     {
 
         /**
@@ -80,9 +81,12 @@ class Cutlass
 
         $output = $cutlassrenderer->render();
 
+        if($echo === false) {
+            return $output;
+        }
+
         echo $output;
 
-        return $output;
 
     }
 
