@@ -567,6 +567,21 @@ class Post
 
     }
 
+    /**
+     * Delete this posts meta given a key and optionally a value
+     *
+     * @param string $key
+     * @param mixed  $value
+     *
+     * @return bool True on success, false on failure.
+     */
+    public function delete_meta($key, $value = '')
+    {
+
+        return delete_post_meta($this->ID, $key, $value);
+
+    }
+
 
     /**
      * Gets this posts children
