@@ -326,21 +326,21 @@ class Post
     /**
      * Returns the post class
      *
-     * @param bool $echo
      * @param null $class
+     * @param bool $echo
      *
      * @return mixed
      */
-    public function post_class($echo = true, $class = null)
+    public function post_class($class = null, $echo = true)
     {
 
         $class = 'class="' . join(' ', get_post_class($class, $this->ID)) . '"';
 
-        if ($echo === true) {
-            echo $class;
-        } else {
+        if ($echo === false) {
             return $class;
         }
+
+        echo $class;
 
     }
 
@@ -409,20 +409,20 @@ class Post
      * Gets the posts featured image
      * Returns thumbnail by default
      *
-     * @param bool         $echo
      * @param String|array $size
      * @param String|array $attr
+     * @param bool         $echo
      *
-     * @return String
+     * @return String|void
      */
-    public function thumbnail($echo = true, $size = 'thumbnail', $attr = '')
+    public function thumbnail($size = 'thumbnail', $attr = '', $echo = true)
     {
 
-        if ($echo === true) {
-            echo get_the_post_thumbnail($this->ID, $size, $attr);
-        } else {
+        if ($echo === false) {
             return get_the_post_thumbnail($this->ID, $size, $attr);
         }
+
+        echo get_the_post_thumbnail($this->ID, $size, $attr);
 
     }
 
@@ -431,20 +431,20 @@ class Post
      * Gets the posts featured image (a little more verbosely)
      * Returns full size by default
      *
-     * @param bool         $echo
      * @param String|array $size
      * @param String|array $attr
+     * @param bool         $echo
      *
-     * @return String
+     * @return String|void
      */
-    public function featured_image($echo = true, $size = 'full', $attr = '')
+    public function featured_image($size = 'full', $attr = '', $echo = true)
     {
 
-        if ($echo === true) {
-            echo get_the_post_thumbnail($this->ID, $size, $attr);
-        } else {
+        if ($echo === false) {
             return get_the_post_thumbnail($this->ID, $size, $attr);
         }
+
+        echo get_the_post_thumbnail($this->ID, $size, $attr);
 
     }
 
@@ -672,11 +672,11 @@ class Post
     /**
      * Updates this post with an array of data
      *
-     * @param array|object $data  Post data. Arrays are expected to be escaped,
+     * @param array|object $data     Post data. Arrays are expected to be escaped,
      *                               objects are not. Default array.
      * @param bool         $wp_error Optional. Allow return of WP_Error on failure. Default false.
      *
-     * @param bool|false $wp_error
+     * @param bool|false   $wp_error
      *
      * @return int|\WP_Error
      */
@@ -792,15 +792,7 @@ class Post
     public function link($relative = false)
     {
 
-        if ( ! empty( $this->link )) {
-            return ( $relative === true ? wp_make_link_relative($this->link) : $this->link );
-        }
-
-        if ( ! empty( $this->permalink )) {
-            return ( $relative === true ? wp_make_link_relative($this->permalink) : $this->permalink );
-        }
-
-        return ( $relative === true ? wp_make_link_relative(get_permalink($this->ID)) : get_permalink($this->ID) );
+        return ( $relative === true ? wp_make_link_relative($this->link) : $this->link );
 
     }
 
@@ -826,10 +818,11 @@ class Post
      *
      * @param int    $length
      * @param string $ellipsis
+     * @param bool   $echo
      *
-     * @return String
+     * @return String|void
      */
-    public function title($length = 0, $ellipsis = "...")
+    public function title($length = 0, $ellipsis = "...", $echo = true)
     {
 
         $title = ( property_exists($this, 'title') ? $this->title : $this->post_title );
@@ -840,7 +833,11 @@ class Post
             $title = Str::words($title, $length, $ellipsis);
         }
 
-        return $title;
+        if ($echo === false) {
+            return $title;
+        }
+
+        echo $title;
 
     }
 
@@ -848,13 +845,13 @@ class Post
     /**
      * Returns the post content after the filters have been run on it
      *
-     * @param bool   $echo
      * @param string $ellipsis
      * @param int    $length
+     * @param bool   $echo
      *
-     * @return String
+     * @return String|void
      */
-    public function content($echo = true, $ellipsis = "...", $length = null)
+    public function content($ellipsis = "...", $length = null, $echo = true)
     {
 
         $content = ( property_exists($this, 'content') ? $this->content : $this->post_content );
@@ -874,11 +871,11 @@ class Post
             $content = Str::words($content, $length, $ellipsis);
         }
 
-        if ($echo === true) {
-            echo $content;
-        } else {
+        if ($echo === false) {
             return $content;
         }
+
+        echo $content;
 
     }
 }
