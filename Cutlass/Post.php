@@ -171,39 +171,6 @@ class Post
          */
         $this->set_properties($post);
 
-        /**
-         * Adds our extra simple properties to the object
-         */
-        $this->extra_properties($post);
-
-    }
-
-
-    /**
-     * Accepts a WP_Post object and sets additional helpful
-     * properties to this Post object
-     *
-     * @param WP_Post $post
-     */
-    private function extra_properties($post)
-    {
-
-        /**
-         * Sets the post link
-         */
-        $this->link      = get_permalink($post->ID);
-        $this->permalink = $this->link;
-        /**
-         * Set human date property using Carbon
-         */
-        $date             = ( property_exists($this, 'date') ? $this->date : $this->post_date );
-        $this->human_date = Carbon::parse($date)->diffForHumans();
-        /**
-         * Set author property to actual author data
-         */
-        $author       = ( property_exists($this, 'author') ? $this->author : $this->post_author );
-        $this->author = get_userdata(intval($author));
-
     }
 
 
@@ -238,6 +205,22 @@ class Post
                 $this->$new = $prop;
             }
         }
+
+        /**
+         * Sets the post link
+         */
+        $this->link      = get_permalink($post->ID);
+        $this->permalink = $this->link;
+        /**
+         * Set human date property using Carbon
+         */
+        $date             = ( property_exists($this, 'date') ? $this->date : $this->post_date );
+        $this->human_date = Carbon::parse($date)->diffForHumans();
+        /**
+         * Set author property to actual author data
+         */
+        $author       = ( property_exists($this, 'author') ? $this->author : $this->post_author );
+        $this->author = get_userdata(intval($author));
 
     }
 
