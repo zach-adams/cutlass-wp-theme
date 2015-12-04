@@ -269,20 +269,20 @@ class Post
      * `<!--more-->` comment. The 'more_text' key has the custom "Read More" text.
      *
      * @param string $return - The type of item to return, must be string and "main", "extended", or "more_text
-     * @param bool $echo - Whether to echo or return value
+     * @param bool   $echo   - Whether to echo or return value
      *
      * @return string|void
      */
     public function extended($return = 'main', $echo = true)
     {
 
-        if(!in_array($return, ['main', 'extended', 'more_text'])) {
-            throw new \InvalidArgumentException('Only accepts string "main", "extended", or "more_text". Input was: '. $return);
+        if ( ! in_array($return, [ 'main', 'extended', 'more_text' ])) {
+            throw new \InvalidArgumentException('Only accepts string "main", "extended", or "more_text". Input was: ' . $return);
         }
 
         $extended = get_extended($this->content);
 
-        if($echo === false) {
+        if ($echo === false) {
             return $extended[$return];
         }
 
@@ -489,26 +489,46 @@ class Post
      * then get this post custom meta.
      *
      * @param String $key
-     * @param bool   $echo
      * @param bool   $format_value
+     * @param bool   $echo
      *
-     * @return Mixed
+     * @return Mixed|void
      */
-    public function field($key, $echo = false, $format_value = true)
+    public function field($key, $format_value = true, $echo = true)
     {
 
         if ( ! function_exists('get_field')) {
             return $this->meta($key, $format_value);
         }
 
-        if ($echo) {
-            $val = get_field($key, $this->ID, $format_value);
-            echo $val;
-
-            return $val;
+        if($echo === false) {
+            return get_field($key, $this->ID, $format_value);
         }
 
-        return get_field($key, $this->ID, $format_value);
+        echo get_field($key, $this->ID, $format_value);
+
+    }
+
+
+    /**
+     * Proxy for ACF's update_field, if ACF isn't installed
+     * then set this post's custom meta.
+     *
+     * @param String $key
+     * @param mixed  $value      Metadata value. Must be serializable if non-scalar.
+     * @param mixed  $prev_value Optional. Previous value to check before removing.
+     *                           Default empty.
+     *
+     * @return Mixed
+     */
+    public function update_field($key, $value, $prev_value = '')
+    {
+
+        if ( ! function_exists('update_field')) {
+            return $this->update_meta($key, $value, $prev_value);
+        }
+
+        return update_field($key, $value, $this->ID);
 
     }
 
@@ -525,6 +545,25 @@ class Post
     {
 
         return get_post_meta($this->ID, $key, $single);
+
+    }
+
+
+    /**
+     * Updates this posts meta with the value
+     *
+     * @param string $key
+     * @param mixed  $value
+     * @param mixed  $prev_value Optional. Previous value to check before removing.
+     *                           Default empty.
+     *
+     * @return int|bool Meta ID if the key didn't exist, true on successful update,
+     *                  false on failure.
+     */
+    public function update_meta($key, $value, $prev_value = '')
+    {
+
+        return update_post_meta($this->ID, $key, $value, $prev_value);
 
     }
 
