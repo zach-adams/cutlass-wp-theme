@@ -98,6 +98,14 @@ class Post
     public $post_status = '';
 
     /**
+     * The posts mimetype
+     * @var string
+     */
+    public $post_mime_type = '';
+
+    public $mime_type = '';
+
+    /**
      * The current comment status (whether comments are enabled
      * or disabled)
      * @var string
@@ -154,6 +162,7 @@ class Post
      * Post object using it's properties
      *
      * @param $post \WP_Post|array
+     *
      * @throws \Exception
      */
     public function __construct($post)
@@ -169,11 +178,11 @@ class Post
         /**
          * If we're given an array we'll assume it's a query
          */
-        if(is_array($post)) {
+        if (is_array($post)) {
             $post['posts_per_page'] = 1;
-            $post = get_posts($post);
+            $post                   = get_posts($post);
 
-            if(isset($post[0])) {
+            if (isset( $post[0] )) {
                 $post = $post[0];
             }
         }
@@ -181,7 +190,7 @@ class Post
         /**
          * If we don't have a WP_Post by now throw an Exception
          */
-        if(!$post instanceof \WP_Post) {
+        if ( ! $post instanceof \WP_Post) {
             throw new \Exception('Cutlass was not able to convert this to a new Post type.');
         }
 
@@ -243,6 +252,41 @@ class Post
          */
         $author       = ( property_exists($this, 'author') ? $this->author : $this->post_author );
         $this->author = get_userdata(intval($author));
+
+    }
+
+
+    /**
+     *
+     * Get extended entry info (<!--more-->).
+     *
+     * There should not be any space after the second dash and before the word
+     * 'more'. There can be text or space(s) after the word 'more', but won't be
+     * referenced.
+     *
+     * The returned array has 'main', 'extended', and 'more_text' keys. Main has the text before
+     * the `<!--more-->`. The 'extended' key has the content after the
+     * `<!--more-->` comment. The 'more_text' key has the custom "Read More" text.
+     *
+     * @param string $return - The type of item to return, must be string and "main", "extended", or "more_text
+     * @param bool $echo - Whether to echo or return value
+     *
+     * @return string|void
+     */
+    public function extended($return = 'main', $echo = true)
+    {
+
+        if(!in_array($return, ['main', 'extended', 'more_text'])) {
+            throw new \InvalidArgumentException('Only accepts string "main", "extended", or "more_text". Input was: '. $return);
+        }
+
+        $extended = get_extended($this->content);
+
+        if($echo === false) {
+            return $extended[$return];
+        }
+
+        echo $extended[$return];
 
     }
 
@@ -360,6 +404,7 @@ class Post
 
     }
 
+
     /**
      * Gets the posts featured image (a little more verbosely)
      * Returns full size by default
@@ -390,7 +435,7 @@ class Post
     public function has_thumbnail()
     {
 
-            return has_post_thumbnail($this->ID);
+        return has_post_thumbnail($this->ID);
 
     }
 
