@@ -418,6 +418,23 @@ class Post
 
 
     /**
+     * Displays a link to edit the current post
+     *
+     * @param string $link   Optional. Anchor text.
+     * @param string $before Optional. Display before edit link.
+     * @param string $after  Optional. Display after edit link.
+     *
+     * @return void
+     */
+    public function edit_link($link = 'Edit this', $before = '', $after = '')
+    {
+
+        edit_post_link($link, $before, $after, $this->ID);
+
+    }
+
+
+    /**
      * Proxy for ACF's get_field, if ACF isn't installed
      * then get this post custom meta.
      *
