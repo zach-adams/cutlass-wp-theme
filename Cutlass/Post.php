@@ -584,6 +584,45 @@ class Post
 
 
     /**
+     * Check if post is sticky.
+     *
+     * @return bool
+     */
+    public function is_sticky()
+    {
+
+        return is_sticky($this->ID);
+
+    }
+
+
+    /**
+     * Makes this post sticky
+     *
+     * @return void
+     */
+    public function stick()
+    {
+
+        stick_post($this->ID);
+
+    }
+
+
+    /**
+     * Unsticks this post
+     *
+     * @return void
+     */
+    public function unstick()
+    {
+
+        unstick_post($this->ID);
+
+    }
+
+
+    /**
      * Gets this posts children
      *
      * @var array args
