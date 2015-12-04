@@ -533,29 +533,6 @@ class Post
 
 
     /**
-     * Proxy for ACF's update_field, if ACF isn't installed
-     * then set this post's custom meta.
-     *
-     * @param String $key
-     * @param mixed  $value      Metadata value. Must be serializable if non-scalar.
-     * @param mixed  $prev_value Optional. Previous value to check before removing.
-     *                           Default empty.
-     *
-     * @return Mixed
-     */
-    public function update_field($key, $value, $prev_value = '')
-    {
-
-        if ( ! function_exists('update_field')) {
-            return $this->update_meta($key, $value, $prev_value);
-        }
-
-        return update_field($key, $value, $this->ID);
-
-    }
-
-
-    /**
      * Gets this posts meta
      *
      * @param String $key
@@ -572,41 +549,6 @@ class Post
 
 
     /**
-     * Updates this posts meta with the value
-     *
-     * @param string $key
-     * @param mixed  $value
-     * @param mixed  $prev_value Optional. Previous value to check before removing.
-     *                           Default empty.
-     *
-     * @return int|bool Meta ID if the key didn't exist, true on successful update,
-     *                  false on failure.
-     */
-    public function update_meta($key, $value, $prev_value = '')
-    {
-
-        return update_post_meta($this->ID, $key, $value, $prev_value);
-
-    }
-
-
-    /**
-     * Delete this posts meta given a key and optionally a value
-     *
-     * @param string $key
-     * @param mixed  $value
-     *
-     * @return bool True on success, false on failure.
-     */
-    public function delete_meta($key, $value = '')
-    {
-
-        return delete_post_meta($this->ID, $key, $value);
-
-    }
-
-
-    /**
      * Check if post is sticky.
      *
      * @return bool
@@ -615,130 +557,6 @@ class Post
     {
 
         return is_sticky($this->ID);
-
-    }
-
-
-    /**
-     * Makes this post sticky
-     *
-     * @return void
-     */
-    public function stick()
-    {
-
-        stick_post($this->ID);
-
-    }
-
-
-    /**
-     * Unsticks this post
-     *
-     * @return void
-     */
-    public function unstick()
-    {
-
-        unstick_post($this->ID);
-
-    }
-
-
-    /**
-     *
-     * Trash or delete this post.
-     *
-     * When the post and page is permanently deleted, everything that is tied to
-     * it is deleted also. This includes comments, post meta fields, and terms
-     * associated with the post.
-     *
-     * The post or page is moved to trash instead of permanently deleted unless
-     * trash is disabled, item is already in the trash, or $force_delete is true.
-     *
-     * @param bool $force        Optional. Whether to bypass trash and force deletion.
-     *                           Default false.
-     *
-     * @return array|false|\WP_Post
-     */
-    public function delete($force = false)
-    {
-
-        return wp_delete_post($this->ID, $force);
-
-    }
-
-
-    /**
-     * Updates this post with an array of data
-     *
-     * @param array|object $data     Post data. Arrays are expected to be escaped,
-     *                               objects are not. Default array.
-     * @param bool         $wp_error Optional. Allow return of WP_Error on failure. Default false.
-     *
-     * @param bool|false   $wp_error
-     *
-     * @return int|\WP_Error
-     */
-    public function update($data, $wp_error = false)
-    {
-        $data['ID'] = $this->ID;
-
-        return wp_update_post($data, $wp_error);
-
-    }
-
-
-    /**
-     * Move this post to the Trash
-     *
-     * If trash is disabled, this post is deleted.
-     *
-     * @return false|array|\WP_Post|null Post data array, otherwise false.
-     */
-    public function trash()
-    {
-
-        return wp_trash_post($this->ID);
-
-    }
-
-
-    /**
-     * Restore this post from the Trash.
-     *
-     * @return false|array|\WP_Post|null Post data array, otherwise false.
-     */
-    public function untrash()
-    {
-
-        return wp_untrash_post($this->ID);
-
-    }
-
-
-    /**
-     * Moves comments for this post to the trash.
-     *
-     * @return mixed|void False on failure.
-     */
-    public function trash_comments()
-    {
-
-        return wp_trash_post_comments($this->ID);
-
-    }
-
-
-    /**
-     * Restores comments for this post to the trash.
-     *
-     * @return mixed|void False on failure.
-     */
-    public function untrash_comments()
-    {
-
-        return wp_untrash_post_comments($this->ID);
 
     }
 
