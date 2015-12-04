@@ -359,6 +359,27 @@ class Post
 
     }
 
+    /**
+     * Gets the categories for this post
+     *
+     * @param array $args    Optional. Category arguments. Default empty.
+     *
+     * @return array Array of category objects
+     */
+    public function categories($args = [ ])
+    {
+
+        $category_ids = wp_get_post_categories($this->ID, $args);
+        $categories = [];
+
+        foreach($category_ids as $category_id) {
+            $categories[] = get_category($category_id);
+        }
+
+        return $categories;
+
+    }
+
 
     /**
      * Gets the terms for this post, accepts a taxonomy
