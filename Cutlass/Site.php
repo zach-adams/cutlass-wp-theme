@@ -28,42 +28,18 @@ class Site
      *
      * @param string $name   - The name of the option to get
      * @param string $filter - Whether to filter the returned value
+     * @param bool $echo - Whether to echo or return the value
      *
-     * @return mixed
+     * @return mixed|void
      */
-    public function info($name, $filter = 'raw')
+    public function info($name, $filter = 'raw', $echo = true)
     {
 
-        return get_bloginfo($name, $filter);
+        if($echo === false) {
+            return get_bloginfo($name, $filter);
+        }
 
-    }
-
-
-    /**
-     * Gets the WordPress page title using the wp_title function
-     *
-     * By default, the page title will display the separator before the page title,
-     * so that the blog title will be before the page title. This is not good for
-     * title display, since the blog title shows up on most tabs and not what is
-     * important, which is the page that the user is looking at.
-     *
-     * There are also SEO benefits to having the blog title after or to the 'right'
-     * or the page title. However, it is mostly common sense to have the blog title
-     * to the right with most browsers supporting tabs. You can achieve this by
-     * using the seplocation parameter and setting the value to 'right'. This change
-     * was introduced around 2.5.0, in case backwards compatibility of themes is
-     * important.
-     *
-     * @param string $sep         Optional, default is '&raquo;'. How to separate the various items within the page title.
-     * @param bool   $display     Optional, default is true. Whether to display or retrieve title.
-     * @param string $seplocation Optional. Direction to display title, 'right'.
-     *
-     * @return String
-     */
-    public function title($sep = '&raquo;', $display = true, $seplocation = 'left')
-    {
-
-        return wp_title($sep, $display, $seplocation);
+        echo get_bloginfo($name, $filter);
 
     }
 
@@ -76,10 +52,11 @@ class Site
      * Otherwise, you can pass in a numerical index to display the sidebar at that index.
      *
      * @param int|string $sidebar Optional, default is 1. Index, name or ID of dynamic sidebar.
+     * @param bool $echo Whether to echo out the sidebar or not
      *
      * @return void|string
      */
-    public function sidebar($sidebar = 1)
+    public function sidebar($sidebar = 1, $echo = true)
     {
         /**
          * We're using ob_ functions so we can reliably return
@@ -89,13 +66,12 @@ class Site
         dynamic_sidebar($sidebar);
         $sidebar = ob_get_clean();
 
-        if (is_string($sidebar)) {
-            echo $sidebar;
-
-            return;
+        if($echo === false) {
+            return $sidebar;
         }
 
-        return $sidebar;
+        echo $sidebar;
+
     }
 
 
@@ -126,12 +102,13 @@ class Site
      *     @type string        $items_wrap      How the list items should be wrapped. Default is a ul with an id and class.
      *                                          Uses printf() format with numbered placeholders.
      * }
+     *
      * @return object|false|void Menu output if $echo is false, false if there are no items or no menu was found.
      */
     public function menu($args = [])
     {
 
-        if ( isset($args['echo']) && $args['echo'] === true ) {
+        if ( isset($args['echo']) && $args['echo'] === false ) {
             echo wp_nav_menu($args);
         }
         else {
@@ -233,12 +210,11 @@ class Site
     public function search_form($echo = true)
     {
 
-        if ( $echo ) {
-            echo get_search_form($echo);
-        }
-        else {
+        if ( $echo === false) {
             return get_search_form($echo);
         }
+
+        echo get_search_form($echo);
 
     }
 
