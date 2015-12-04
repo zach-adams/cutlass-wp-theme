@@ -670,6 +670,26 @@ class Post
 
 
     /**
+     * Updates this post with an array of data
+     *
+     * @param array|object $data  Post data. Arrays are expected to be escaped,
+     *                               objects are not. Default array.
+     * @param bool         $wp_error Optional. Allow return of WP_Error on failure. Default false.
+     *
+     * @param bool|false $wp_error
+     *
+     * @return int|\WP_Error
+     */
+    public function update($data, $wp_error = false)
+    {
+        $data['ID'] = $this->ID;
+
+        return wp_update_post($data, $wp_error);
+
+    }
+
+
+    /**
      * Move this post to the Trash
      *
      * If trash is disabled, this post is deleted.
