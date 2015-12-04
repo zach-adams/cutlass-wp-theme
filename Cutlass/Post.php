@@ -153,7 +153,7 @@ class Post
      * Accepts a WP_Post object and builds a new
      * Post object using it's properties
      *
-     * @param $post WP_Post
+     * @param $post \WP_Post|array
      */
     public function __construct($post)
     {
@@ -163,6 +163,25 @@ class Post
          */
         if (is_int($post)) {
             $post = get_post($post);
+        }
+
+        /**
+         * If we're given an array we'll assume it's a query
+         */
+        if(is_array($post)) {
+            $post['posts_per_page'] = 1;
+            $post = get_posts($post);
+
+            if(isset($post[0])) {
+                $post = $post[0];
+            }
+        }
+
+        /**
+         * If we don't have a WP_Post by now throw an Exception
+         */
+        if(!$post instanceof \WP_Post) {
+            throw new \Exception('Cutlass was not able to convert this to a new Post type.');
         }
 
         /**
@@ -178,7 +197,7 @@ class Post
      * Accepts WP_Post object, takes its properties and
      * applies them to this Post object
      *
-     * @param WP_Post $post
+     * @param \WP_Post $post
      */
     private function set_properties($post)
     {
@@ -202,7 +221,7 @@ class Post
         foreach ($props as $key => $prop) {
             if (substr($key, 0, 5) === "post_") {
                 $new        = substr($key, 5, strlen($key));
-                $this->$new = $prop;
+                $this->$new =& $this->$key;
             }
         }
 
@@ -210,12 +229,14 @@ class Post
          * Sets the post link
          */
         $this->link      = get_permalink($post->ID);
-        $this->permalink = $this->link;
+        $this->permalink =& $this->link;
+
         /**
          * Set human date property using Carbon
          */
         $date             = ( property_exists($this, 'date') ? $this->date : $this->post_date );
         $this->human_date = Carbon::parse($date)->diffForHumans();
+
         /**
          * Set author property to actual author data
          */
