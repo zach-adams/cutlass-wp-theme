@@ -623,6 +623,84 @@ class Post
 
 
     /**
+     *
+     * Trash or delete this post.
+     *
+     * When the post and page is permanently deleted, everything that is tied to
+     * it is deleted also. This includes comments, post meta fields, and terms
+     * associated with the post.
+     *
+     * The post or page is moved to trash instead of permanently deleted unless
+     * trash is disabled, item is already in the trash, or $force_delete is true.
+     *
+     * @param bool $force Optional. Whether to bypass trash and force deletion.
+     *                           Default false.
+     *
+     * @return array|false|\WP_Post
+     */
+    public function delete($force = false)
+    {
+
+        return wp_delete_post($this->ID, $force);
+
+    }
+
+
+    /**
+     * Move this post to the Trash
+     *
+     * If trash is disabled, this post is deleted.
+     *
+     * @return false|array|\WP_Post|null Post data array, otherwise false.
+     */
+    public function trash()
+    {
+
+        return wp_trash_post($this->ID);
+
+    }
+
+
+    /**
+     * Restore this post from the Trash.
+     *
+     * @return false|array|\WP_Post|null Post data array, otherwise false.
+     */
+    public function untrash()
+    {
+
+        return wp_untrash_post($this->ID);
+
+    }
+
+
+    /**
+     * Moves comments for this post to the trash.
+     *
+     * @return mixed|void False on failure.
+     */
+    public function trash_comments()
+    {
+
+        return wp_trash_post_comments($this->ID);
+
+    }
+
+
+    /**
+     * Restores comments for this post to the trash.
+     *
+     * @return mixed|void False on failure.
+     */
+    public function untrash_comments()
+    {
+
+        return wp_untrash_post_comments($this->ID);
+
+    }
+
+
+    /**
      * Gets this posts children
      *
      * @var array args
