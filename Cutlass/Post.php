@@ -336,6 +336,7 @@ class Post
 
     /**
      * Gets the posts featured image
+     * Returns thumbnail by default
      *
      * @param bool         $echo
      * @param String|array $size
@@ -345,6 +346,28 @@ class Post
      */
     public function thumbnail($echo = true, $size = 'thumbnail', $attr = '')
     {
+
+        if ($echo === true) {
+            echo get_the_post_thumbnail($this->ID, $size, $attr);
+        } else {
+            return get_the_post_thumbnail($this->ID, $size, $attr);
+        }
+
+    }
+
+    /**
+     * Gets the posts featured image (a little more verbosely)
+     * Returns full size by default
+     *
+     * @param bool         $echo
+     * @param String|array $size
+     * @param String|array $attr
+     *
+     * @return String
+     */
+    public function featured_image($echo = true, $size = 'full', $attr = '')
+    {
+
         if ($echo === true) {
             echo get_the_post_thumbnail($this->ID, $size, $attr);
         } else {
@@ -355,7 +378,7 @@ class Post
 
 
     /**
-     * Returns whether the currenst post has a thumbanil
+     * Returns whether the currenst post has a featured image
      *
      * @return Bool
      */
@@ -363,6 +386,19 @@ class Post
     {
 
             return has_post_thumbnail($this->ID);
+
+    }
+
+
+    /**
+     * Returns whether the currenst post has a featured image
+     *
+     * @return Bool
+     */
+    public function has_featured_image()
+    {
+
+        return has_post_thumbnail($this->ID);
 
     }
 
