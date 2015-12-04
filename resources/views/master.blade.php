@@ -10,6 +10,8 @@
 	<link rel="pingback" href="{{ $site->info('pingback_url') }}" />
 
 	{!! $wp_head !!}
+
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,600,700' rel='stylesheet' type='text/css'>
 </head>
 
 <body {{ body_class() }}>

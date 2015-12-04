@@ -35,6 +35,13 @@ function cutlass_setup()
 	 */
 	add_theme_support( 'title-tag' );
 
+	add_theme_support('soil-clean-up');
+	add_theme_support('soil-nav-walker');
+	add_theme_support('soil-relative-urls');
+	add_theme_support('soil-js-to-footer');
+	add_theme_support('soil-disable-trackbacks');
+	add_theme_support('soil-disable-asset-versioning');
+
 	//Register default nav menus
 	register_nav_menus([
 			'primary_navigation' => 'Primary Navigation'
@@ -68,13 +75,26 @@ add_action('widgets_init', 'cutlass_widgets_init');
  */
 function cutlass_scripts()
 {
+	if(file_exists(public_path('css/plugins.css'))) {
+		/**
+		 * Queue our elixir styles
+		 */
+		wp_enqueue_style('plugins', asset('css/plugins.css'), [ ], null, 'all');
+	}
 	if(file_exists(public_path('css/app.css'))) {
 		/**
 		 * Queue our elixir styles
 		 */
-		wp_enqueue_style('all', asset('css/app.css'), [ ], null, 'all');
+		wp_enqueue_style('all', asset('css/app.css'), ['plugins'], null, 'all');
 	}
-	if(file_exists(public_path('css/app.js'))) {
+	if(file_exists(public_path('js/plugins.js'))) {
+
+		/**
+		 * Queue our elixir scripts
+		 */
+		wp_enqueue_script('plugins', asset('js/plugins.js'), [ 'jquery' ], null, true);
+	}
+	if(file_exists(public_path('js/app.js'))) {
 
 		/**
 		 * Queue our elixir scripts

@@ -1,4 +1,4 @@
-@extends('layouts.sidebar')
+@extends('layouts.page')
 
 @section('content')
     <header>

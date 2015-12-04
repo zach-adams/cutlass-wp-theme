@@ -1,5 +1,7 @@
 {
-	"name": "cutlass",
-	"dependencies": {
-	}
+  "name": "cutlass",
+  "dependencies": {
+    "jquery.transit": "~0.9.12",
+    "tether": "~1.1.1"
+  }
 }

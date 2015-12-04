@@ -16,7 +16,8 @@
 		"philo/laravel-blade": "3.*",
 		"illuminate/view": "^5.1",
 		"illuminate/events": "^5.1",
-		"nesbot/carbon": "~1.19"
+		"nesbot/carbon": "~1.19",
+		"webcode/wp-bootstrap-navwalker": "dev-master"
 	},
 	"autoload": {
 		"files": ["Cutlass/Util.php"],

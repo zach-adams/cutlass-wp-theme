@@ -1,4 +1,4 @@
-@extends('layouts.full-width')
+@extends('layouts.page')
 
 @section('content')
 	<article {{ $post->post_class() }}>
@@ -13,7 +13,8 @@
 		<div class="entry-content">
 			{{ $post->content() }}
 		</div>
+		<footer>
+			{{ var_dump($post->comments()) }}
+		</footer>
 	</article>
-
-	{{ $site->comments() }}
 @endsection

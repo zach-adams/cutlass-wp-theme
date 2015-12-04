@@ -1,6 +1,8 @@
 <?php
+use Cutlass\NavWalker;
 use Cutlass\Site;
 use Cutlass\Page;
+use Webcode\WordPress\Template\BootstrapNavWalker;
 
 /**
  * Set the default path to the directory where Blade will read for
@@ -74,6 +76,7 @@ function add_cutlass_global_view_data($global_view_data)
     $global_view_data = array_merge($global_view_data, [
         'site' => new Site(),
         'page' => new Page(),
+        'walker'    =>  new NavWalker(),
     ]);
 
     return $global_view_data;

@@ -1,4 +1,4 @@
-@extends('layouts.full-width')
+@extends('layouts.page')
 
 @section('content')
 	<header>
