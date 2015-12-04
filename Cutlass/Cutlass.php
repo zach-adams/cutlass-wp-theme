@@ -163,39 +163,23 @@ class Cutlass
      * See {@link sanitize_post()} for optional $filter values. Also, the parameter
      * $post, must be given as a variable, since it is passed by reference.
      *
-     * @param int|WP_Post|null $post   Optional. Post ID or post object. Defaults to global $post.
-     * @param string           $output Optional, default is Object. Accepts OBJECT, ARRAY_A, or ARRAY_N.
-     *                                 Default OBJECT.
-     * @param string           $filter Optional. Type of filter to apply. Accepts 'raw', 'edit', 'db',
-     *                                 or 'display'. Default 'raw'.
-     * @return WP_Post|array|null Type corresponding to $output on success or null on failure.
-     *                            When $output is OBJECT, a `WP_Post` instance is returned.
+     * @param int|\WP_Post|null $post   Optional. Post ID or post object. Defaults to global $post.
      *
      * @return Post|bool|null
      */
-    public static function get_post( $post = null, $output = OBJECT, $filter = 'raw' )
+    public static function get_post( $post = null )
     {
 
-        $post = get_post($post, $output, $filter);
-
-        /**
-         * If it's null just return null
-         */
-        if(is_null($post)) {
-            return null;
-        }
+        $post = get_post($post);
 
         /**
          * If it's a correct WP_Post convert it to a Cutlass Post
          */
-        if (is_a($post, 'WP_Post')) {
+        if ($post instanceof \WP_Post) {
             return new Post($post);
         }
 
-        /**
-         * Return post if it's an Array
-         */
-        return $post;
+        return null;
 
     }
 
@@ -206,9 +190,9 @@ class Cutlass
      * * Note: We use array_walk over foreach for memory conservation because
      * * the gained time is not worth the memory lost
      *
-     * @param array|WP_Post $posts
+     * @param array|\WP_Post $posts
      *
-     * @return null|WP_Post
+     * @return array
      */
     public static function convert_posts(&$posts)
     {
@@ -216,15 +200,14 @@ class Cutlass
         /**
          * If it's already Post just return
          */
-        if (is_a($posts, 'Post')) {
-            return;
+        if ($posts instanceof Post) {
+            return $posts;
         }
 
         /**
-         * If it's a single WP_Post object convert it
-         * and return
+         * If it's a single WP_Post object convert it and return
          */
-        if (is_a($posts, 'WP_Post')) {
+        if ($posts instanceof \WP_Post) {
             $posts = new Post($posts);
 
             return $posts;
