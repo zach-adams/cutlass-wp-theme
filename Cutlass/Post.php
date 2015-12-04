@@ -493,7 +493,6 @@ class Post
      */
     public function children($args = [ 'post_type' => 'any' ])
     {
-        global $cutlass;
 
         if (is_string($args)) {
             $args = [
