@@ -218,4 +218,19 @@ class Site
 
     }
 
+
+    /**
+     * Simple proxy for get_bloginfo('url');
+     *
+     * @param string $type - in case you want to get the home_url, defaults to url
+     *
+     * @return mixed|void
+     */
+    public function url($type = 'url')
+    {
+
+        return get_bloginfo($type);
+
+    }
+
 }
