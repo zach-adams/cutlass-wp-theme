@@ -131,8 +131,8 @@ class Post
 
 
     /**
-     * Accepts a WP_Post object and builds a new
-     * Post object using it's properties
+     * Accepts a WP_Post object and builds a new Post object using
+     * it's properties
      *
      * @param $post \WP_Post|array
      *
@@ -182,7 +182,7 @@ class Post
      *
      * @param \WP_Post $post
      */
-    private function set_properties($post)
+    protected function set_properties($post)
     {
 
         /**
