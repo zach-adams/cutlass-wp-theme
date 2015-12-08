@@ -445,4 +445,32 @@ class Site
 
     }
 
+
+    /**
+     * Simple proxy for get_calendar
+     *
+     * Display calendar with days that have posts as links.
+     *
+     * The calendar is cached, which will be retrieved, if it exists. If there are
+     * no posts for the month, then it will not be displayed.
+     *
+     * @param bool $initial Optional, default is true. Use initial calendar names.
+     * @param bool $echo    Optional, default is true. Set to false for return.
+     *
+     * @return string|void String when retrieving.
+     */
+    public function calendar($initial = true, $echo = true)
+    {
+
+        if ($echo === false) {
+            return get_calendar($initial, $echo);
+        }
+
+        /**
+         * Function will echo itself out
+         */
+        get_calendar($initial, $echo);
+
+    }
+
 }
