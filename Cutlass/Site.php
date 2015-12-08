@@ -233,4 +233,51 @@ class Site
 
     }
 
+
+    /**
+     * Simple proxy for get_footer function
+     *
+     * Load footer template.
+     *
+     * Includes the footer template for a theme or if a name is specified then a
+     * specialised footer will be included.
+     *
+     * For the parameter, if the file is called "footer-special.php" then specify
+     * "special".
+     *
+     * @param string $name The name of the specialised footer.
+     *
+     * @return void
+     */
+    public function footer($name = null)
+    {
+
+        get_footer($name);
+
+    }
+
+
+    /**
+     * Simple proxy for wp_loginout
+     *
+     * Display the Log In/Out link.
+     *
+     * Displays a link, which allows users to navigate to the Log In page to log in
+     * or log out depending on whether they are currently logged in.
+     *
+     * @param string $redirect Optional path to redirect to on login/logout.
+     * @param bool   $echo     Default to echo and not return the link.
+     * @return string|void String when retrieving.
+     */
+    public function loginout($redirect = '', $echo = true)
+    {
+
+        if($echo === false) {
+            return wp_loginout($redirect, $echo);
+        }
+
+        wp_loginout($redirect, $echo);
+
+    }
+
 }
