@@ -332,4 +332,25 @@ class Site
 
     }
 
+
+    /**
+     * Simple proxy for wp_registration_url
+     *
+     * Returns the URL that allows the user to register on the site.
+     *
+     * @param bool $echo Default to echo and not return the link.
+     *
+     * @return string|void User registration URL.
+     */
+    public function registration($echo = true)
+    {
+
+        if ($echo === false) {
+            return wp_registration_url();
+        }
+
+        echo wp_registration_url();
+
+    }
+
 }
