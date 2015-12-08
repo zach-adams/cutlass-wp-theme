@@ -14,8 +14,5 @@
 			@foreach($post->categories() as $category) {{ $category->name }} @endforeach
 			{{ $post->content() }}
 		</div>
-		<footer>
-			{{ var_dump($post->comments()) }}
-		</footer>
 	</article>
 @endsection
