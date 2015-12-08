@@ -382,4 +382,26 @@ class Site
 
     }
 
+
+    /**
+     * Simple proxy for wp_lostpassword_url
+     *
+     * Returns the URL that allows the user to retrieve the lost password
+     *
+     * @param string $redirect Path to redirect to on login.
+     * @param bool   $echo     Default to echo and not return the link.
+     *
+     * @return string Lost password URL.
+     */
+    public function lostpassword($redirect = '', $echo = true)
+    {
+
+        if ($echo === false) {
+            return wp_lostpassword_url($redirect);
+        }
+
+        echo wp_lostpassword_url($redirect);
+
+    }
+
 }
