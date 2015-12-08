@@ -404,4 +404,45 @@ class Site
 
     }
 
+
+    /**
+     * Simple proxy for get_site_icon_url
+     *
+     * Returns or echos the Site Icon URL.
+     *
+     * @param  int    $size    Size of the site icon.
+     * @param  string $url     Fallback url if no site icon is found.
+     * @param  int    $blog_id Id of the blog to get the site icon for.
+     * @param bool    $echo    Default to echo and not return the link.
+     *
+     * @return string|void          Site Icon URL.
+     */
+    public function icon($size = 512, $url = '', $blog_id = 0, $echo = true)
+    {
+
+        if ($echo === false) {
+            return get_site_icon_url($size, $url, $blog_id);
+        }
+
+        echo get_site_icon_url($size, $url, $blog_id);
+
+    }
+
+
+    /**
+     * Simple proxy for has_site_icon
+     *
+     * Whether the site has a Site Icon.
+     *
+     * @param int $blog_id Optional. Blog ID. Default: Current blog.
+     *
+     * @return bool
+     */
+    public function has_icon($blog_id = 0)
+    {
+
+        return has_site_icon($blog_id);
+
+    }
+
 }
