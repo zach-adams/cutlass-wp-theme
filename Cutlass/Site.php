@@ -221,6 +221,35 @@ class Site
 
 
     /**
+     * Simple proxy for wp_login_form
+     *
+     * Provides a simple login form for use anywhere within WordPress. By default, it echoes
+     * the HTML immediately.
+     *
+     * @param array $args Configuration options to modify the form output.
+     * @param bool  $echo Default to echo and not return the form.
+     *
+     * @return string|void String when retrieving.
+     */
+    public function login_form($args = [ ], $echo = true)
+    {
+
+        if (( isset( $args['echo'] ) && $args['echo'] === false ) || $echo === false) {
+            return wp_login_form($args);
+        }
+
+        /**
+         * The function will echo itself out
+         */
+
+        $args['echo'] = true;
+
+        wp_login_form($args);
+
+    }
+
+
+    /**
      * Simple proxy for get_bloginfo('url');
      *
      * @param string $type - in case you want to get the home_url, defaults to url
