@@ -1,5 +1,6 @@
 <?php
 use Cutlass\Cutlass;
+use Cutlass\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -10,6 +11,7 @@ use Cutlass\Cutlass;
 |
 */
 
-$post = Cutlass::get_post();
+$post = new Post(1);
+var_dump($post);die();
 
 Cutlass::render(['posts.'. $post->post_name, 'posts.post'], compact('post'));

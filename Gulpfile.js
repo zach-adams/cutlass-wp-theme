@@ -1,3 +1,5 @@
+process.env.DISABLE_NOTIFIER = true;
+
 var elixir = require('laravel-elixir');
 
 /*
@@ -13,5 +15,12 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
 	mix.sass('app.scss');
+	mix.styles('resources/assets/css/**/*.css', 'public/css/plugins.css');
+	mix.scriptsIn('resources/assets/js/plugins', 'public/js/plugins.js');
 	mix.scripts('app.js');
+
+	mix.browserSync({
+		proxy: 'cutlasswp.dev',
+		notify: false
+	});
 });

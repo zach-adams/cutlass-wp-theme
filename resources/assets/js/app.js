@@ -24,7 +24,7 @@
 				// JavaScript to be fired on all pages
 			},
 			finalize: function() {
-				// JavaScript to be fired on all pages, after page specific JS is fired
+
 			}
 		},
 		// Home page
@@ -33,13 +33,17 @@
 				// JavaScript to be fired on the home page
 			},
 			finalize: function() {
-				// JavaScript to be fired on the home page, after the init JS
+				$('a.onward').click(function(e) {
+					e.preventDefault();
+					$('html,body').animate({
+						scrollTop: $($(this).attr('href')).offset().top
+					}, 200);
+				});
 			}
 		},
 		// About us page, note the change from about-us to about_us.
-		'about_us': {
+		'docs': {
 			init: function() {
-				// JavaScript to be fired on the about us page
 			}
 		}
 	};

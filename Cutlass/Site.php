@@ -28,14 +28,14 @@ class Site
      *
      * @param string $name   - The name of the option to get
      * @param string $filter - Whether to filter the returned value
-     * @param bool $echo - Whether to echo or return the value
+     * @param bool   $echo   - Whether to echo or return the value
      *
      * @return mixed|void
      */
     public function info($name, $filter = 'raw', $echo = true)
     {
 
-        if($echo === false) {
+        if ($echo === false) {
             return get_bloginfo($name, $filter);
         }
 
@@ -52,7 +52,7 @@ class Site
      * Otherwise, you can pass in a numerical index to display the sidebar at that index.
      *
      * @param int|string $sidebar Optional, default is 1. Index, name or ID of dynamic sidebar.
-     * @param bool $echo Whether to echo out the sidebar or not
+     * @param bool       $echo    Whether to echo out the sidebar or not
      *
      * @return void|string
      */
@@ -66,7 +66,7 @@ class Site
         dynamic_sidebar($sidebar);
         $sidebar = ob_get_clean();
 
-        if($echo === false) {
+        if ($echo === false) {
             return $sidebar;
         }
 
@@ -78,40 +78,41 @@ class Site
     /**
      * Gets a WordPress menu using the wp_nav_menu function
      *
-     * @param array $args {
-     *     Optional. Array of nav menu arguments.
+     * @param array        $args            {
+     *                                      Optional. Array of nav menu arguments.
      *
-     *     @type string        $menu            Desired menu. Accepts (matching in order) id, slug, name. Default empty.
-     *     @type string        $menu_class      CSS class to use for the ul element which forms the menu. Default 'menu'.
-     *     @type string        $menu_id         The ID that is applied to the ul element which forms the menu.
+     * @type string        $menu            Desired menu. Accepts (matching in order) id, slug, name. Default empty.
+     * @type string        $menu_class      CSS class to use for the ul element which forms the menu. Default 'menu'.
+     * @type string        $menu_id         The ID that is applied to the ul element which forms the menu.
      *                                          Default is the menu slug, incremented.
-     *     @type string        $container       Whether to wrap the ul, and what to wrap it with. Default 'div'.
-     *     @type string        $container_class Class that is applied to the container. Default 'menu-{menu slug}-container'.
-     *     @type string        $container_id    The ID that is applied to the container. Default empty.
-     *     @type callback|bool $fallback_cb     If the menu doesn't exists, a callback function will fire.
+     * @type string        $container       Whether to wrap the ul, and what to wrap it with. Default 'div'.
+     * @type string        $container_class Class that is applied to the container. Default 'menu-{menu
+     *       slug}-container'.
+     * @type string        $container_id    The ID that is applied to the container. Default empty.
+     * @type callback|bool $fallback_cb     If the menu doesn't exists, a callback function will fire.
      *                                          Default is 'wp_page_menu'. Set to false for no fallback.
-     *     @type string        $before          Text before the link text. Default empty.
-     *     @type string        $after           Text after the link text. Default empty.
-     *     @type string        $link_before     Text before the link. Default empty.
-     *     @type string        $link_after      Text after the link. Default empty.
-     *     @type bool          $echo            Whether to echo the menu or return it. Default true.
-     *     @type int           $depth           How many levels of the hierarchy are to be included. 0 means all. Default 0.
-     *     @type object        $walker          Instance of a custom walker class. Default empty.
-     *     @type string        $theme_location  Theme location to be used. Must be registered with register_nav_menu()
+     * @type string        $before          Text before the link text. Default empty.
+     * @type string        $after           Text after the link text. Default empty.
+     * @type string        $link_before     Text before the link. Default empty.
+     * @type string        $link_after      Text after the link. Default empty.
+     * @type bool          $echo            Whether to echo the menu or return it. Default true.
+     * @type int           $depth           How many levels of the hierarchy are to be included. 0 means all. Default
+     *       0.
+     * @type object        $walker          Instance of a custom walker class. Default empty.
+     * @type string        $theme_location  Theme location to be used. Must be registered with register_nav_menu()
      *                                          in order to be selectable by the user.
-     *     @type string        $items_wrap      How the list items should be wrapped. Default is a ul with an id and class.
+     * @type string        $items_wrap      How the list items should be wrapped. Default is a ul with an id and class.
      *                                          Uses printf() format with numbered placeholders.
      * }
      *
      * @return object|false|void Menu output if $echo is false, false if there are no items or no menu was found.
      */
-    public function menu($args = [])
+    public function menu($args = [ ])
     {
 
-        if ( isset($args['echo']) && $args['echo'] === false ) {
+        if (isset( $args['echo'] ) && $args['echo'] === false) {
             echo wp_nav_menu($args);
-        }
-        else {
+        } else {
             return wp_nav_menu($args);
         }
 
@@ -178,7 +179,7 @@ class Site
      *
      * @return void
      */
-    public function comments( $file = '/comments.php', $separate_comments = false )
+    public function comments($file = '/comments.php', $separate_comments = false)
     {
 
         comments_template($file, $separate_comments);
@@ -210,11 +211,124 @@ class Site
     public function search_form($echo = true)
     {
 
-        if ( $echo === false) {
+        if ($echo === false) {
             return get_search_form($echo);
         }
 
         echo get_search_form($echo);
+
+    }
+
+
+    /**
+     * Simple proxy for get_bloginfo('url');
+     *
+     * @param string $type - in case you want to get the home_url, defaults to url
+     *
+     * @return mixed|void
+     */
+    public function url($type = 'url')
+    {
+
+        return get_bloginfo($type);
+
+    }
+
+
+    /**
+     * Simple proxy for get_footer function
+     *
+     * Load footer template.
+     *
+     * Includes the footer template for a theme or if a name is specified then a
+     * specialised footer will be included.
+     *
+     * For the parameter, if the file is called "footer-special.php" then specify
+     * "special".
+     *
+     * @param string $name The name of the specialised footer.
+     *
+     * @return void
+     */
+    public function footer($name = null)
+    {
+
+        get_footer($name);
+
+    }
+
+
+    /**
+     * Simple proxy for wp_loginout
+     *
+     * Display the Log In/Out link.
+     *
+     * Displays a link, which allows users to navigate to the Log In page to log in
+     * or log out depending on whether they are currently logged in.
+     *
+     * @param string $redirect Optional path to redirect to on login/logout.
+     * @param bool   $echo     Default to echo and not return the link.
+     *
+     * @return string|void String when retrieving.
+     */
+    public function loginout($redirect = '', $echo = true)
+    {
+
+        if ($echo === false) {
+            return wp_loginout($redirect, $echo);
+        }
+
+        /**
+         * This function will echo itself out
+         */
+        wp_loginout($redirect, $echo);
+
+    }
+
+
+    /**
+     * Simple proxy for wp_logout_url
+     *
+     * Returns the Log Out URL.
+     *
+     * Returns the URL that allows the user to log out of the site.
+     *
+     * @param string $redirect Path to redirect to on logout.
+     * @param bool   $echo     Default to echo and not return the link.
+     *
+     * @return string A log out URL.
+     */
+    public function logout($redirect = '', $echo = true)
+    {
+
+        if ($echo === false) {
+            return wp_logout_url($redirect);
+        }
+
+        echo wp_logout_url($redirect);
+
+    }
+
+
+    /**
+     * Simple proxy for wp_login_url
+     *
+     * Returns the URL that allows the user to log in to the site.
+     *
+     * @param string $redirect     Path to redirect to on login.
+     * @param bool   $force_reauth Whether to force reauthorization, even if a cookie is present. Default is false.
+     * @param bool   $echo         Default to echo and not return the link.
+     *
+     * @return string A log in URL.
+     */
+    public function login($redirect = '', $force_reauth = false, $echo = true)
+    {
+
+        if ($echo === false) {
+            return wp_login_url($redirect, $force_reauth);
+        }
+
+        echo wp_login_url($redirect, $force_reauth);
 
     }
 

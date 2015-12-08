@@ -17,4 +17,4 @@ use Cutlass\Cutlass;
 
 $post = Cutlass::get_post();
 
-Cutlass::render('welcome', compact('post'));
+Cutlass::render('pages.front-page', compact('post'));

@@ -1,0 +1,55 @@
+body.page-docs {
+  main.page {
+    padding:0;
+  }
+  #sidebar, #content {
+    padding:40px 0;
+  }
+  .inner-sidebar {
+    max-width:80%;
+    margin:0 auto;
+  }
+  #content {
+    .list-group-item-heading h4 {
+      font-weight:bold;
+    }
+    .list-group-item-text h5 {
+      font-weight:normal;
+    }
+
+    ul.header {
+      list-style:none;
+      padding-left:20px;
+
+      ul {
+        list-style:none;
+      }
+      a {
+        position: relative;
+        display:inline-block;
+        &:before {
+          content: "#";
+          display:block;
+          position: absolute;
+          left:-17px;
+          top:0;
+          font-size:1rem;
+          font-weight:normal;
+          opacity:.8;
+          color:$brand-primary;
+        }
+      }
+      > li {
+        font-weight:bold;
+
+        > ul  {
+          padding-left:30px;
+
+          li {
+            font-weight:normal;
+          }
+        }
+      }
+    }
+  }
+}
