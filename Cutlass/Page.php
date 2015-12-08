@@ -24,9 +24,10 @@ class Page
     /**
      * Simply loads the queried object and ID
      */
-    public function __construct() {
+    public function __construct()
+    {
 
-        $this->queried_object = get_queried_object();
+        $this->queried_object    = get_queried_object();
         $this->queried_object_id = get_queried_object_id();
 
     }
@@ -39,28 +40,35 @@ class Page
      * From Root's Sage
      * https://github.com/roots/sage
      *
+     * @param bool $echo
+     *
      * @return string
      */
-    public function title()
+    public function title($echo = true)
     {
-
+        $title = '';
         if (is_home()) {
             if (get_option('page_for_posts', true)) {
-                return get_the_title(get_option('page_for_posts', true));
+                $title = get_the_title(get_option('page_for_posts', true));
             } else {
-                return 'Latest Posts';
+                $title = 'Latest Posts';
             }
         } elseif (is_archive()) {
-            return get_the_archive_title();
+            $title = get_the_archive_title();
         } elseif (is_search()) {
-            return 'Search Results for ' . get_search_query();
+            $title = 'Search Results for ' . get_search_query();
         } elseif (is_404()) {
-            return '404 - Not Found';
+            $title = '404 - Not Found';
         } else {
-            return get_the_title($this->queried_object_id);
+            $title = get_the_title($this->queried_object_id);
         }
 
-    }
+        if ($echo === false) {
+            return $echo;
+        }
 
+        echo $title;
+
+    }
 
 }
