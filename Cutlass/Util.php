@@ -367,7 +367,7 @@ if ( ! function_exists('url')) {
     function url($path = '')
     {
 
-        return get_site_url(null, $path, null);
+        return get_home_url(null, $path, null);
 
     }
 }
