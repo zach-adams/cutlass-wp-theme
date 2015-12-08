@@ -278,6 +278,9 @@ class Site
             return wp_loginout($redirect, $echo);
         }
 
+        /**
+         * This function will echo itself out
+         */
         wp_loginout($redirect, $echo);
 
     }
@@ -292,6 +295,7 @@ class Site
      *
      * @param string $redirect Path to redirect to on logout.
      * @param bool   $echo     Default to echo and not return the link.
+     *
      * @return string A log out URL.
      */
     public function logout($redirect = '', $echo = true)
@@ -301,7 +305,30 @@ class Site
             return wp_logout_url($redirect);
         }
 
-        wp_logout_url($redirect);
+        echo wp_logout_url($redirect);
+
+    }
+
+
+    /**
+     * Simple proxy for wp_login_url
+     *
+     * Returns the URL that allows the user to log in to the site.
+     *
+     * @param string $redirect     Path to redirect to on login.
+     * @param bool   $force_reauth Whether to force reauthorization, even if a cookie is present. Default is false.
+     * @param bool   $echo         Default to echo and not return the link.
+     *
+     * @return string A log in URL.
+     */
+    public function login($redirect = '', $force_reauth = false, $echo = true)
+    {
+
+        if ($echo === false) {
+            return wp_login_url($redirect, $force_reauth);
+        }
+
+        echo wp_login_url($redirect, $force_reauth);
 
     }
 
