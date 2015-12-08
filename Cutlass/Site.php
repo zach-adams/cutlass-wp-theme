@@ -1,8 +1,7 @@
 <?php namespace Cutlass;
 
 /**
- * Allows us to quickly and easily access common WordPress
- * options and blog info.
+ * Allows us to quickly and easily access common WordPress functions
  */
 class Site
 {
