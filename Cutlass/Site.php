@@ -555,4 +555,30 @@ class Site
 
     }
 
+
+    /**
+     * Simple proxy for get_search_query
+     *
+     * Retrieve the contents of the search WordPress query variable.
+     *
+     * The search query string is passed through {@link esc_attr()}
+     * to ensure that it is safe for placing in an html attribute.
+     *
+     * @param bool $escaped   Whether the result is escaped. Default true.
+     *                        Only use when you are later escaping it. Do not use unescaped.
+     * @param bool $echo      Optional, default is true. Set to false for return.
+     *
+     * @return string|void
+     */
+    public function search_query($escaped = true, $echo = true)
+    {
+
+        if ($echo === false) {
+            return get_search_query($escaped);
+        }
+
+        echo get_search_query($escaped);
+
+    }
+
 }
