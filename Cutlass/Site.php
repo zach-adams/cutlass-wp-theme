@@ -282,4 +282,27 @@ class Site
 
     }
 
+
+    /**
+     * Simple proxy for wp_logout_url
+     *
+     * Returns the Log Out URL.
+     *
+     * Returns the URL that allows the user to log out of the site.
+     *
+     * @param string $redirect Path to redirect to on logout.
+     * @param bool   $echo     Default to echo and not return the link.
+     * @return string A log out URL.
+     */
+    public function logout($redirect = '', $echo = true)
+    {
+
+        if ($echo === false) {
+            return wp_logout_url($redirect);
+        }
+
+        wp_logout_url($redirect);
+
+    }
+
 }
