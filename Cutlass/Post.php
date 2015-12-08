@@ -164,7 +164,7 @@ class Post
          * If we don't have a WP_Post by now throw an Exception
          */
         if ( ! $post instanceof \WP_Post) {
-            throw new \Exception('Cutlass was not able to convert this to a new Post type.');
+            throw new \Exception('This Post was not able to convert the arguments into a valid WP_Post object.');
         }
 
         /**
@@ -194,14 +194,9 @@ class Post
          * Apply WP_Post properties to this Post object
          */
         foreach ($props as $key => $prop) {
-            $this->$key = $prop;
-        }
 
-        /**
-         * Make "easy" properties
-         * * i.e. $this->post_date to $this->date
-         */
-        foreach ($props as $key => $prop) {
+            $this->$key = $prop;
+
             if (substr($key, 0, 5) === "post_") {
                 $new        = substr($key, 5, strlen($key));
                 $this->$new =& $this->$key;
@@ -224,7 +219,7 @@ class Post
          * Set author property to actual author data
          */
         $author       = ( property_exists($this, 'author') ? $this->author : $this->post_author );
-        $this->author = get_userdata(intval($author));
+        $this->author = new User(intval($author));
 
     }
 
@@ -388,7 +383,7 @@ class Post
      *
      * @return String|void
      */
-    public function thumbnail($size = 'thumbnail', $attr, $echo = true)
+    public function thumbnail($size = 'thumbnail', $attr = '', $echo = true)
     {
 
         if ($echo === false) {
@@ -410,7 +405,7 @@ class Post
      *
      * @return String|void
      */
-    public function featured_image($size = 'full', $attr, $echo = true)
+    public function featured_image($size = 'full', $attr = '', $echo = true)
     {
 
         if ($echo === false) {
