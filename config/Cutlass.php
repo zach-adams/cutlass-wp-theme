@@ -103,7 +103,7 @@ function add_custom_directives($custom_directives)
     $custom_directives = array_merge($custom_directives, [
         'wpposts'      => '<?php $posts = get_posts(); foreach($posts as $post) : setup_postdata($post); $post = new Cutlass\Post($post); ?>',
         'wppostsend'   => '<?php endforeach; wp_reset_postdata(); ?>',
-        'wppostsquery' => '<?php $posts = get_posts({expression}); foreach($posts as $post) : setup_postdata($post); ?>',
+        'wppostsquery' => '<?php $posts = get_posts({expression}); foreach($posts as $post) : setup_postdata($post); $post = new Cutlass\Post($post);  ?>',
     ]);
 
     return $custom_directives;
