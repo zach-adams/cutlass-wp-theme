@@ -216,10 +216,13 @@ class Post
         $this->human_date = Carbon::parse($date)->diffForHumans();
 
         /**
-         * Set author property to actual author data
+         * Set author property to Cutlass User object
          */
-        $author       = ( property_exists($this, 'author') ? $this->author : $this->post_author );
-        $this->author = new User(intval($author));
+        $author = ( property_exists($this, 'author') ? $this->author : $this->post_author );
+
+        if ( ! $author instanceof User) {
+            $this->author = new User(intval($author));
+        }
 
     }
 
