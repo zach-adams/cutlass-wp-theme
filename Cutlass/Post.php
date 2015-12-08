@@ -4,9 +4,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 /**
- * Converts a WP_Post object into a much more useable
- * object that we can use to easily access common
- * wp properties and methods
+ * Converts a WP_Post object into a much more useable object that we can
+ * use to easily access common wp properties and methods
  */
 class Post
 {
@@ -15,15 +14,13 @@ class Post
      * The posts id
      * @var int
      */
-    public $ID = 0;
+    public $ID;
 
     /**
      * The posts link
      * @var string
      */
-    public $link = '';
-
-    public $permalink = '';
+    public $link, $permalink;
 
     /**
      * A human readable post date
@@ -31,130 +28,106 @@ class Post
      *
      * @var string
      */
-    public $human_date = '';
+    public $human_date;
 
     /**
      * The post author's name
      * @var string
      */
-    public $author = '';
-
-    public $post_author = '';
+    public $author, $post_author;
 
     /**
      * The post slug name
      * @var string
      */
-    public $name = '';
-
-    public $post_name = '';
+    public $name, $post_name;
 
     /**
      * The post type
      * @var string
      */
-    public $type = '';
-
-    public $post_type = '';
+    public $type, $post_type;
 
     /**
      * The post title
      * @var string
      */
-    public $title = '';
-
-    public $post_title = '';
+    public $title, $post_title;
 
     /**
      * The post date
      * @var string
      */
-    public $date = '';
-
-    public $post_date = '';
+    public $date, $post_date;
 
     /**
      * The post date in GMT
      * @var string
      */
-    public $date_gmt = '';
-
-    public $post_date_gmt = '';
+    public $date_gmt, $post_date_gmt;
 
     /**
      * The post content
      * @var string
      */
-    public $content = '';
-
-    public $post_content = '';
+    public $content, $post_content;
 
     /**
      * The posts current status
      * @var string
      */
-    public $status = '';
-
-    public $post_status = '';
+    public $status, $post_status;
 
     /**
      * The posts mimetype
      * @var string
      */
-    public $post_mime_type = '';
-
-    public $mime_type = '';
+    public $post_mime_type, $mime_type;
 
     /**
      * The current comment status (whether comments are enabled
      * or disabled)
      * @var string
      */
-    public $comment_status = '';
+    public $comment_status;
 
     /**
      * The current ping status (whether this post can receive
      * pings or not)
      * @var string
      */
-    public $ping_status = '';
+    public $ping_status;
 
     /**
      * The posts password if it has one
      * @var string
      */
-    public $password = '';
-
-    public $post_password = '';
+    public $password, $post_password;
 
     /**
      * When the post was last modified
      * @var string
      */
-    public $modified = '';
-
-    public $post_modified = '';
+    public $modified, $post_modified;
 
     /**
      * When the post was last modified in GMT
      * @var string
      */
-    public $modified_gmt = '';
-
-    public $post_modified_gmt = '';
+    public $modified_gmt, $post_modified_gmt;
 
     /**
      * Number of comments for this post (in string for
      * whatever reason)
      * @var string
      */
-    public $comment_count = '';
+    public $comment_count;
 
     /**
      * Order of this post in the menu
      * @var string
      */
-    public $menu_order = '';
+    public $menu_order;
 
 
     /**
@@ -415,7 +388,7 @@ class Post
      *
      * @return String|void
      */
-    public function thumbnail($size = 'thumbnail', $attr = '', $echo = true)
+    public function thumbnail($size = 'thumbnail', $attr, $echo = true)
     {
 
         if ($echo === false) {
@@ -437,7 +410,7 @@ class Post
      *
      * @return String|void
      */
-    public function featured_image($size = 'full', $attr = '', $echo = true)
+    public function featured_image($size = 'full', $attr, $echo = true)
     {
 
         if ($echo === false) {
@@ -498,7 +471,7 @@ class Post
      *
      * @return void
      */
-    public function edit_link($link = 'Edit this', $before = '', $after = '')
+    public function edit_link($link = 'Edit this', $before, $after)
     {
 
         edit_post_link($link, $before, $after, $this->ID);
