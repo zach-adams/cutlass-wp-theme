@@ -19,6 +19,7 @@ class Cutlass
      */
     public static $blade;
 
+
     /**
      * Gets an instance of our plugin.
      *
@@ -40,7 +41,7 @@ class Cutlass
      *
      * @param array $filenames - An array of views to render in order of precedence
      * @param array $context   - An array of items to add to the view
-     * @param bool $echo - Whether to echo or return output
+     * @param bool  $echo      - Whether to echo or return output
      *
      * @return string|void
      */
@@ -81,7 +82,7 @@ class Cutlass
 
         $output = $cutlassrenderer->render();
 
-        if($echo === false) {
+        if ($echo === false) {
             return $output;
         }
 
@@ -100,7 +101,7 @@ class Cutlass
     {
         $cache_directory = apply_filters('cutlass_cache_directory', app_path() . '/storage/framework/views');
 
-        if(substr($cache_directory, -1) != '/') {
+        if (substr($cache_directory, -1) != '/') {
             $cache_directory .= '/';
         }
 
@@ -131,6 +132,7 @@ class Cutlass
          * If the query's empty and the global WP_Query has posts grab them
          * else just grab the posts the normal way
          */
+
         if (empty( $query ) && property_exists($wp_query, 'posts') && ! empty( $wp_query->posts )) {
             $posts = $wp_query->posts;
         } else {
@@ -147,7 +149,7 @@ class Cutlass
         /**
          * Convert WP_Posts to Posts
          */
-        self::convert_posts($posts);
+        $posts = self::convert_posts($posts);
 
         /**
          * Return array of Posts
@@ -163,11 +165,11 @@ class Cutlass
      * See {@link sanitize_post()} for optional $filter values. Also, the parameter
      * $post, must be given as a variable, since it is passed by reference.
      *
-     * @param int|\WP_Post|null $post   Optional. Post ID or post object. Defaults to global $post.
+     * @param int|\WP_Post|null $post Optional. Post ID or post object. Defaults to global $post.
      *
      * @return Post|bool|null
      */
-    public static function get_post( $post = null )
+    public static function get_post($post = null)
     {
 
         $post = get_post($post);
@@ -194,7 +196,7 @@ class Cutlass
      *
      * @return array
      */
-    public static function convert_posts(&$posts)
+    public static function convert_posts($posts)
     {
 
         /**
@@ -216,9 +218,11 @@ class Cutlass
         /**
          * Convert all posts
          */
-        array_walk($posts, function (&$value, $key) {
-            $value = new Post($value);
+        array_walk($posts, function (&$post) {
+            $post = new Post($post);
         });
+
+        return $posts;
 
     }
 }
