@@ -23,14 +23,6 @@ class Post
     public $link, $permalink;
 
     /**
-     * A human readable post date
-     * * i.e. 2015-03-05 12:53:12 to 3 months ago
-     *
-     * @var string
-     */
-    public $human_date;
-
-    /**
      * The post author's name
      * @var string
      */
@@ -58,13 +50,13 @@ class Post
      * The post date
      * @var string
      */
-    public $date, $post_date;
+    public $date, $post_date, $human_date;
 
     /**
      * The post date in GMT
      * @var string
      */
-    public $date_gmt, $post_date_gmt;
+    public $date_gmt, $post_date_gmt, $human_date_gmt;
 
     /**
      * The post content
@@ -108,13 +100,13 @@ class Post
      * When the post was last modified
      * @var string
      */
-    public $modified, $post_modified;
+    public $modified, $post_modified, $human_modified;
 
     /**
      * When the post was last modified in GMT
      * @var string
      */
-    public $modified_gmt, $post_modified_gmt;
+    public $modified_gmt, $post_modified_gmt, $human_modified_gmt;
 
     /**
      * Number of comments for this post (in string for
@@ -210,10 +202,12 @@ class Post
         $this->permalink =& $this->link;
 
         /**
-         * Set human date property using Carbon
+         * Set human dates property using Carbon
          */
-        $date             = ( property_exists($this, 'date') ? $this->date : $this->post_date );
-        $this->human_date = Carbon::parse($date)->diffForHumans();
+        $this->human_date         = Carbon::parse($this->date)->diffForHumans();
+        $this->human_date_gmt     = Carbon::parse($this->date_gmt)->diffForHumans();
+        $this->human_modified     = Carbon::parse($this->modified)->diffForHumans();
+        $this->human_modified_gmt = Carbon::parse($this->modified_gmt)->diffForHumans();
 
         /**
          * Set author property to Cutlass User object
