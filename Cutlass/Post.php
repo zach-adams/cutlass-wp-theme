@@ -209,13 +209,8 @@ class Post
         $this->human_modified     = Carbon::parse($this->modified)->diffForHumans();
         $this->human_modified_gmt = Carbon::parse($this->modified_gmt)->diffForHumans();
 
-        /**
-         * Set author property to Cutlass User object
-         */
-        $author = ( property_exists($this, 'author') ? $this->author : $this->post_author );
-
-        if ( ! $author instanceof User) {
-            $this->author = new User(intval($author));
+        if ( ! $this->author instanceof User) {
+            $this->author = new User(intval($this->author));
         }
 
     }
