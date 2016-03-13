@@ -1,8 +1,6 @@
 <?php
-use Cutlass\NavWalker;
 use Cutlass\Site;
 use Cutlass\Page;
-use Webcode\WordPress\Template\BootstrapNavWalker;
 
 /**
  * Set the default path to the directory where Blade will read for
@@ -76,7 +74,6 @@ function add_cutlass_global_view_data($global_view_data)
     $global_view_data = array_merge($global_view_data, [
         'site' => new Site(),
         'page' => new Page(),
-        'walker'    =>  new NavWalker(),
     ]);
 
     return $global_view_data;
@@ -104,6 +101,10 @@ function add_custom_directives($custom_directives)
         'wpposts'      => '<?php $posts = get_posts(); foreach($posts as $post) : setup_postdata($post); $post = new Cutlass\Post($post); ?>',
         'wppostsend'   => '<?php endforeach; wp_reset_postdata(); ?>',
         'wppostsquery' => '<?php $posts = get_posts({expression}); foreach($posts as $post) : setup_postdata($post); $post = new Cutlass\Post($post);  ?>',
+        'wploop'      => '<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); $post = Cutlass\Cutlass::get_post(); ?>',
+        'wploopempty' => '<?php endwhile; else : ?>',
+        'wploopend'   => '<?php endif; wp_reset_postdata(); ?>',
+        'wploopquery' => '<?php $query = new WP_Query({expression}); if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post(); $post = Cutlass\Cutlass::get_post(); ?>',
     ]);
 
     return $custom_directives;
