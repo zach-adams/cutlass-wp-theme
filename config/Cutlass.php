@@ -47,7 +47,7 @@ add_filter('cutlass_cache_directory', 'set_cutlass_cache_directory', 10, 1);
  */
 function set_cutlass_disable_cache($disable_cache)
 {
-    if (WP_DEBUG === true) {
+    if (getenv('THEME_DEBUG') == true) {
         return true;
     }
 

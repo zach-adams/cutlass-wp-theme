@@ -33,12 +33,7 @@
 				// JavaScript to be fired on the home page
 			},
 			finalize: function() {
-				$('a.onward').click(function(e) {
-					e.preventDefault();
-					$('html,body').animate({
-						scrollTop: $($(this).attr('href')).offset().top
-					}, 200);
-				});
+
 			}
 		},
 		// About us page, note the change from about-us to about_us.

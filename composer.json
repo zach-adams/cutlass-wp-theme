@@ -21,6 +21,6 @@
 		"php": ">=5.5.0",
 		"nesbot/carbon": "~1.19",
 		"zach-adams/cutlass-core": "dev-master",
-		"webcode/wp-bootstrap-navwalker": "dev-master"
+		"vlucas/phpdotenv": "^2.2"
 	}
 }

@@ -1,7 +1,4 @@
-/node_modules
-/.sass-cache
 /vendor
-/storage/views
-/.phpcomplete_extended
-/.idea
-.DS_Store
+/node_modules
+/public/storage
+.env

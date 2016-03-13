@@ -2,6 +2,8 @@ process.env.DISABLE_NOTIFIER = true;
 
 var elixir = require('laravel-elixir');
 
+var inProduction = elixir.config.production;
+
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -14,13 +16,26 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
+
 	mix.sass('app.scss');
-	mix.styles('resources/assets/css/**/*.css', 'public/css/plugins.css');
-	mix.scriptsIn('resources/assets/js/plugins', 'public/js/plugins.js');
 	mix.scripts('app.js');
 
-	mix.browserSync({
-		proxy: 'cutlasswp.dev',
-		notify: false
-	});
+
+
+	if (inProduction) {
+
+		mix.version([
+			'public/css/app.css',
+			'public/js/app.js'
+		]);
+
+	} else {
+
+		mix.browserSync({
+			proxy: 'blankwp.dev',
+			notify: false
+		});
+
+	}
+
 });

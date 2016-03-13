@@ -75,18 +75,24 @@ add_action('widgets_init', 'cutlass_widgets_init');
  */
 function cutlass_scripts()
 {
-	if(file_exists(public_path('css/app.css'))) {
+	if(getenv('THEME_DEBUG') == true) {
 		/**
 		 * Queue our elixir styles
 		 */
-		wp_enqueue_style('all', asset('css/app.css'), ['plugins'], null, 'all');
-	}
-	if(file_exists(public_path('js/app.js'))) {
-
+		wp_enqueue_style('all', asset('css/app.css'), [], null, 'all');
 		/**
 		 * Queue our elixir scripts
 		 */
 		wp_enqueue_script('all', asset('js/app.js'), [ 'jquery' ], null, true);
+	} else {
+		/**
+		 * Queue our elixir styles
+		 */
+		wp_enqueue_style('all', elixir('css/app.css'), [], null, 'all');
+		/**
+		 * Queue our elixir scripts
+		 */
+		wp_enqueue_script('all', elixir('js/app.js'), [ 'jquery' ], null, true);
 	}
 
 	if (is_singular() && comments_open() && get_option('thread_comments')) {
