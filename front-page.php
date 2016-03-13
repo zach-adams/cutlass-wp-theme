@@ -15,6 +15,6 @@ use Cutlass\Cutlass;
 |
 */
 
-$post = Cutlass::get_post();
+$posts = Cutlass::get_posts();
 
-Cutlass::render('pages.front-page', compact('post'));
+Cutlass::render('pages.page', compact('posts'));

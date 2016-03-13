@@ -1,4 +1,4 @@
-@extends('layouts.page')
+@extends('base')
 
 @section('content')
 	<header>
@@ -6,7 +6,7 @@
 	</header>
 
 	<section>
-		{{ $post->content() }}
+		{{ $page->content() }}
 	</section>
 
 	{{ $site->comments() }}

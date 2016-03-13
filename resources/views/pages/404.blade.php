@@ -1,11 +1,11 @@
-@extends('layouts.page')
+@extends('base')
 
 @section('content')
 	<header>
 		<h1>{{ $page->title() }}</h1>
 	</header>
 
-	<section id="main-content">
+	<section>
 		{{ $site->search_form() }}
 	</section>
 @endsection

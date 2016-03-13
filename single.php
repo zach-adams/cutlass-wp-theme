@@ -12,4 +12,4 @@ use Cutlass\Cutlass;
 
 $post = Cutlass::get_post();
 
-Cutlass::render(['posts.'. $post->post_name, 'posts.post'], compact('post'));
+Cutlass::render('posts.post', compact('post'));

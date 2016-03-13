@@ -15,9 +15,14 @@
 </head>
 
 <body {{ body_class() }}>
+
 	@include('includes.header')
 
-	@yield('main_content')
+	<main id="main" class="page" role="main">
+
+		@yield('content')
+
+	</main>
 
 	@include('includes.footer')
 

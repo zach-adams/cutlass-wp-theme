@@ -11,18 +11,16 @@
 			"homepage": "http://zach-adams.com"
 		}
 	],
+	"repositories": [
+		{
+			"type":"vcs",
+			"url":"/home/zach/Code/wordpress/blankwp/wp-content/themes/cutlass-core"
+		}
+	],
 	"require": {
 		"php": ">=5.5.0",
-		"philo/laravel-blade": "3.*",
-		"illuminate/view": "^5.1",
-		"illuminate/events": "^5.1",
 		"nesbot/carbon": "~1.19",
+		"zach-adams/cutlass-core": "dev-master",
 		"webcode/wp-bootstrap-navwalker": "dev-master"
-	},
-	"autoload": {
-		"files": ["Cutlass/Util.php"],
-		"classmap": ["Cutlass/"]
-	},
-	"require-dev": {
 	}
 }

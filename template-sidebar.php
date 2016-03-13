@@ -13,4 +13,4 @@ use Cutlass\Cutlass;
 
 $post = Cutlass::get_post();
 
-Cutlass::render(['pages.sidebar'], compact('post'));
+Cutlass::render('pages.sidebar', compact('post'));
